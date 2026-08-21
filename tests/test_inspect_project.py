@@ -18,6 +18,7 @@ class InspectProjectTests(unittest.TestCase):
 
         self.assertEqual(result["project_type"], "react-native-or-expo")
         self.assertIn("expo", result["platform_hints"])
+        self.assertNotIn("web", result["platform_hints"])
         self.assertIn("package.json", result["package_managers"])
         self.assertIn("src/components", result["directories"])
         self.assertIn("app/(tabs)/index.tsx", result["screens_or_routes"])
