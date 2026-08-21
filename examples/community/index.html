@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f2ec" />
+    <meta
+      name="description"
+      content="Gather is a warm, editorial community space for finding people who care about the same things."
+    />
+    <meta property="og:title" content="Gather — Find your people, not just a feed." />
+    <meta
+      property="og:description"
+      content="A production-minded community experience built around circles, context, and real conversations."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./assets/og-gather.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Gather — Community, with context.</title>
+  </head>
+  <body>
+    <svg class="icon-defs" aria-hidden="true" focusable="false">
+      <symbol id="icon-home" viewBox="0 0 24 24"><path d="m4 10 8-6 8 6v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9Z" /></symbol>
+      <symbol id="icon-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" /><path d="m15.3 8.7-1.8 4.8-4.8 1.8 1.8-4.8 4.8-1.8Z" /></symbol>
+      <symbol id="icon-users" viewBox="0 0 24 24"><path d="M16 19v-1.2c0-1.8-1.6-3.3-3.5-3.3h-5C5.6 14.5 4 16 4 17.8V19M10 11.5a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4ZM15.5 6.3a3 3 0 0 1 0 5.8M16 14.7c2.2 0 4 1.4 4 3.1V19" /></symbol>
+      <symbol id="icon-bookmark" viewBox="0 0 24 24"><path d="M6 4.8A1.8 1.8 0 0 1 7.8 3h8.4A1.8 1.8 0 0 1 18 4.8V21l-6-3.5L6 21V4.8Z" /></symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m16 16 4.5 4.5" /></symbol>
+      <symbol id="icon-bell" viewBox="0 0 24 24"><path d="M18 9.8a6 6 0 0 0-12 0c0 7-2.5 7-2.5 8.4h17C20.5 16.8 18 16.8 18 9.8ZM10 21h4" /></symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></symbol>
+      <symbol id="icon-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M6.5 10.5 12 5l5.5 5.5" /></symbol>
+      <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" /></symbol>
+      <symbol id="icon-heart" viewBox="0 0 24 24"><path d="M20.8 8.8c0 5.1-8.8 10-8.8 10s-8.8-4.9-8.8-10A4.7 4.7 0 0 1 12 6a4.7 4.7 0 0 1 8.8 2.8Z" /></symbol>
+      <symbol id="icon-message" viewBox="0 0 24 24"><path d="M20 11.2a7.2 7.2 0 0 1-7.5 7.2 8.8 8.8 0 0 1-3.2-.6L5 19l1.1-3.2a7 7 0 0 1-1.1-3.8A7.2 7.2 0 0 1 12.5 5 7.2 7.2 0 0 1 20 11.2Z" /></symbol>
+      <symbol id="icon-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /></symbol>
+      <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></symbol>
+      <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" /></symbol>
+      <symbol id="icon-spark" viewBox="0 0 24 24"><path d="m12 3 1.4 6.1L19 12l-5.6 2.9L12 21l-1.4-6.1L5 12l5.6-2.9L12 3Z" /></symbol>
+      <symbol id="icon-sliders" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16M8 4v6M16 14v6" /></symbol>
+    </svg>
+
+    <div class="app-shell">
+      <div class="sidebar-scrim" id="sidebarScrim"></div>
+      <aside class="sidebar" id="sidebar" aria-label="Primary navigation">
+        <div class="sidebar-top">
+          <a class="brand" href="#top" aria-label="Gather home">
+            <span class="brand-mark" aria-hidden="true">g</span>
+            <span>gather</span>
+          </a>
+
+          <button class="workspace-switcher" type="button" data-toast="Workspace switcher coming next">
+            <span class="workspace-avatar">S</span>
+            <span class="workspace-copy"><strong>Seoul circles</strong><small>Personal space</small></span>
+            <svg class="icon icon-chevron" aria-hidden="true"><use href="#icon-chevron" /></svg>
+          </button>
+
+          <nav class="primary-nav">
+            <p class="nav-label">Your space</p>
+            <button class="nav-item is-active" type="button" data-nav="Home">
+              <svg class="icon" aria-hidden="true"><use href="#icon-home" /></svg><span>Home</span>
+            </button>
+            <button class="nav-item" type="button" data-nav="Discover">
+              <svg class="icon" aria-hidden="true"><use href="#icon-compass" /></svg><span>Discover</span>
+            </button>
+            <button class="nav-item" type="button" data-nav="Your circles">
+              <svg class="icon" aria-hidden="true"><use href="#icon-users" /></svg><span>Your circles</span><span class="nav-count">4</span>
+            </button>
+            <button class="nav-item" type="button" data-nav="Saved">
+              <svg class="icon" aria-hidden="true"><use href="#icon-bookmark" /></svg><span>Saved</span>
+            </button>
+          </nav>
+
+          <nav class="primary-nav nav-secondary">
+            <p class="nav-label">Stay close</p>
+            <button class="nav-item" type="button" data-nav="Notifications">
+              <svg class="icon" aria-hidden="true"><use href="#icon-bell" /></svg><span>Notifications</span><span class="notification-dot" aria-label="Unread notifications"></span>
+            </button>
+            <button class="nav-item" type="button" data-nav="Settings">
+              <svg class="icon" aria-hidden="true"><use href="#icon-sliders" /></svg><span>Preferences</span>
+            </button>
+          </nav>
+        </div>
+
+        <div class="sidebar-bottom">
+          <div class="sidebar-note">
+            <div class="note-icon"><svg class="icon" aria-hidden="true"><use href="#icon-spark" /></svg></div>
+            <p><strong>Make room for a good question.</strong><span>Thoughtful communities grow one prompt at a time.</span></p>
+          </div>
+          <button class="profile-row" type="button" data-toast="Profile menu coming next">
+            <span class="avatar avatar-user">MP</span>
+            <span><strong>Mina Park</strong><small>@minapark</small></span>
+            <svg class="icon icon-chevron" aria-hidden="true"><use href="#icon-chevron" /></svg>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content" id="top">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button class="icon-button mobile-menu-button" id="openSidebar" type="button" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">
+              <svg class="icon" aria-hidden="true"><use href="#icon-menu" /></svg>
+            </button>
+            <div class="breadcrumb"><span>Home</span><span class="breadcrumb-separator">/</span><strong>For you</strong></div>
+          </div>
+          <div class="topbar-actions">
+            <label class="search-field" for="searchInput">
+              <svg class="icon" aria-hidden="true"><use href="#icon-search" /></svg>
+              <input id="searchInput" type="search" placeholder="Search people, circles, ideas" autocomplete="off" />
+              <kbd>⌘ K</kbd>
+            </label>
+            <button class="icon-button has-notification" type="button" aria-label="Notifications" data-toast="You are all caught up">
+              <svg class="icon" aria-hidden="true"><use href="#icon-bell" /></svg><span class="notification-dot"></span>
+            </button>
+            <button class="avatar avatar-user topbar-avatar" type="button" aria-label="Open Mina Park profile" data-toast="Profile menu coming next">MP</button>
+          </div>
+        </header>
+
+        <div class="page-content">
+          <section class="welcome-section" aria-labelledby="welcome-title">
+            <div class="welcome-copy">
+              <p class="eyebrow"><span class="eyebrow-line"></span>Tuesday, 18 June 2024</p>
+              <h1 id="welcome-title">Find your people,<br /><em>not just a feed.</em></h1>
+              <p class="welcome-description">A quieter corner of the internet for good questions, useful rituals, and the people who make them better.</p>
+              <div class="welcome-actions">
+                <button class="button button-primary" id="openComposer" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-plus" /></svg> Start a conversation</button>
+                <button class="text-button" id="scrollToCircles" type="button">Explore circles <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button>
+              </div>
+            </div>
+            <div class="welcome-art" aria-label="People in your circles">
+              <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+              <div class="art-center"><span>12</span><small>new voices<br />this week</small></div>
+              <div class="orbit-avatar orbit-avatar-one">J</div><div class="orbit-avatar orbit-avatar-two">S</div><div class="orbit-avatar orbit-avatar-three">A</div><div class="orbit-avatar orbit-avatar-four">H</div>
+              <span class="art-caption">small circles,<br /><em>better conversations.</em></span>
+            </div>
+          </section>
+
+          <section class="content-grid" aria-label="Community feed and your circles">
+            <div class="feed-column">
+              <div class="section-heading-row">
+                <div><p class="section-kicker">The town square</p><h2>Worth your attention</h2></div>
+                <div class="feed-filters" role="group" aria-label="Filter feed">
+                  <button class="filter-chip is-active" type="button" data-filter="all">For you</button>
+                  <button class="filter-chip" type="button" data-filter="following">Following</button>
+                  <button class="filter-chip" type="button" data-filter="latest">Latest</button>
+                </div>
+              </div>
+
+              <article class="feature-card">
+                <div class="feature-image-wrap"><img class="feature-image" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=85" alt="Friends sharing a conversation outdoors" /><span class="image-label">Featured in City Makers</span></div>
+                <div class="feature-content"><div class="post-meta"><span class="circle-dot dot-coral"></span><span>City Makers</span><span class="meta-separator">·</span><span>8 min read</span></div><h3>A little more daylight, a lot more making.</h3><p>“The best projects I’ve worked on started with a small table, an unfinished idea, and someone willing to stay for one more question.”</p><div class="feature-footer"><div class="author-line"><span class="avatar avatar-mina">MP</span><span><strong>Mina Park</strong><small>Today, 9:42 AM</small></span></div><button class="round-arrow" type="button" aria-label="Read featured story"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div></div>
+              </article>
+
+              <div class="feed-list" id="feedList" aria-live="polite"></div>
+            </div>
+
+            <aside class="right-rail">
+              <div class="rail-card circles-card" id="circlesSection">
+                <div class="rail-card-heading"><div><p class="section-kicker">Your orbit</p><h3>Circles you’re in</h3></div><button class="icon-button small" type="button" aria-label="View all circles" data-toast="All circles view coming next"><svg class="icon" aria-hidden="true"><use href="#icon-more" /></svg></button></div>
+                <div class="circle-list">
+                  <button class="circle-row" type="button" data-filter-circle="City Makers"><span class="circle-symbol symbol-coral">CM</span><span><strong>City Makers</strong><small>18 new posts</small></span><svg class="icon icon-chevron" aria-hidden="true"><use href="#icon-chevron" /></svg></button>
+                  <button class="circle-row" type="button" data-filter-circle="Quiet Mornings"><span class="circle-symbol symbol-lilac">QM</span><span><strong>Quiet Mornings</strong><small>6 new posts</small></span><svg class="icon icon-chevron" aria-hidden="true"><use href="#icon-chevron" /></svg></button>
+                  <button class="circle-row" type="button" data-filter-circle="Sunday Film Club"><span class="circle-symbol symbol-moss">SF</span><span><strong>Sunday Film Club</strong><small>2 new posts</small></span><svg class="icon icon-chevron" aria-hidden="true"><use href="#icon-chevron" /></svg></button>
+                  <button class="circle-row" type="button" data-filter-circle="Open Table"><span class="circle-symbol symbol-blue">OT</span><span><strong>Open Table</strong><small>Start a conversation</small></span><svg class="icon icon-chevron" aria-hidden="true"><use href="#icon-chevron" /></svg></button>
+                </div>
+                <button class="rail-link" type="button" data-toast="Circle discovery coming next">See all circles <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button>
+              </div>
+
+              <div class="rail-card prompt-card"><div class="prompt-top"><span class="prompt-icon"><svg class="icon" aria-hidden="true"><use href="#icon-spark" /></svg></span><span>Today’s prompt</span></div><h3>What’s a small ritual that makes your work feel like yours?</h3><p>14 people have answered this prompt.</p><button class="button button-dark" id="promptButton" type="button">Answer the prompt <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+
+              <div class="rail-card activity-card"><div class="rail-card-heading"><div><p class="section-kicker">A gentle nudge</p><h3>What’s happening</h3></div></div><div class="activity-list"><div class="activity-row"><span class="activity-marker marker-coral"></span><p><strong>Jae</strong> replied to your post <small>12 min ago</small></p></div><div class="activity-row"><span class="activity-marker marker-lilac"></span><p><strong>Quiet Mornings</strong> has a new prompt <small>1 hr ago</small></p></div><div class="activity-row"><span class="activity-marker marker-moss"></span><p><strong>Hana</strong> joined City Makers <small>Yesterday</small></p></div></div></div>
+            </aside>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+      <button class="mobile-nav-item is-active" type="button" data-nav="Home"><svg class="icon" aria-hidden="true"><use href="#icon-home" /></svg><span>Home</span></button>
+      <button class="mobile-nav-item" type="button" data-nav="Discover"><svg class="icon" aria-hidden="true"><use href="#icon-compass" /></svg><span>Discover</span></button>
+      <button class="mobile-compose" id="mobileCompose" type="button" aria-label="Start a conversation"><svg class="icon" aria-hidden="true"><use href="#icon-plus" /></svg></button>
+      <button class="mobile-nav-item" type="button" data-nav="Your circles"><svg class="icon" aria-hidden="true"><use href="#icon-users" /></svg><span>Circles</span></button>
+      <button class="mobile-nav-item" type="button" data-nav="Saved"><svg class="icon" aria-hidden="true"><use href="#icon-bookmark" /></svg><span>Saved</span></button>
+    </nav>
+
+    <dialog class="composer-dialog" id="composerDialog" aria-labelledby="composerTitle">
+      <form id="composerForm" method="dialog">
+        <div class="dialog-header"><div><p class="section-kicker">Make a little room</p><h2 id="composerTitle">Start a conversation</h2></div><button class="icon-button small" id="closeComposer" type="button" aria-label="Close composer"><svg class="icon" aria-hidden="true"><use href="#icon-close" /></svg></button></div>
+        <label class="form-label" for="composerCircle">Share with</label>
+        <select class="form-control" id="composerCircle"><option>City Makers</option><option>Quiet Mornings</option><option>Sunday Film Club</option><option>Open Table</option></select>
+        <label class="form-label" for="composerTitleInput">A clear title</label>
+        <input class="form-control" id="composerTitleInput" required maxlength="80" placeholder="What are you thinking about?" />
+        <label class="form-label" for="composerBody">Add a little context <span>optional</span></label>
+        <textarea class="form-control form-textarea" id="composerBody" maxlength="280" placeholder="The best conversations start with a little specificity…"></textarea>
+        <div class="dialog-footer"><span class="draft-note"><span class="draft-dot"></span> Saved as a draft automatically</span><button class="button button-primary" type="submit">Publish conversation <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+      </form>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
