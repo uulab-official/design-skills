@@ -1,0 +1,6 @@
+interface:
+  display_name: "Design Skills"
+  short_description: "Platform-aware product design for apps and web"
+  default_prompt: "Use $design-skills to design or improve this product for its target platform."
+policy:
+  allow_implicit_invocation: true
