@@ -1,6 +1,6 @@
 ---
 name: design-skills
-description: Use when designing, implementing, redesigning, or reviewing an app or website UI that must fit a declared platform, product type, device class, or existing project and reach a high-fidelity, production-ready finish; especially when generic screens, inconsistent design systems, placeholder content, missing states, weak responsive behavior, or poor accessibility are risks.
+description: Use when designing, implementing, redesigning, or reviewing an app or website UI that must fit a declared platform, product type, device class, or existing project and reach a Figma-quality, high-fidelity, production-ready finish; especially when generic screens, inconsistent design systems, placeholder content, missing states, weak responsive behavior, or poor accessibility are risks.
 ---
 
 # Design Skills
@@ -18,6 +18,7 @@ Design and implement the product, not just a pretty screen. Select the platform 
 - Use the repository's actual stack. If a matching platform/framework skill is available, load it for implementation details after this skill's product decisions are clear.
 - Treat accessibility, responsive behavior, loading, empty, error, offline/permission, disabled, success, and recovery states as part of the feature, not polish.
 - Treat visual fidelity as an acceptance requirement: real content, coherent rhythm, rendered target-size evidence, and state-by-state inspection are required for a release-ready claim.
+- For app work, treat [production-app-design.md](references/production-app-design.md) as required: produce a Figma-equivalent design board and a complete production-grade app surface, not a single showcase screen.
 - Do not claim readiness from a static happy-path screenshot. Run the review rubric and record evidence for remaining findings.
 
 ## Workflow
@@ -77,7 +78,7 @@ Use the existing design system when one exists. Add a token only when it express
 
 ### 5. Lock visual direction and fidelity plan
 
-Read [visual-fidelity.md](references/visual-fidelity.md) when the user asks for polished, premium, beautiful, pixel-conscious, production-ready, or high-fidelity work. Before screen polish, write a visual direction contract covering visual thesis, personality, hierarchy, typography voice, color behavior, spatial rhythm, material behavior, imagery/icon treatment, motion, and deliberate exclusions.
+Read [visual-fidelity.md](references/visual-fidelity.md) when the user asks for polished, premium, beautiful, pixel-conscious, production-ready, or high-fidelity work. For app work, also read [production-app-design.md](references/production-app-design.md). Before screen polish, write a visual direction contract covering visual thesis, personality, hierarchy, typography voice, color behavior, spatial rhythm, material behavior, imagery/icon treatment, motion, and deliberate exclusions.
 
 Also declare the fidelity evidence plan:
 
@@ -112,11 +113,21 @@ Accessibility and input notes:
 
 Specify deep links, URL state, system back, sheets/modals, keyboard movement, safe areas, orientation, and interruption behavior when the platform requires them. Design permission explanations and denied states for every native capability.
 
-### 7. Implement in vertical slices
+### 7. Build the Figma-equivalent board and production app surface
+
+For app work, produce these deliverables before calling the implementation complete:
+
+1. **Design board:** intent/art direction, foundations, component anatomy and variants, patterns, screen set, prototype transitions, and handoff notes.
+2. **Production surface:** token/theme mapping, semantic primitives, app shell, navigation and native behavior, complete primary flow, state matrix, and runtime evidence.
+3. **Figma-to-code parity:** map visual decisions to tokens/components and map prototype transitions to real routes, sheets, gestures, back behavior, loading, and recovery. If a Figma file exists, inspect it when the Figma capability is available; if not, produce the equivalent structured handoff.
+
+The minimum app slice is the app shell plus an end-to-end primary journey with at least three meaningful screens for a multi-screen product, reusable component variants, realistic content/assets, and the non-default states that alter user decisions. A single polished screen is a concept, not a production app design.
+
+### 8. Implement in vertical slices
 
 Build the smallest complete user journey first: entry → primary task → feedback/result → recovery or next step. Keep component boundaries aligned to semantic behavior, not screenshot rectangles. Reuse the token system and component states across screens. Validate with realistic content, long labels, no data, slow data, failed actions, text scaling, and at least one neighboring route or breakpoint while implementing. Re-render after structural changes and fix hierarchy drift before decorative polish.
 
-### 8. Review and iterate
+### 9. Review and iterate
 
 Read [review-rubric.md](references/review-rubric.md) and [visual-fidelity.md](references/visual-fidelity.md). Review the actual rendered UI at representative target sizes and input modes whenever runtime or browser tooling is available. If it is not available, review the implementation and state the missing evidence:
 
@@ -135,7 +146,10 @@ For a new or structurally changed design, finish with this compact record:
 Platform / device:
 Archetype / primary job:
 Navigation decision:
+Figma-equivalent design board:
 Design-system source:
+Production app surface:
+Prototype / route flow:
 State coverage:
 Visual direction:
 Rendered evidence / target sizes:
@@ -158,6 +172,9 @@ Stop and correct course when any of these appear:
 - only the default state is implemented;
 - placeholder copy, random assets, or fake data remain in the reviewed flow;
 - a default screen is called release-ready without rendered target-size evidence;
+- a single showcase screen is presented as a complete app design;
+- a Figma component has no implementation variant, state contract, or platform behavior;
+- prototype transitions are not mapped to real routes, sheets, gestures, or recovery;
 - typography wrapping, image crop, or spacing rhythm is only checked at one viewport;
 - a permission, network, keyboard, back, focus, or text-scaling path is left to framework defaults;
 - responsive Web is handled by shrinking desktop controls until they are unusable;

@@ -18,6 +18,7 @@
 - New work must declare platform, archetype, IA/navigation, tokens, and state coverage before implementation.
 - Review findings use `critical`, `high`, `medium`, or `low` severity and include evidence plus a next action.
 - A `release-ready` claim requires rendered target-size evidence, realistic content/assets, representative non-default states, and no in-scope rubric dimension below 3.
+- App work additionally requires a Figma-equivalent design board and a production app surface with maintainable components, route/prototype mapping, native behavior, performance, and accessibility notes.
 - Do not add README, changelog, or installation-guide files; the skill folder contains only runtime instructions, references, scripts, tests, and required project docs.
 
 ### Task 1: Define the inspector's failing behavior
@@ -82,6 +83,7 @@
 - Create: `references/design-quality.md`
 - Create: `references/review-rubric.md`
 - Create: `references/visual-fidelity.md`
+- Create: `references/production-app-design.md`
 
 **Interfaces:**
 - Consumes: the selected platform, device class, and archetype from `SKILL.md`.
@@ -99,7 +101,11 @@
 
   Define token roles and baseline scales without forcing a visual brand. Add the anti-pattern list, an actionable rubric with score bands and severity definitions, and a visual-fidelity loop covering visual direction, realistic content/assets, rendered target sizes, neighboring breakpoint/device checks, and readiness levels.
 
-- [ ] **Step 4: Commit references**
+- [ ] **Step 4: Write the production app standard**
+
+  Define the Figma-equivalent board contract and the production app surface: foundations, component variants, screen set, prototype transitions, app shell, primary flow, state matrix, native behavior, performance, accessibility, localization, and runtime evidence. Make a single polished screen insufficient for a production-ready claim.
+
+- [ ] **Step 5: Commit references**
 
   Run `git add references && git commit -m "docs: add platform archetype and quality references"`.
 
@@ -110,7 +116,7 @@
 - Create: `agents/openai.yaml`
 
 **Interfaces:**
-- Consumes: user brief, repository inspection output, `references/platforms.md`, `references/archetypes.yaml`, `references/design-quality.md`, and `references/review-rubric.md`.
+- Consumes: user brief, repository inspection output, `references/platforms.md`, `references/archetypes.yaml`, `references/design-quality.md`, `references/visual-fidelity.md`, `references/production-app-design.md`, and `references/review-rubric.md`.
 - Produces: a reusable `design-skills` skill that triggers on app/web product design, UI implementation, redesign, and UX review requests.
 
 - [ ] **Step 1: Write frontmatter and trigger description**
@@ -138,6 +144,7 @@
 **Files:**
 - Modify: `SKILL.md`, references, or tests only when a verification finding requires it
 - Create: `tests/test_design_quality_contract.py` when adding or changing the high-fidelity release gate
+- Create: `tests/test_production_app_contract.py` when adding or changing the app production-readiness gate
 
 - [ ] **Step 1: Run tests and validator**
 
@@ -153,10 +160,14 @@
 
   Apply the skill to the community mobile, SaaS web dashboard, and camera game prompts under time pressure. Confirm each output declares a platform, chooses an archetype, defines visual direction and realistic content/assets, names rendered target sizes and representative states, avoids generic navigation defaults, defines state coverage, includes the `Visual fidelity` score, and refuses a `release-ready` claim without evidence.
 
-- [ ] **Step 4: Review the final diff**
+- [ ] **Step 4: Verify app-specific handoff shape**
+
+  For an app prompt, confirm the output includes the Figma-equivalent design board, production app surface, prototype/route flow, reusable component variants, at least three meaningful screens for a multi-screen product, and an explicit production-readiness score.
+
+- [ ] **Step 5: Review the final diff**
 
   Run `git diff --check` and `git status --short`. Confirm no generated caches, credentials, temporary files, or user-specific absolute paths are tracked.
 
-- [ ] **Step 5: Commit and push the release**
+- [ ] **Step 6: Commit and push the release**
 
   Run `git add . && git commit -m "feat: launch platform-aware design skills"`, verify `git log -1 --oneline`, then run `git push origin main`.

@@ -26,6 +26,7 @@ Score each dimension from 0 to 4:
 | Accessibility | Semantics, focus, screen reader, keyboard/touch targets, contrast, scaling, and reduced motion are covered |
 | Interaction quality | Feedback, validation, latency, interruption, undo, and error recovery are understandable |
 | Implementation fidelity | The code follows the repository stack, keeps component boundaries coherent, and avoids visual drift |
+| Production readiness | The app surface has maintainable boundaries, realistic data states, native behavior, performance, accessibility, and handoff evidence |
 
 ## Severity
 
@@ -62,6 +63,7 @@ Scores:
 - Accessibility: <0-4>
 - Interaction quality: <0-4>
 - Implementation fidelity: <0-4>
+- Production readiness: <0-4>
 
 Findings:
 - [critical|high|medium|low] <short title>
@@ -71,4 +73,4 @@ Findings:
 
 ## Ready threshold
 
-Do not declare a design ready when any in-scope dimension scores 0 or 1, or when an unresolved `critical`/`high` finding affects the primary task. A score of 3 is a reasonable first release target; a 4 requires evidence across relevant states and target environments, not visual preference. Do not call work `release-ready` without rendered evidence for the declared platform, target sizes, realistic content, and representative non-default states.
+Do not declare a design ready when any in-scope dimension scores 0 or 1, or when an unresolved `critical`/`high` finding affects the primary task. A score of 3 is a reasonable first release target; a 4 requires evidence across relevant states and target environments, not visual preference. For app work, do not call it `production-ready` or `release-ready` unless `Production readiness` is at least 3, the Figma-equivalent board and production app surface are both present, and rendered evidence covers the declared platform, target sizes, realistic content, and representative non-default states.

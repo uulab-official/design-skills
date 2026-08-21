@@ -1,6 +1,6 @@
 interface:
   display_name: "Design Skills"
-  short_description: "High-fidelity platform-aware app and web design"
-  default_prompt: "Use $design-skills to create a high-fidelity product experience for its target platform."
+  short_description: "Figma-quality production app and web design"
+  default_prompt: "Use $design-skills to create a Figma-quality, production-grade product experience for its target platform."
 policy:
   allow_implicit_invocation: true
