@@ -21,6 +21,7 @@ const artboardDescriptions = {
   "Circle / City Makers": "Context · membership · belonging",
   "Thread / Conversation": "Reading · response · recovery",
   "Profile / Mina Park": "Identity · contribution · trust",
+  "Settings / Preferences": "Account · rhythm · recovery",
   "Mobile / Home": "Responsive recomposition · 390",
   "Home / Following": "Circle-scoped state · retained context",
   "Composer / Modal": "Creation · validation · success",

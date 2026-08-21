@@ -44,6 +44,7 @@ The focused desktop pass inspected the hero baseline, orbit artwork, feed headin
 | DQ-008 | P2 | Route / implementation coverage | The global Saved navigation item stopped at a route-boundary toast even though Profile already exposed a Saved panel. | Resolved by mapping desktop and mobile Saved to the shareable Profile Saved route with selected navigation state and browser-back recovery. |
 | DQ-009 | P2 | Route / implementation coverage | Sidebar Notifications and the topbar bell stopped at a toast, leaving the board’s Stay close activity state without a runnable destination or unread/read model. | Resolved by adding a responsive Notifications route with deterministic activity, Thread/Circle/Discover follow-through, mark-all-read status feedback, evidence captures, and a visual baseline. |
 | DQ-010 | P2 | Route / implementation coverage | Sidebar Settings stopped at a route-boundary toast, leaving the board’s account and preference surface without a runnable destination or saved-state feedback. | Resolved by adding a responsive Settings route with account context, accessible preference toggles, dirty/saved status feedback, browser-back recovery, evidence captures, and a visual baseline. |
+| DQ-011 | P2 | Handoff parity | Settings became a real route, but the public board still promised the older eight-screen set and had no inspectable Settings artboard or metadata. | Resolved by adding the ninth Settings / Preferences artboard, updating the board marker and inventory, adding responsive board styling, and testing Settings dialog metadata/focus recovery. |
 
 P0 findings: none.  
 P1 findings: none.  
@@ -79,6 +80,8 @@ The v0.22 Notifications-route pass closes the remaining high-signal Stay close g
 
 The v0.23 Settings-route pass closes the remaining account-controls dead end: Sidebar Settings now opens a responsive preferences surface with Mina Park account context, weekly digest/replies/quiet-hours toggles, explicit dirty and saved status, browser-back recovery, and dedicated desktop/mobile evidence.
 
+The v0.24 Settings-board parity pass closes the handoff gap introduced by that route: the public board now carries a ninth Settings / Preferences artboard, its detail dialog exposes the declared account/rhythm/recovery metadata, the header marker is refreshed to `v0.24 · review`, and the board/prototype evidence is re-captured at desktop and mobile sizes.
+
 ## Rubric pass
 
 - Typography: local fonts, weight hierarchy, serif display treatment, wrapping, and line-height remain coherent across source and implementation.
@@ -98,7 +101,7 @@ The v0.23 Settings-route pass closes the remaining account-controls dead end: Si
 - `npm run capture:community` — refreshed 18 evidence captures, including Discover, City Makers Circle, the featured “A little more daylight” Thread, Mina Park Profile, Notifications, and Settings at desktop and mobile.
 - QA comparison capture — refreshed source and implementation panels at 1280 × 720 CSS px / 1× density.
 - `npm run validate:evidence` — 18 captures and 32 documented runtime assertions passed.
-- `npm run test:browser` — 25 / 25 runtime checks passed, including Home circles rail → Discover, global Saved → Profile Saved, Notifications unread/read state, Settings dirty/saved preference state, and Home → Featured Thread plus Discover → Circle → Thread → Profile route entry/back recovery, Circle tab/join state, Thread reply creation, Profile tab/follow feedback, instant scroll reset, navigation current state, dedicated feed-status announcements, and Like action focus retention after feed rerender.
+- `npm run test:browser` — 25 / 25 runtime checks passed, including Home circles rail → Discover, global Saved → Profile Saved, Notifications unread/read state, Settings dirty/saved preference state, Settings board-artboard metadata/focus recovery, and Home → Featured Thread plus Discover → Circle → Thread → Profile route entry/back recovery, Circle tab/join state, Thread reply creation, Profile tab/follow feedback, instant scroll reset, navigation current state, dedicated feed-status announcements, and Like action focus retention after feed rerender.
 - `npm run test:visual` — 9 / 9 targets passed with `mismatchRatio: 0`.
 - `python3 -m unittest tests.test_community_example_contract.CommunityExampleContractTests.test_responsive_and_motion_contracts_are_present` — safe-area contract passed after the intentional RED → GREEN cycle.
 - Browser console sweep — 0 console errors, 0 page errors, and 0 invalid links across Home, Featured Thread, Discover, City Makers Circle, City Makers Thread, Mina Park Profile, Notifications, Settings, and board desktop/mobile states.

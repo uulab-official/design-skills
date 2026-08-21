@@ -424,7 +424,7 @@ async function runRuntimeChecks() {
       filterPressed: document.querySelector('[data-board-filter="screens"]').getAttribute("aria-pressed"),
       visibleScreens: document.querySelectorAll('article[data-board-type="screens"]:not([hidden])').length,
     }));
-    assert(boardHistoryState.view === "desktop" && boardHistoryState.filterPressed === "true" && boardHistoryState.visibleScreens === 8, "Board did not rehydrate after a history state change");
+    assert(boardHistoryState.view === "desktop" && boardHistoryState.filterPressed === "true" && boardHistoryState.visibleScreens === 9, "Board did not rehydrate after a history state change");
     results.push({ id: "board-history-state", verified: true, viewport: "1440x1000" });
 
     await board.goto(`${DEFAULT_BASE_URL}/board.html?source=qa&view=mobile&filter=all`, { waitUntil: "networkidle" });
@@ -441,6 +441,20 @@ async function runRuntimeChecks() {
       open: document.querySelector("#boardDialog").open,
     }));
     assert(boardDialogClosed.activeLabel === "Home / For you" && !boardDialogClosed.open, "Board dialog focus did not return after Escape");
+    await board.locator('[data-open-artboard="Settings / Preferences"]').click();
+    const settingsDialogOpen = await board.evaluate(() => ({
+      active: document.activeElement.id,
+      title: document.querySelector("#dialogTitle")?.textContent,
+      description: document.querySelector("#dialogDescription")?.textContent,
+      open: document.querySelector("#boardDialog").open,
+    }));
+    assert(settingsDialogOpen.active === "closeBoardDialog" && settingsDialogOpen.title === "Settings / Preferences" && settingsDialogOpen.description === "Account · rhythm · recovery" && settingsDialogOpen.open, "Settings artboard handoff did not open with its declared metadata");
+    await board.keyboard.press("Escape");
+    const settingsDialogClosed = await board.evaluate(() => ({
+      activeLabel: document.activeElement.getAttribute("data-open-artboard"),
+      open: document.querySelector("#boardDialog").open,
+    }));
+    assert(settingsDialogClosed.activeLabel === "Settings / Preferences" && !settingsDialogClosed.open, "Settings artboard dialog focus did not return after Escape");
     results.push({ id: "board-dialog-focus-return", verified: true, viewport: "1440x1000" });
     await board.close();
   } finally {

@@ -40,9 +40,10 @@ The selected direction is the warm editorial one because Gather’s primary job 
 3. **Circle / City Makers** — circle identity, membership, tabs, and conversation list.
 4. **Thread / Conversation** — reading hierarchy, replies, author context, and inline response composer.
 5. **Profile / Mina Park** — identity, contribution history, trust signals, and saved context.
-6. **Mobile home** — stacked content with fixed bottom navigation, floating create action, and responsive recomposition.
-7. **Home / Following + circle scoped** — the production surface adds filter and circle-selection states without changing the shell.
-8. **Composer / modal** — the production surface adds circle selection, required title, optional context, validation, and success feedback.
+6. **Settings / Preferences** — account context, preference rhythm, accessible toggles, and saved feedback.
+7. **Mobile home** — stacked content with fixed bottom navigation, floating create action, and responsive recomposition.
+8. **Home / Following + circle scoped** — the production surface adds filter and circle-selection states without changing the shell.
+9. **Composer / modal** — the production surface adds circle selection, required title, optional context, validation, and success feedback.
 
 The design board also shows the empty, loading, recovery, and success states that are easy to omit from a visual-only case study.
 
@@ -104,6 +105,7 @@ This prevents “community” from defaulting to one feed pattern. The selected 
 | Featured Thread route | Home opens `view=thread&circle=City Makers&thread=city-daylight` with the board’s “A little more daylight” content |
 | Profile route | The account identity opens `view=profile&profile=mina` with contribution context and browser-back recovery |
 | Profile tabs and follow | Conversations/Saved expose selected state; Follow updates `aria-pressed` and a polite status message |
+| Settings handoff | Settings / Preferences is represented on the board with account, preference, and saved-state metadata aligned to `view=settings` |
 
 ## Prototype map
 
@@ -117,6 +119,7 @@ board.html
   ├─ Circle / City Makers  ├─ open live prototype → index.html?view=circle&circle=City%20Makers
   ├─ Thread / Conversation  ├─ open live prototype → index.html?view=thread&circle=City%20Makers&thread=city-map
   ├─ Profile / Mina Park    ├─ open live prototype → index.html?view=profile&profile=mina
+  ├─ Settings / Preferences ├─ open live prototype → index.html?view=settings
   └─ Mobile / Home ─────────┘
        ├─ Empty
        ├─ Loading
@@ -142,7 +145,7 @@ board.html
 | Target | Evidence | Coverage |
 | --- | --- | --- |
 | Desktop 1440 × 1000 | [`board-1440.jpg`](evidence/board-1440.jpg), [`prototype-1440.jpg`](evidence/prototype-1440.jpg) | Primary wide review of the design board and runnable surface |
-| Desktop 1280 × 900 | [`board-1280.jpg`](evidence/board-1280.jpg) | Directions, archetypes, platform translations, home, discover, circle, thread, profile |
+| Desktop 1280 × 900 | [`board-1280.jpg`](evidence/board-1280.jpg) | Directions, archetypes, platform translations, home, discover, circle, thread, profile, settings |
 | Desktop 1024 × 900 | [`board-1024.jpg`](evidence/board-1024.jpg) | Sidebar-to-drawer boundary and content reflow |
 | Mobile 390 × 844 | [`board-390.jpg`](evidence/board-390.jpg), [`prototype-390.jpg`](evidence/prototype-390.jpg), [`prototype-discover-390.jpg`](evidence/prototype-discover-390.jpg) | One-column cards, horizontal filters, bottom navigation, Discover directory, composer, empty/loading/recovery/success states |
 | Discover desktop 1440 × 1000 | [`prototype-discover-1440.jpg`](evidence/prototype-discover-1440.jpg) | Dark editorial hero, circle directory cards, topic filters, route-boundary state |
@@ -152,9 +155,11 @@ board.html
 | Thread mobile 390 × 844 | [`prototype-thread-390.jpg`](evidence/prototype-thread-390.jpg) | Stacked featured Thread flow, reply list, fixed navigation, response composer and context cards |
 | Profile desktop 1440 × 1000 | [`prototype-profile-1440.jpg`](evidence/prototype-profile-1440.jpg) | Mina Park identity, contribution stats, conversations, saved context, circle rail |
 | Profile mobile 390 × 844 | [`prototype-profile-390.jpg`](evidence/prototype-profile-390.jpg) | Stacked identity cover, profile tabs, contribution cards, circle list and bottom navigation |
+| Settings desktop 1440 × 1000 | [`prototype-settings-1440.jpg`](evidence/prototype-settings-1440.jpg), [`board-1440.jpg`](evidence/board-1440.jpg) | Preferences hero, account context, toggle states, saved feedback, and board handoff parity |
+| Settings mobile 390 × 844 | [`prototype-settings-390.jpg`](evidence/prototype-settings-390.jpg), [`board-390.jpg`](evidence/board-390.jpg) | Stacked preferences flow, fixed navigation, responsive board artboard, and accessible controls |
 | Native intent: iOS 390 pt / Android 360 dp | Platform translation artboards | Large-title/tab-bar and app-bar/FAB behavior are specified; native runtime remains a target, not a shipped surface |
 
-The live surface was checked after the direction, platform, and archetype boards were added. Runtime QA also exercised composer validation → recovery → publish success, feed filter state, mobile drawer open → Escape recovery, URL restoration, prototype and board history-state rehydration, local font loading, search URL synchronization, composer focus return, drawer focus return, 44 px mobile touch-target geometry, board dialog focus return, and skip-link navigation. The [evidence manifest](evidence/manifest.json) binds each capture and runtime assertion to its route, viewport, and represented state; run `npm run test:browser` and `npm run validate:evidence` to verify the interaction contract and JPEG dimensions. Evidence captures are committed under `examples/community/evidence/`; they are full-page JPEG screenshots produced from the local server at the viewport sizes named above. Reproduce the surface with the command in [Run locally](#run-locally), then open `/board.html` and `/index.html` at the declared sizes. The static example has no backend or network dependency; loading, empty, recovery, validation, and success are represented as deterministic prototype states. Contributors can regenerate the capture matrix with `npm install`, `npx playwright install chromium`, and `npm run capture:community`; the command reads the manifest instead of maintaining a second list of viewports.
+The live surface was checked after the direction, platform, and archetype boards were added. Runtime QA also exercised composer validation → recovery → publish success, feed filter state, mobile drawer open → Escape recovery, URL restoration, prototype and board history-state rehydration, local font loading, search URL synchronization, composer focus return, drawer focus return, 44 px mobile touch-target geometry, Home and Settings board dialog metadata/focus recovery, and skip-link navigation. The [evidence manifest](evidence/manifest.json) binds each capture and runtime assertion to its route, viewport, and represented state; run `npm run test:browser` and `npm run validate:evidence` to verify the interaction contract and JPEG dimensions. Evidence captures are committed under `examples/community/evidence/`; they are full-page JPEG screenshots produced from the local server at the viewport sizes named above. Reproduce the surface with the command in [Run locally](#run-locally), then open `/board.html` and `/index.html` at the declared sizes. The static example has no backend or network dependency; loading, empty, recovery, validation, and success are represented as deterministic prototype states. Contributors can regenerate the capture matrix with `npm install`, `npx playwright install chromium`, and `npm run capture:community`; the command reads the manifest instead of maintaining a second list of viewports.
 
 The live route flow now covers Home circles rail → Discover → Circle / City Makers → Thread → Profile, global Saved → Profile Saved, Notifications → Thread/Circle/Discover follow-through, Settings → account/preferences, and Home → Featured Thread with shareable URLs, selected Conversations/About and Conversations/Saved tabs, join/follow feedback, author/reply context, local reply creation, contribution history, unread/read feedback, dirty/saved preference feedback, and browser-back restoration. Circle, featured Thread, Profile, Notifications, and Settings desktop/mobile captures are included in the evidence matrix alongside the Discover route.
 
