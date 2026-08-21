@@ -22,6 +22,8 @@ const artboardDescriptions = {
   "Thread / Conversation": "Reading · response · recovery",
   "Profile / Mina Park": "Identity · contribution · trust",
   "Mobile / Home": "Responsive recomposition · 390",
+  "Home / Following": "Circle-scoped state · retained context",
+  "Composer / Modal": "Creation · validation · success",
 };
 
 function showToast(message) {
@@ -140,5 +142,7 @@ document.querySelectorAll("[data-scroll-to]").forEach((button) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !boardDialog.open && /\bis-open\b/.test(boardDialog.className)) closeArtboard();
 });
+
+window.addEventListener("popstate", readUrlState);
 
 readUrlState();

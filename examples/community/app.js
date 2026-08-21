@@ -347,5 +347,10 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+window.addEventListener("popstate", () => {
+  readUrlState();
+  renderFeed();
+});
+
 readUrlState();
 renderFeed();

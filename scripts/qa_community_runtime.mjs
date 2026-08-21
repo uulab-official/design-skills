@@ -47,6 +47,20 @@ async function runRuntimeChecks() {
     assert(!syncedUrl.includes("filter="), "Search recovery did not clear the old filter state");
     results.push({ id: "url-sync", verified: true, viewport: "1440x1000" });
 
+    await desktop.evaluate(() => {
+      const url = new URL(window.location.href);
+      url.searchParams.set("filter", "latest");
+      url.searchParams.delete("q");
+      window.history.pushState({}, "", `${url.pathname}${url.search}${url.hash}`);
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    });
+    const historyState = await desktop.evaluate(() => ({
+      latestPressed: document.querySelector('[data-filter="latest"]').getAttribute("aria-pressed"),
+      posts: document.querySelectorAll("#feedList .post-card").length,
+    }));
+    assert(historyState.latestPressed === "true" && historyState.posts === 1, "Prototype did not rehydrate after a history state change");
+    results.push({ id: "prototype-history-state", verified: true, viewport: "1440x1000" });
+
     await desktop.goto(`${DEFAULT_BASE_URL}/index.html`, { waitUntil: "networkidle" });
     await desktop.click("#openComposer");
     await wait(80);
@@ -99,6 +113,21 @@ async function runRuntimeChecks() {
     assert(boardState.visiblePlatforms === 3 && boardState.hiddenDirections, "Board filter rendered the wrong sections");
     assert(boardState.url.includes("source=qa"), "Board state did not preserve unknown URL parameters");
     results.push({ id: "board-url-state", verified: true, viewport: "1440x1000" });
+
+    await board.evaluate(() => {
+      const url = new URL(window.location.href);
+      url.searchParams.set("view", "desktop");
+      url.searchParams.set("filter", "screens");
+      window.history.pushState({}, "", `${url.pathname}${url.search}${url.hash}`);
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    });
+    const boardHistoryState = await board.evaluate(() => ({
+      view: document.querySelector("#boardMain").dataset.view,
+      filterPressed: document.querySelector('[data-board-filter="screens"]').getAttribute("aria-pressed"),
+      visibleScreens: document.querySelectorAll('article[data-board-type="screens"]:not([hidden])').length,
+    }));
+    assert(boardHistoryState.view === "desktop" && boardHistoryState.filterPressed === "true" && boardHistoryState.visibleScreens === 8, "Board did not rehydrate after a history state change");
+    results.push({ id: "board-history-state", verified: true, viewport: "1440x1000" });
 
     await board.goto(`${DEFAULT_BASE_URL}/board.html?source=qa&view=mobile&filter=all`, { waitUntil: "networkidle" });
     await board.locator('[data-open-artboard="Home / For you"]').click();

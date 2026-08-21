@@ -1,4 +1,5 @@
 import unittest
+import re
 from pathlib import Path
 
 
@@ -58,6 +59,16 @@ class CommunityExampleContractTests(unittest.TestCase):
         self.assertIn("history.replaceState", board_js)
         self.assertIn("state.dialogTrigger", board_js)
         self.assertIn('boardDialog.addEventListener("cancel"', board_js)
+        self.assertIn('aria-describedby="dialogDescription"', board_html)
+        self.assertIn('window.addEventListener("popstate", readUrlState)', board_js)
+        self.assertEqual(len(re.findall(r'data-artboard-title="[^"]+"', board_html)), 8)
+        self.assertIn('data-artboard-title="Home / Following"', board_html)
+        self.assertIn('data-artboard-title="Composer / Modal"', board_html)
+
+    def test_prototype_rehydrates_url_state_after_history_changes(self):
+        self.assertIn('window.addEventListener("popstate"', self.js)
+        self.assertIn('readUrlState();', self.js)
+        self.assertIn('renderFeed();', self.js)
 
 
 if __name__ == "__main__":
