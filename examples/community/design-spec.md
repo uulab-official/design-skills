@@ -8,6 +8,7 @@ Gather is a production-minded responsive web concept for reviewing how `design-s
 - Archetype: community / discussion
 - Primary job: help people find a small circle worth returning to
 - Viewports: 1440 × 1000, 1280 × 900, 1024 × 900, 390 × 844
+- Native translation targets: iOS / SwiftUI 390 pt, Android / Jetpack Compose 360 dp
 - Route concept: `/home`, with future `/discover`, `/circles/:slug`, `/post/:id`, and `/saved`
 
 ## Visual thesis
@@ -45,6 +46,18 @@ The selected direction is the warm editorial one because Gather’s primary job 
 
 The design board also shows the empty, loading, recovery, and success states that are easy to omit from a visual-only case study.
 
+## Platform translations
+
+The selected visual direction is translated instead of copied across platforms:
+
+| Platform | Composition | Native behavior represented |
+| --- | --- | --- |
+| Responsive Web | Wide content-first canvas with persistent sidebar | Keyboard search, URL state, hover enhancement, toast feedback |
+| iOS / SwiftUI | Large-title rhythm with thumb-safe tab bar | Sheet composer, swipe-back, safe area, Dynamic Type intent |
+| Android / Jetpack Compose | Material task surface with compact filters and FAB | App bar elevation, system back, snackbar-style feedback |
+
+The board is a visual handoff, not a claim that these native screens are already shipped. The web surface is the runnable implementation; iOS and Android frames specify the platform-aware translation target.
+
 ## Interaction contract
 
 | Interaction | Expected result |
@@ -64,6 +77,7 @@ The design board also shows the empty, loading, recovery, and success states tha
 ```text
 board.html
   ├─ Home / For you ───────┐
+  ├─ Web / iOS / Android    ├─ platform translation board
   ├─ Discover / Circles     ├─ open live prototype → index.html
   ├─ Circle / City Makers  │
   ├─ Thread / Conversation  │

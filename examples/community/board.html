@@ -43,10 +43,10 @@
       </section>
 
       <section class="board-toolbar" aria-label="Design board controls">
-        <div class="board-toolbar-label"><strong>Design board</strong><span>03 directions · 08 screens · 14 components · 05 states</span></div>
+        <div class="board-toolbar-label"><strong>Design board</strong><span>03 directions · 03 platforms · 08 screens · 14 components · 05 states</span></div>
         <div class="board-controls">
           <div class="board-segmented" role="group" aria-label="Preview size"><button class="is-active" type="button" data-view-toggle="desktop">Desktop</button><button type="button" data-view-toggle="mobile">Mobile</button></div>
-          <div class="board-filters" role="group" aria-label="Filter board"><button class="is-active" type="button" data-board-filter="all">All</button><button type="button" data-board-filter="directions">Directions</button><button type="button" data-board-filter="screens">Screens</button><button type="button" data-board-filter="states">States</button><button type="button" data-board-filter="system">System</button></div>
+          <div class="board-filters" role="group" aria-label="Filter board"><button class="is-active" type="button" data-board-filter="all">All</button><button type="button" data-board-filter="directions">Directions</button><button type="button" data-board-filter="platforms">Platforms</button><button type="button" data-board-filter="screens">Screens</button><button type="button" data-board-filter="states">States</button><button type="button" data-board-filter="system">System</button></div>
         </div>
       </section>
 
@@ -66,6 +66,29 @@
           <article class="direction-card direction-bulletin" data-board-type="directions">
             <div class="direction-preview bulletin-preview"><div class="bulletin-top"><b>GATHER DAILY</b><span>VOL. 04 / 18 JUNE</span><i>→</i></div><div class="bulletin-body"><div class="bulletin-lead"><small>THE CITY MAKERS</small><h3>What makes<br /><em>a place yours?</em></h3><p>A field guide to the small details that turn a route into a ritual.</p><b>Read story ↗</b></div><div class="bulletin-block block-orange">CM</div><div class="bulletin-block block-blue">QM</div><div class="bulletin-note"><span>“</span><p>Good places are made of repeated gestures.</p><small>— Mina Park</small></div></div></div>
             <div class="direction-info"><div class="direction-meta"><span>D / 03</span><span>Alternate direction</span></div><h3>City bulletin</h3><p>Modular blocks, punchy headlines, and a public-square energy. Community as a living publication.</p><div class="direction-bottom"><div class="direction-tags"><span>Public</span><span>Graphic</span><span>Modular</span></div><small>Best for discovery, city guides, and open networks.</small></div></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="board-section platforms-section" data-board-type="platforms" aria-labelledby="platforms-title">
+        <div class="section-marker"><span>00.5</span><div><p class="board-eyebrow">Platform translation</p><h2 id="platforms-title">Same community, native behavior.</h2></div><p class="section-note">The product language stays recognizable while navigation, surfaces, gestures, and system feedback respect the platform.</p></div>
+        <div class="platform-grid">
+          <article class="platform-card" data-board-type="platforms">
+            <div class="platform-meta"><span>PLATFORM / WEB</span><b>Responsive Web</b></div>
+            <div class="platform-preview web-platform-preview"><div class="browser-chrome"><span></span><span></span><span></span><b>gather.space/city-makers</b><i>⌘ K</i></div><div class="web-platform-body"><div class="web-platform-sidebar"><b>g</b><span class="active"></span><span></span><span></span><span></span><i></i><span></span></div><div class="web-platform-main"><div class="web-platform-nav"><b>City Makers</b><span>Search&nbsp; · &nbsp;Notifications&nbsp; · &nbsp;MP</span></div><small>18 NEW POSTS THIS WEEK</small><h3>A little more<br /><em>daylight.</em></h3><div class="web-platform-card"><span></span><b>A neighborhood map made from borrowed stories.</b><small>Hana Lee · 12 min ago</small></div><div class="web-platform-input">Start a conversation <b>↗</b></div></div></div></div>
+            <div class="platform-info"><h3>Content-first canvas</h3><p>Keyboard-first search, URL state, persistent sidebar, and wide editorial composition.</p><div class="platform-contract"><span><b>Input</b>Mouse + keyboard</span><span><b>Navigation</b>URL + sidebar</span><span><b>Feedback</b>Toast + inline</span></div></div>
+          </article>
+
+          <article class="platform-card" data-board-type="platforms">
+            <div class="platform-meta"><span>PLATFORM / IOS</span><b>SwiftUI · 390 pt</b></div>
+            <div class="platform-preview ios-platform-preview"><div class="ios-status"><span>9:41</span><span>● ◔ ▮</span></div><div class="ios-nav"><b>Gather</b><span>⌕ &nbsp; ◌ &nbsp; <i>MP</i></span></div><div class="ios-body"><small>YOUR ORBIT</small><h3>Good morning,<br /><em>Mina.</em></h3><p>There are 12 new voices in your circles.</p><div class="ios-prompt"><span>✦</span><div><small>TODAY’S PROMPT</small><b>What’s making room<br />for you this week?</b></div><i>↗</i></div><div class="ios-section"><b>Worth your attention</b><span>See all</span></div><div class="ios-post"><span class="ios-image"></span><div><small>CITY MAKERS · 8 MIN</small><b>A little more daylight,<br />a lot more making.</b><span>♡ 84 &nbsp; ◌ 18</span></div></div></div><div class="ios-tabbar"><span class="selected">⌂<small>Home</small></span><span>⌕<small>Discover</small></span><b>+</b><span>♧<small>Circles</small></span><span>◉<small>Profile</small></span></div></div>
+            <div class="platform-info"><h3>Contextual native shell</h3><p>Large-title rhythm, thumb-safe actions, sheet-based composer, and safe-area aware tab navigation.</p><div class="platform-contract"><span><b>Input</b>Touch + Dynamic Type</span><span><b>Navigation</b>Tab + swipe back</span><span><b>Feedback</b>Sheet + haptic cue</span></div></div>
+          </article>
+
+          <article class="platform-card" data-board-type="platforms">
+            <div class="platform-meta"><span>PLATFORM / ANDROID</span><b>Jetpack Compose · 360 dp</b></div>
+            <div class="platform-preview android-platform-preview"><div class="android-status"><span>9:41</span><span>▴ ◔ ▮</span></div><div class="android-appbar"><span>☰</span><b>Gather</b><i>MP</i></div><div class="android-body"><div class="android-title"><small>YOUR CIRCLES</small><h3>Find a good<br /><em>place to start.</em></h3></div><div class="android-filter"><span class="selected">For you</span><span>Following</span><span>Latest</span></div><div class="android-card"><div class="android-card-top"><span>CM</span><small>CITY MAKERS</small><i>⋮</i></div><b>A neighborhood map made from borrowed stories.</b><p>What happens when a city is drawn by the people who notice its edges?</p><div class="android-card-bottom"><span>HL · 12 min ago</span><b>♡ 61 &nbsp; ◌ 12</b></div></div><div class="android-fab">+</div></div><div class="android-nav"><span class="selected">⌂<small>Home</small></span><span>◈<small>Discover</small></span><span>♧<small>Circles</small></span><span>◉<small>Profile</small></span></div></div>
+            <div class="platform-info"><h3>Material task surface</h3><p>Edge-to-edge app bar, scroll-aware elevation, compact filters, FAB hierarchy, and system back behavior.</p><div class="platform-contract"><span><b>Input</b>Touch + back</span><span><b>Navigation</b>App bar + bottom nav</span><span><b>Feedback</b>Snackbar + elevation</span></div></div>
           </article>
         </div>
       </section>

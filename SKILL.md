@@ -125,6 +125,8 @@ For app work, produce these deliverables before calling the implementation compl
 
 The minimum app slice is the app shell plus an end-to-end primary journey with at least three meaningful screens for a multi-screen product, reusable component variants, realistic content/assets, and the non-default states that alter user decisions. A single polished screen is a concept, not a production app design.
 
+For cross-platform briefs, show a side-by-side platform translation board. Keep the product language and semantic tokens shared, but explicitly change navigation, safe-area behavior, input model, typography rhythm, surface/elevation, feedback, and back/dismissal behavior for Web, iOS, Android, or the declared targets. A phone-shaped web screenshot is not a native app design.
+
 ### 8. Implement in vertical slices
 
 Build the smallest complete user journey first: entry → primary task → feedback/result → recovery or next step. Keep component boundaries aligned to semantic behavior, not screenshot rectangles. Reuse the token system and component states across screens. Validate with realistic content, long labels, no data, slow data, failed actions, text scaling, and at least one neighboring route or breakpoint while implementing. Re-render after structural changes and fix hierarchy drift before decorative polish.
@@ -146,6 +148,7 @@ For a new or structurally changed design, finish with this compact record:
 
 ```text
 Platform / device:
+Platform-specific translation:
 Archetype / primary job:
 Navigation decision:
 Figma-equivalent design board:
