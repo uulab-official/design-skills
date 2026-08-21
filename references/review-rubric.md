@@ -19,6 +19,7 @@ Score each dimension from 0 to 4:
 | Product structure | The primary job, information hierarchy, route depth, and content model are clear |
 | Navigation | Entry points, back behavior, tabs/sidebar/sheets, deep links, and scope are predictable |
 | Visual hierarchy | Typography, spacing, alignment, density, and primary action communicate priority |
+| Visual fidelity | Rendered UI preserves the intended rhythm, typography wrapping, asset treatment, component states, and target-size composition |
 | Consistency | Tokens, component variants, states, copy, icons, radius, and elevation are coherent |
 | Platform fit | Input model, system behavior, native conventions, safe areas, and responsive composition fit the target |
 | State completeness | Loading, empty, error, offline/stale, permission, disabled, success, and recovery paths exist |
@@ -39,8 +40,9 @@ Score each dimension from 0 to 4:
 2. Inspect the repository and identify the actual route/component/token implementation.
 3. Walk the primary happy path once without stopping for polish.
 4. Walk the highest-risk alternate paths: first use, empty data, slow network, error, permission denied, offline/stale, text scaling, keyboard, and back/interrupt behavior as applicable.
-5. Score all dimensions and record evidence. Do not average away a `critical` or `high` issue.
-6. Fix the smallest structural issue that removes multiple downstream inconsistencies, then re-check the affected flows.
+5. Render the declared target sizes and one neighboring width or device. Compare hierarchy, alignment, text wrapping, asset crop, rhythm, contrast, and interaction states; record the evidence source.
+6. Score all dimensions and record evidence. Do not average away a `critical` or `high` issue.
+7. Fix the smallest structural issue that removes multiple downstream inconsistencies, then re-check the affected flows and target render.
 
 ## Report format
 
@@ -53,6 +55,7 @@ Scores:
 - Product structure: <0-4>
 - Navigation: <0-4>
 - Visual hierarchy: <0-4>
+- Visual fidelity: <0-4>
 - Consistency: <0-4>
 - Platform fit: <0-4>
 - State completeness: <0-4>
@@ -68,4 +71,4 @@ Findings:
 
 ## Ready threshold
 
-Do not declare a design ready when any in-scope dimension scores 0 or 1, or when an unresolved `critical`/`high` finding affects the primary task. A score of 3 is a reasonable first release target; a 4 requires evidence across relevant states and target environments, not visual preference.
+Do not declare a design ready when any in-scope dimension scores 0 or 1, or when an unresolved `critical`/`high` finding affects the primary task. A score of 3 is a reasonable first release target; a 4 requires evidence across relevant states and target environments, not visual preference. Do not call work `release-ready` without rendered evidence for the declared platform, target sizes, realistic content, and representative non-default states.

@@ -17,6 +17,7 @@
 - Repository inspection is read-only and dependency-free.
 - New work must declare platform, archetype, IA/navigation, tokens, and state coverage before implementation.
 - Review findings use `critical`, `high`, `medium`, or `low` severity and include evidence plus a next action.
+- A `release-ready` claim requires rendered target-size evidence, realistic content/assets, representative non-default states, and no in-scope rubric dimension below 3.
 - Do not add README, changelog, or installation-guide files; the skill folder contains only runtime instructions, references, scripts, tests, and required project docs.
 
 ### Task 1: Define the inspector's failing behavior
@@ -80,6 +81,7 @@
 - Create: `references/archetypes.yaml`
 - Create: `references/design-quality.md`
 - Create: `references/review-rubric.md`
+- Create: `references/visual-fidelity.md`
 
 **Interfaces:**
 - Consumes: the selected platform, device class, and archetype from `SKILL.md`.
@@ -95,7 +97,7 @@
 
 - [ ] **Step 3: Write quality and review references**
 
-  Define token roles and baseline scales without forcing a visual brand. Add the anti-pattern list and an actionable rubric with score bands and severity definitions.
+  Define token roles and baseline scales without forcing a visual brand. Add the anti-pattern list, an actionable rubric with score bands and severity definitions, and a visual-fidelity loop covering visual direction, realistic content/assets, rendered target sizes, neighboring breakpoint/device checks, and readiness levels.
 
 - [ ] **Step 4: Commit references**
 
@@ -135,6 +137,7 @@
 
 **Files:**
 - Modify: `SKILL.md`, references, or tests only when a verification finding requires it
+- Create: `tests/test_design_quality_contract.py` when adding or changing the high-fidelity release gate
 
 - [ ] **Step 1: Run tests and validator**
 
@@ -148,7 +151,7 @@
 
 - [ ] **Step 3: Run the skill pressure scenarios**
 
-  Apply the skill to the community mobile, SaaS web dashboard, and camera game prompts. Confirm each output declares a platform, chooses an archetype, avoids generic navigation defaults, defines state coverage, and ends with platform-specific review findings.
+  Apply the skill to the community mobile, SaaS web dashboard, and camera game prompts under time pressure. Confirm each output declares a platform, chooses an archetype, defines visual direction and realistic content/assets, names rendered target sizes and representative states, avoids generic navigation defaults, defines state coverage, includes the `Visual fidelity` score, and refuses a `release-ready` claim without evidence.
 
 - [ ] **Step 4: Review the final diff**
 

@@ -1,6 +1,6 @@
 ---
 name: design-skills
-description: Use when designing, implementing, redesigning, or reviewing an app or website UI and the result must fit a declared platform, product type, device class, or existing project; especially when generic screens, inconsistent design systems, missing states, weak responsive behavior, or poor accessibility are risks.
+description: Use when designing, implementing, redesigning, or reviewing an app or website UI that must fit a declared platform, product type, device class, or existing project and reach a high-fidelity, production-ready finish; especially when generic screens, inconsistent design systems, placeholder content, missing states, weak responsive behavior, or poor accessibility are risks.
 ---
 
 # Design Skills
@@ -17,6 +17,7 @@ Design and implement the product, not just a pretty screen. Select the platform 
 - For new or structurally changed work, state the design brief, platform assumption, archetype, navigation decision, tokens, and state coverage before implementation.
 - Use the repository's actual stack. If a matching platform/framework skill is available, load it for implementation details after this skill's product decisions are clear.
 - Treat accessibility, responsive behavior, loading, empty, error, offline/permission, disabled, success, and recovery states as part of the feature, not polish.
+- Treat visual fidelity as an acceptance requirement: real content, coherent rhythm, rendered target-size evidence, and state-by-state inspection are required for a release-ready claim.
 - Do not claim readiness from a static happy-path screenshot. Run the review rubric and record evidence for remaining findings.
 
 ## Workflow
@@ -74,7 +75,24 @@ Read [design-quality.md](references/design-quality.md). Write or map a small sem
 
 Use the existing design system when one exists. Add a token only when it expresses a real semantic distinction. Do not use gradient, glass, blur, glow, arbitrary rounded cards, or shadows as a substitute for hierarchy.
 
-### 5. Design information architecture and states
+### 5. Lock visual direction and fidelity plan
+
+Read [visual-fidelity.md](references/visual-fidelity.md) when the user asks for polished, premium, beautiful, pixel-conscious, production-ready, or high-fidelity work. Before screen polish, write a visual direction contract covering visual thesis, personality, hierarchy, typography voice, color behavior, spatial rhythm, material behavior, imagery/icon treatment, motion, and deliberate exclusions.
+
+Also declare the fidelity evidence plan:
+
+```text
+Readiness target: concept / implementation-ready / review-ready / release-ready
+Rendered environments:
+Target sizes:
+Representative states:
+Real content/assets used:
+Comparison evidence:
+```
+
+Use real or realistic content from the first polished pass. Define the layout system and semantic primitives before tuning individual screens. If rendering is unavailable, label the work `not verified` and do not call it `release-ready`.
+
+### 6. Design information architecture and states
 
 For each route or screen, record:
 
@@ -94,19 +112,20 @@ Accessibility and input notes:
 
 Specify deep links, URL state, system back, sheets/modals, keyboard movement, safe areas, orientation, and interruption behavior when the platform requires them. Design permission explanations and denied states for every native capability.
 
-### 6. Implement in vertical slices
+### 7. Implement in vertical slices
 
-Build the smallest complete user journey first: entry → primary task → feedback/result → recovery or next step. Keep component boundaries aligned to semantic behavior, not screenshot rectangles. Reuse the token system and component states across screens. Validate with realistic content, long labels, no data, slow data, failed actions, and text scaling while implementing.
+Build the smallest complete user journey first: entry → primary task → feedback/result → recovery or next step. Keep component boundaries aligned to semantic behavior, not screenshot rectangles. Reuse the token system and component states across screens. Validate with realistic content, long labels, no data, slow data, failed actions, text scaling, and at least one neighboring route or breakpoint while implementing. Re-render after structural changes and fix hierarchy drift before decorative polish.
 
-### 7. Review and iterate
+### 8. Review and iterate
 
-Read [review-rubric.md](references/review-rubric.md). Review the actual UI or code at representative target sizes and input modes:
+Read [review-rubric.md](references/review-rubric.md) and [visual-fidelity.md](references/visual-fidelity.md). Review the actual rendered UI at representative target sizes and input modes whenever runtime or browser tooling is available. If it is not available, review the implementation and state the missing evidence:
 
 1. Confirm the primary task and navigation without explaining it verbally.
 2. Walk first use, happy path, empty, loading, error, offline/stale, permission denied, interruption/back, and destructive/recovery paths as applicable.
-3. Check visual hierarchy, spacing, token consistency, component states, platform conventions, accessibility, and responsive recomposition.
+3. Check visual hierarchy, spacing, typography wrapping, asset crop, token consistency, component states, platform conventions, accessibility, and responsive recomposition.
 4. Report 0–4 scores for every in-scope dimension and findings with severity, evidence, and next action.
-5. Fix structural issues before cosmetic polish, then repeat the affected checks.
+5. Fix structural issues before cosmetic polish, then repeat the affected checks at the same target size and one neighboring screen or breakpoint.
+6. Use the readiness levels from `visual-fidelity.md`; call work `release-ready` only when no in-scope dimension is below 3, no critical/high finding remains, and rendered evidence covers the declared platform and representative states.
 
 ## Required handoff shape
 
@@ -118,6 +137,9 @@ Archetype / primary job:
 Navigation decision:
 Design-system source:
 State coverage:
+Visual direction:
+Rendered evidence / target sizes:
+Readiness level:
 Implementation files:
 Review scores:
 Open findings:
@@ -134,6 +156,9 @@ Stop and correct course when any of these appear:
 - camera preview, game canvas, reading surface, or primary data is visually subordinate to chrome;
 - each screen invents its own typography, spacing, radius, or button hierarchy;
 - only the default state is implemented;
+- placeholder copy, random assets, or fake data remain in the reviewed flow;
+- a default screen is called release-ready without rendered target-size evidence;
+- typography wrapping, image crop, or spacing rhythm is only checked at one viewport;
 - a permission, network, keyboard, back, focus, or text-scaling path is left to framework defaults;
 - responsive Web is handled by shrinking desktop controls until they are unusable;
 - accessibility is described as a future pass with no current semantics or focus plan;

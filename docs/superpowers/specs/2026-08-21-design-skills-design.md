@@ -18,7 +18,8 @@ The same request can require radically different information architecture and in
 6. Produce a design brief and design tokens before screen implementation.
 7. Require state completeness: default, loading, empty, error, offline/permission where relevant, disabled, and success/confirmation.
 8. Review the result against structure, visual hierarchy, consistency, platform fit, accessibility, responsiveness, interaction states, and implementation fidelity.
-9. Keep repository inspection read-only and dependency-free by implementing a small Python standard-library script.
+9. Treat visual fidelity as a separate acceptance dimension: realistic content/assets, coherent rhythm, rendered target-size evidence, and neighboring viewport/state checks are required for a release-ready claim.
+10. Keep repository inspection read-only and dependency-free by implementing a small Python standard-library script.
 
 ## Scope
 
@@ -29,6 +30,7 @@ The same request can require radically different information architecture and in
 - Archetype catalog expressed as readable YAML.
 - Design quality and anti-pattern guidance.
 - UI review rubric with severity levels and scoring.
+- Visual fidelity reference with readiness levels and rendered-evidence gates.
 - Read-only project inspection script with JSON output.
 - Unit tests for the inspection script.
 - OpenAI UI metadata and contributor-facing implementation/spec documentation.
@@ -67,6 +69,7 @@ For new or structurally changed work, the agent should produce:
 - `Component contracts`: purpose, variants, states, content limits, interaction, accessibility label/focus behavior.
 - `Screen/state inventory`: each screen's default, loading, empty, error, permission/offline, disabled, and success states as applicable.
 - `Review`: findings with severity (`critical`, `high`, `medium`, `low`), evidence, and next action.
+- `Visual fidelity evidence`: rendered target sizes, realistic content/assets, neighboring breakpoint/device check, and readiness level.
 
 ## Quality gates
 
@@ -80,6 +83,7 @@ The result is not ready when it only looks good in a static happy-path screensho
 - Web layouts remain usable across the declared breakpoints; mobile layouts remain thumb-reachable and resilient to dynamic type.
 - Implementation uses the repository's actual stack and existing conventions, or documents why a change is needed.
 - Review findings are resolved or explicitly handed off with severity and evidence.
+- Visual fidelity is reviewed with rendered evidence; a polished default screenshot alone never qualifies as release-ready.
 
 ## Baseline pressure findings
 
