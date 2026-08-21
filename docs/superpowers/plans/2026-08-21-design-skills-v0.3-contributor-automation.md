@@ -1,6 +1,6 @@
 # Design Skills v0.3 Contributor Automation Roadmap
 
-> **Status:** In progress. The contributor quality loop and rendered evidence workflow are implemented; pixel-diff policy, backend integration, and native runtime remain scope-dependent follow-ups.
+> **Status:** In progress. The contributor quality loop, rendered evidence workflow, and representative visual baseline are implemented; backend integration and native runtime remain scope-dependent follow-ups.
 
 ## Goal
 
@@ -25,7 +25,7 @@ Make the design-quality contract easy to run in a clean checkout and easy to rev
 - [x] Run contract checks on pushes to `main` and pull requests.
 - [x] Render the declared community viewport matrix in a separate Chromium job.
 - [x] Upload generated evidence as a short-retention artifact for human visual review.
-- [ ] Establish a cross-environment pixel-diff baseline and threshold with fixed local font and image assets.
+- [x] Establish a cross-environment pixel-diff baseline and threshold with fixed local font and image assets.
 
 ### 4. Scope boundaries
 

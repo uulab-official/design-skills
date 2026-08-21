@@ -14,6 +14,8 @@ class RepositoryQualityContractTests(unittest.TestCase):
             scripts["ci:quality"],
             "npm run test && npm run validate:evidence && npm run validate:skill",
         )
+        self.assertEqual(scripts["test:visual"], "node scripts/compare_community_visuals.mjs")
+        self.assertEqual(scripts["update:visual"], "node scripts/compare_community_visuals.mjs --update")
         self.assertIn("validate:skill", scripts)
 
     def test_workflow_runs_contracts_and_uploads_rendered_evidence(self):
@@ -24,6 +26,7 @@ class RepositoryQualityContractTests(unittest.TestCase):
             "npx playwright install --with-deps chromium",
             "npm run capture:community",
             "npm run test:browser",
+            "npm run test:visual",
             "npm run validate:evidence",
             "actions/upload-artifact@v4",
         ):

@@ -7,12 +7,16 @@
   "scripts": {
     "capture:community": "node scripts/capture_community_evidence.mjs",
     "test:browser": "node scripts/qa_community_runtime.mjs",
+    "test:visual": "node scripts/compare_community_visuals.mjs",
+    "update:visual": "node scripts/compare_community_visuals.mjs --update",
     "validate:evidence": "python3 scripts/validate_example_evidence.py --path . --json",
     "validate:skill": "python3 scripts/validate_skill.py --path . --json",
     "ci:quality": "npm run test && npm run validate:evidence && npm run validate:skill",
     "test": "python3 -m unittest discover -s tests -v"
   },
   "devDependencies": {
-    "playwright": "^1.49.0"
+    "pixelmatch": "^7.2.0",
+    "playwright": "^1.49.0",
+    "pngjs": "^7.0.0"
   }
 }

@@ -38,6 +38,7 @@ The capture command reads [`evidence/manifest.json`](examples/community/evidence
 ```bash
 npm run validate:evidence
 npm run test:browser
+npm run test:visual
 ```
 
 `npm run test:browser` proves URL restoration, local font loading, search URL synchronization, composer focus return, mobile drawer focus return, and skip-link navigation in Chromium.
@@ -50,7 +51,7 @@ Run the same checks used by the repository workflow:
 npm run ci:quality
 ```
 
-This runs the Python contract suite, evidence manifest validator, and dependency-light skill validator. Pull requests also run the browser interaction assertions, render the evidence matrix in GitHub Actions, and upload the generated images as an artifact for visual review. Demo imagery is checked into `examples/community/assets/editorial/` so captures do not depend on an image CDN; the workflow intentionally does not use a hard pixel-diff gate yet because font rendering can still vary across environments.
+This runs the Python contract suite, evidence manifest validator, and dependency-light skill validator. Pull requests also run the browser interaction assertions, compare three representative PNG baselines with a 3% anti-alias-tolerant mismatch threshold, render the evidence matrix in GitHub Actions, and upload the generated images as an artifact for visual review. Demo imagery is checked into `examples/community/assets/editorial/` and prototype fonts are local, so the visual gate does not depend on remote assets. Update baselines only after intentional visual review with `npm run update:visual`.
 
 The community reference surface also ships its DM Sans and Fraunces WOFF2 files in `examples/community/assets/fonts/`, with the applicable OFL text beside them. The pages load `assets/fonts.css` locally so typography remains reviewable offline and capture output is not dependent on Google Fonts availability.
 
@@ -64,4 +65,4 @@ The community reference surface is intentionally `review-ready`, not `release-re
 
 Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening a change. The short version is: preserve the existing product decisions, add evidence for new states or viewports, run `npm run ci:quality`, and describe any remaining finding with severity, evidence, and next action.
 
-The current roadmap is [`docs/superpowers/plans/2026-08-21-design-skills-v0.5-board-handoff-hardening.md`](docs/superpowers/plans/2026-08-21-design-skills-v0.5-board-handoff-hardening.md).
+The current roadmap is [`docs/superpowers/plans/2026-08-21-design-skills-v0.6-visual-regression-baseline.md`](docs/superpowers/plans/2026-08-21-design-skills-v0.6-visual-regression-baseline.md).

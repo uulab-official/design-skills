@@ -162,7 +162,7 @@ Scores use the 0–4 rubric in `references/review-rubric.md` and only claim what
 
 - **medium — native runtime:** iOS/SwiftUI and Android/Jetpack Compose are platform-aware design targets, but no compiled native implementation or simulator evidence is included in this example.
 - **medium — data/runtime integration:** authentication, backend persistence, network retry, offline caching, analytics, and deployment checks still require product integration.
-- **low — visual regression review:** capture automation and CI artifact review are now available through `npm run capture:community`; demo imagery and prototype fonts are local, but a cross-environment pixel-diff threshold remains open until browser rasterization policy is defined.
+- **low — visual regression review:** capture automation, three representative PNG baselines, and CI artifact review are available through `npm run capture:community` and `npm run test:visual`; the 3% threshold tolerates anti-aliasing variation, while full-page evidence remains a human visual review responsibility.
 
 These findings intentionally prevent a `release-ready` claim. The next implementation slice should close the native/runtime evidence only when those targets are in scope.
 

@@ -45,12 +45,16 @@ jobs:
         run: npm run capture:community
       - name: Run browser interaction assertions
         run: npm run test:browser
+      - name: Run visual baseline comparison
+        run: npm run test:visual
       - name: Validate rendered evidence
         run: npm run validate:evidence
       - name: Upload rendered evidence
         uses: actions/upload-artifact@v4
         with:
           name: community-evidence-${{ github.sha }}
-          path: examples/community/evidence/*.jpg
+          path: |
+            examples/community/evidence/*.jpg
+            examples/community/evidence/visual-baseline/*.png
           if-no-files-found: error
           retention-days: 7

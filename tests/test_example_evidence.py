@@ -23,6 +23,13 @@ class ExampleEvidenceTests(unittest.TestCase):
         self.assertEqual(result["metrics"]["measured_images"]["board-wide"][0], 1440)
         self.assertEqual(result["metrics"]["measured_images"]["board-mobile"][0], 390)
 
+    def test_visual_baselines_cover_representative_surfaces(self):
+        baseline_dir = ROOT / "examples" / "community" / "evidence" / "visual-baseline"
+        for baseline in ("prototype-wide.png", "prototype-mobile.png", "board-wide.png"):
+            path = baseline_dir / baseline
+            self.assertTrue(path.is_file(), baseline)
+            self.assertGreater(path.stat().st_size, 1024, baseline)
+
 
 if __name__ == "__main__":
     unittest.main()
