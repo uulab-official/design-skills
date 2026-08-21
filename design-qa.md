@@ -1,7 +1,7 @@
 # Design QA
 
 Date: 2026-08-21  
-Scope: Gather community example — `Home / For you`, `Discover / Circles`, and `Thread / Conversation`, desktop and mobile handoff
+Scope: Gather community example — `Home / For you`, `Discover / Circles`, `Thread / Conversation`, and `Profile / Mina Park`, desktop and mobile handoff
 
 ## Comparison inputs
 
@@ -16,6 +16,7 @@ The source and implementation were captured and reviewed together before judging
 | Discover route review | [prototype-discover-1440.jpg](examples/community/evidence/prototype-discover-1440.jpg), [prototype-discover-390.jpg](examples/community/evidence/prototype-discover-390.jpg) | Same implementation route at desktop and mobile | 1440 × 1000 and 390 × 844 CSS px / full-page evidence | 1× |
 | Circle route review | [prototype-circle-1440.jpg](examples/community/evidence/prototype-circle-1440.jpg), [prototype-circle-390.jpg](examples/community/evidence/prototype-circle-390.jpg) | Same implementation route at desktop and mobile | 1440 × 1000 and 390 × 844 CSS px / full-page evidence | 1× |
 | Thread route review | [prototype-thread-1440.jpg](examples/community/evidence/prototype-thread-1440.jpg), [prototype-thread-390.jpg](examples/community/evidence/prototype-thread-390.jpg) | Same implementation route at desktop and mobile | 1440 × 1000 and 390 × 844 CSS px / full-page evidence | 1× |
+| Profile route review | [prototype-profile-1440.jpg](examples/community/evidence/prototype-profile-1440.jpg), [prototype-profile-390.jpg](examples/community/evidence/prototype-profile-390.jpg) | Same implementation route at desktop and mobile | 1440 × 1000 and 390 × 844 CSS px / full-page evidence | 1× |
 
 The desktop source is the refreshed `A / 01 · Home / For you` artboard with its screen content aligned to the viewport. The mobile source is the responsive design board containing `A / 06 · Mobile / Home`; the implementation is the runnable prototype at the same mobile viewport.
 
@@ -25,7 +26,7 @@ The source and implementation share the same editorial hierarchy: forest navigat
 
 ## Focused comparison
 
-The focused desktop pass inspected the hero baseline, orbit artwork, feed heading/filter group, featured card split, image crop, and right rail. The focused mobile pass inspected the top bar, hero wrap, primary action, orbit, featured card, bottom navigation, and touch-target geometry. The Discover pass inspected the dark directory hero, orbit art, topic filter row, six-card grid, route CTA, and mobile bottom navigation at both target sizes. The Circle pass inspected the identity hero, orbit artwork, tab bar, conversation cards, context rail, join CTA, and mobile recomposition. The Thread pass inspected the reading hierarchy, author context, reply rhythm, context rail, local reply composer, and mobile fixed navigation interaction. No overlap, clipping, broken wrapping, or hierarchy collapse was found in the reviewed states.
+The focused desktop pass inspected the hero baseline, orbit artwork, feed heading/filter group, featured card split, image crop, and right rail. The focused mobile pass inspected the top bar, hero wrap, primary action, orbit, featured card, bottom navigation, and touch-target geometry. The Discover pass inspected the dark directory hero, orbit art, topic filter row, six-card grid, route CTA, and mobile bottom navigation at both target sizes. The Circle pass inspected the identity hero, orbit artwork, tab bar, conversation cards, context rail, join CTA, and mobile recomposition. The Thread pass inspected the reading hierarchy, author context, reply rhythm, context rail, local reply composer, and mobile fixed navigation interaction. The Profile pass inspected the identity cover, contribution stats, tab state, profile cards, circle list, follow CTA, and mobile recomposition. No overlap, clipping, broken wrapping, or hierarchy collapse was found in the reviewed states.
 
 ## Findings and comparison history
 
@@ -35,6 +36,7 @@ The focused desktop pass inspected the hero baseline, orbit artwork, feed headin
 | DQ-002 | P2 | Route / implementation coverage | The board defined Discover / Circles as a screen, but the runnable navigation stopped at a route-boundary toast. This made the board-to-prototype handoff incomplete for the first discovery task. | Resolved by adding a shareable Discover view with topic filters, global search feedback, instant scroll reset, browser-back recovery, responsive evidence, and a dedicated visual baseline. |
 | DQ-003 | P2 | Route / implementation coverage | Discover cards still ended at a route-boundary toast, leaving Circle identity, membership, and conversation context absent from the runnable flow. | Resolved by adding a shareable City Makers Circle route with Conversations/About tabs, join state, conversation feedback, responsive evidence, and a dedicated visual baseline. |
 | DQ-004 | P2 | Route / implementation coverage | Circle conversation CTAs stopped at a toast, leaving the board’s Thread / Conversation reading and reply screen absent from the runnable flow. | Resolved by adding a shareable Thread route with author context, deterministic replies, browser-back recovery, local reply creation, responsive evidence, and a dedicated visual baseline. |
+| DQ-005 | P2 | Route / implementation coverage | The board defined Profile / Mina Park as the identity and contribution screen, but account controls stopped at a profile-menu toast. | Resolved by adding a shareable Profile route with identity cover, contribution stats, Conversations/Saved tabs, follow feedback, circle context, responsive evidence, and a dedicated visual baseline. |
 
 P0 findings: none.  
 P1 findings: none.  
@@ -58,6 +60,8 @@ The v0.16 Circle-route pass continues the route flow into a real City Makers det
 
 The v0.17 Thread-route pass continues the flow into a real conversation detail screen: the board’s reading hierarchy, author context, replies, Circle context rail, and inline reply composer are rendered at desktop and mobile sizes. Reply data is deterministic and local by design; persistence remains an integration finding.
 
+The v0.18 Profile-route pass closes the identity screen gap: Mina Park’s cover art, contribution stats, Conversations/Saved tabs, follow state, circle context, and Thread entry are rendered at desktop and mobile sizes, with browser-back recovery to Home.
+
 ## Rubric pass
 
 - Typography: local fonts, weight hierarchy, serif display treatment, wrapping, and line-height remain coherent across source and implementation.
@@ -67,19 +71,19 @@ The v0.17 Thread-route pass continues the flow into a real conversation detail s
 - Image quality and assets: the featured story uses the same local editorial asset and preserves its crop; no placeholder image replaces a designed asset.
 - Copy and content: source and implementation use the same product copy and state labels for the reviewed home surface.
 - Icons: board symbols and implementation SVG sprite icons are present, aligned, and stylistically consistent.
-- States and interactions: URL state, history restoration, Discover → Circle → Thread route entry/back with instant scroll reset, topic filters, Circle tab/join state, Thread reply creation and status feedback, dedicated feed-status announcement, Featured story route feedback, synchronized navigation current state, composer focus return, drawer focus return, skip-link navigation, board state, and board dialog focus return passed runtime checks.
+- States and interactions: URL state, history restoration, Discover → Circle → Thread → Profile route entry/back with instant scroll reset, topic filters, Circle tab/join state, Thread reply creation/status feedback, Profile Conversations/Saved tabs and follow feedback, dedicated feed-status announcement, Featured story route feedback, synchronized navigation current state, composer focus return, drawer focus return, skip-link navigation, board state, and board dialog focus return passed runtime checks.
 - Feed action focus: Like/Save rerendering preserves the focused action and its updated pressed state in browser QA.
 - Accessibility: semantic controls, visible focus treatment, dedicated live status messaging, reduced-motion support, image alt text, and minimum 44 × 44 px mobile control geometry are covered by the example contract and runtime QA.
 - AI shortcut artifacts: no generic placeholder card, fake product image, or mismatched decorative surface was found in the reviewed home surface; the orbit treatment is a deliberate shared motif.
 
 ## Verification
 
-- `npm run capture:community` — refreshed 12 evidence captures, including Discover, City Makers Circle, and City Makers Thread at desktop and mobile.
+- `npm run capture:community` — refreshed 14 evidence captures, including Discover, City Makers Circle, City Makers Thread, and Mina Park Profile at desktop and mobile.
 - QA comparison capture — refreshed source and implementation panels at 1280 × 720 CSS px / 1× density.
-- `npm run validate:evidence` — 12 captures and 26 documented runtime assertions passed.
-- `npm run test:browser` — 19 / 19 runtime checks passed, including Discover → Circle → Thread route entry/back recovery, Circle tab/join state, Thread reply creation, instant scroll reset, navigation current state, dedicated feed-status announcements, Featured story CTA feedback, and Like action focus retention after feed rerender.
-- `npm run test:visual` — 6 / 6 targets passed with `mismatchRatio: 0`.
+- `npm run validate:evidence` — 14 captures and 27 documented runtime assertions passed.
+- `npm run test:browser` — 20 / 20 runtime checks passed, including Discover → Circle → Thread → Profile route entry/back recovery, Circle tab/join state, Thread reply creation, Profile tab/follow feedback, instant scroll reset, navigation current state, dedicated feed-status announcements, Featured story CTA feedback, and Like action focus retention after feed rerender.
+- `npm run test:visual` — 7 / 7 targets passed with `mismatchRatio: 0`.
 - `python3 -m unittest tests.test_community_example_contract.CommunityExampleContractTests.test_responsive_and_motion_contracts_are_present` — safe-area contract passed after the intentional RED → GREEN cycle.
-- Browser console sweep — 0 console errors and 0 page errors across Home, Discover, City Makers Circle, City Makers Thread, and board desktop/mobile states.
+- Browser console sweep — 0 console errors and 0 page errors across Home, Discover, City Makers Circle, City Makers Thread, Mina Park Profile, and board desktop/mobile states.
 
 final result: passed

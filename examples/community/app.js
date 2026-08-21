@@ -63,6 +63,10 @@ const state = {
   thread: "",
   threadReplies: {},
   threadStatus: "",
+  profile: "",
+  profileTab: "conversations",
+  profileFollowed: false,
+  profileStatus: "",
   liked: new Set(),
   saved: new Set(),
   toastTimer: null,
@@ -78,6 +82,7 @@ const discoverView = document.querySelector("#discoverView");
 const discoverStatus = document.querySelector("#discoverStatus");
 const circleView = document.querySelector("#circleView");
 const threadView = document.querySelector("#threadView");
+const profileView = document.querySelector("#profileView");
 const composerDialog = document.querySelector("#composerDialog");
 const composerForm = document.querySelector("#composerForm");
 const composerTitleInput = document.querySelector("#composerTitleInput");
@@ -89,7 +94,7 @@ const sidebarTrigger = document.querySelector("#openSidebar");
 
 const validFilters = new Set(["all", "following", "latest"]);
 const validCircles = new Set(["City Makers", "Quiet Mornings", "Sunday Film Club", "Open Table", "Tiny Libraries", "Field Notes"]);
-const validViews = new Set(["home", "discover", "circle", "thread"]);
+const validViews = new Set(["home", "discover", "circle", "thread", "profile"]);
 const validDiscoverFilters = new Set(["all", "make", "slow", "notice"]);
 const circleProfiles = {
   "City Makers": {
@@ -280,6 +285,18 @@ const threadProfiles = {
 };
 
 const validThreads = new Set(Object.keys(threadProfiles));
+const profileProfiles = {
+  mina: {
+    name: "Mina Park",
+    handle: "@minapark",
+    location: "Seoul, KR",
+    bio: "Designing gentle systems for good questions, useful rituals, and the people who make them better.",
+    circles: ["City Makers", "Quiet Mornings", "Open Table", "Sunday Film Club"],
+    conversations: ["quiet-inbox", "city-map"],
+    saved: ["film-door", "open-room"],
+  },
+};
+const validProfiles = new Set(Object.keys(profileProfiles));
 
 function readUrlState() {
   const params = new URLSearchParams(window.location.search);
@@ -287,13 +304,16 @@ function readUrlState() {
   const filter = params.get("filter");
   const circle = params.get("circle");
   const thread = params.get("thread");
+  const profile = params.get("profile");
   const discoverFilter = params.get("topic");
   state.view = validViews.has(view) ? view : "home";
   state.filter = validFilters.has(filter) ? filter : "all";
   state.circle = validCircles.has(circle) ? circle : "";
   state.thread = validThreads.has(thread) ? thread : "";
+  state.profile = validProfiles.has(profile) ? profile : "";
   if (state.view === "circle" && !state.circle) state.view = "home";
   if (state.view === "thread" && !state.thread) state.view = "home";
+  if (state.view === "profile" && !state.profile) state.view = "home";
   if (state.view === "thread") state.circle = threadProfiles[state.thread].circle;
   state.query = params.get("q")?.slice(0, 120) ?? "";
   state.discoverFilter = validDiscoverFilters.has(discoverFilter) ? discoverFilter : "all";
@@ -303,7 +323,7 @@ function readUrlState() {
 
 function updateUrlState(historyMethod = "replaceState") {
   const url = new URL(window.location.href);
-  if (state.view === "discover" || state.view === "circle" || state.view === "thread") url.searchParams.set("view", state.view);
+  if (state.view === "discover" || state.view === "circle" || state.view === "thread" || state.view === "profile") url.searchParams.set("view", state.view);
   else url.searchParams.delete("view");
   if (state.filter !== "all" && !state.circle) url.searchParams.set("filter", state.filter);
   else url.searchParams.delete("filter");
@@ -311,6 +331,8 @@ function updateUrlState(historyMethod = "replaceState") {
   else url.searchParams.delete("circle");
   if (state.view === "thread" && state.thread) url.searchParams.set("thread", state.thread);
   else url.searchParams.delete("thread");
+  if (state.view === "profile" && state.profile) url.searchParams.set("profile", state.profile);
+  else url.searchParams.delete("profile");
   if (state.query.trim()) url.searchParams.set("q", state.query.trim().slice(0, 120));
   else url.searchParams.delete("q");
   if (state.view === "discover" && state.discoverFilter !== "all") url.searchParams.set("topic", state.discoverFilter);
@@ -499,20 +521,42 @@ function renderThread({ syncUrl = true } = {}) {
   if (syncUrl) syncUrlState();
 }
 
+function renderProfile({ syncUrl = true } = {}) {
+  const profile = profileProfiles[state.profile];
+  if (!profile) return;
+  document.querySelector("#profileTitle").textContent = profile.name;
+  document.querySelector("#profileBio").textContent = profile.bio;
+  const followButton = document.querySelector("#followProfile");
+  followButton.setAttribute("aria-pressed", String(state.profileFollowed));
+  followButton.textContent = state.profileFollowed ? "Following" : "Follow";
+  document.querySelectorAll("[data-profile-tab]").forEach((button) => button.setAttribute("aria-selected", String(button.dataset.profileTab === state.profileTab)));
+  document.querySelector("#profileCircleList").innerHTML = profile.circles.map((circleName) => `<button class="profile-circle-row" type="button" data-profile-circle="${escapeHtml(circleName)}"><span class="circle-symbol symbol-coral">${escapeHtml(circleProfiles[circleName].initials)}</span><span><strong>${escapeHtml(circleName)}</strong><small>${circleProfiles[circleName].memberCount} people</small></span>${icon("chevron")}</button>`).join("");
+  const threadIds = state.profileTab === "saved" ? profile.saved : profile.conversations;
+  const panelClass = state.profileTab === "saved" ? "profile-saved-panel" : "profile-conversation-panel";
+  const kicker = state.profileTab === "saved" ? "Saved for later" : "Recent conversations";
+  document.querySelector("#profilePanel").innerHTML = `<div class="${panelClass}"><p class="section-kicker">${kicker}</p>${threadIds.map((threadId) => { const thread = threadProfiles[threadId]; const circle = circleProfiles[thread.circle]; return `<article class="profile-post-card"><div class="profile-post-meta"><span class="circle-dot dot-coral"></span><span>${escapeHtml(thread.circle)}</span><span>·</span><span>${escapeHtml(thread.time)}</span></div><h2>${escapeHtml(thread.title)}</h2><p>${escapeHtml(thread.body)}</p><div class="profile-post-footer"><span>${thread.replies.length} replies · ${circle.memberCount} members</span><button class="text-button" type="button" data-profile-thread="${escapeHtml(threadId)}">Read conversation ${icon("arrow-up")}</button></div></article>`; }).join("")}</div>`;
+  const defaultStatus = state.profileTab === "saved" ? `Saved by ${profile.name}.` : `Conversations by ${profile.name}.`;
+  document.querySelector("#profileStatus").textContent = state.profileStatus || defaultStatus;
+  if (syncUrl) syncUrlState();
+}
+
 function renderRoute({ syncUrl = true, scroll = true } = {}) {
   const isDiscover = state.view === "discover";
   const isCircle = state.view === "circle";
   const isThread = state.view === "thread";
-  homeView.hidden = isDiscover || isCircle || isThread;
+  const isProfile = state.view === "profile";
+  homeView.hidden = isDiscover || isCircle || isThread || isProfile;
   discoverView.hidden = !isDiscover;
   circleView.hidden = !isCircle;
   threadView.hidden = !isThread;
-  document.querySelector("#breadcrumbRoot").textContent = isCircle || isThread ? "Circles" : isDiscover ? "Discover" : "Home";
-  document.querySelector("#breadcrumbCurrent").textContent = isThread ? threadProfiles[state.thread]?.title || "Conversation" : isCircle ? state.circle : isDiscover ? "Circles" : "For you";
-  setActiveNavigation(isCircle || isThread ? "Your circles" : isDiscover ? "Discover" : "Home");
+  profileView.hidden = !isProfile;
+  document.querySelector("#breadcrumbRoot").textContent = isCircle || isThread ? "Circles" : isProfile ? "Profile" : isDiscover ? "Discover" : "Home";
+  document.querySelector("#breadcrumbCurrent").textContent = isThread ? threadProfiles[state.thread]?.title || "Conversation" : isCircle ? state.circle : isProfile ? profileProfiles[state.profile]?.name || "Mina Park" : isDiscover ? "Circles" : "For you";
+  setActiveNavigation(isCircle || isThread ? "Your circles" : isDiscover ? "Discover" : isProfile ? "" : "Home");
   if (isDiscover) renderDiscover({ syncUrl });
   else if (isCircle) renderCircle({ syncUrl });
   else if (isThread) renderThread({ syncUrl });
+  else if (isProfile) renderProfile({ syncUrl });
   else renderFeed({ syncUrl });
   if (scroll) window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 }
@@ -520,8 +564,10 @@ function renderRoute({ syncUrl = true, scroll = true } = {}) {
 function navigateToView(view) {
   state.view = validViews.has(view) ? view : "home";
   if (state.view !== "thread") state.thread = "";
+  if (state.view !== "profile") state.profile = "";
   if (state.view === "home" || state.view === "discover") state.circle = "";
   state.threadStatus = "";
+  state.profileStatus = "";
   updateUrlState("pushState");
   renderRoute({ syncUrl: false });
 }
@@ -531,6 +577,7 @@ function navigateToCircle(circleName) {
   state.view = "circle";
   state.circle = circleName;
   state.thread = "";
+  state.profile = "";
   state.filter = "all";
   state.query = "";
   state.circleTab = "conversations";
@@ -551,6 +598,23 @@ function navigateToThread(threadId) {
   state.query = "";
   state.circleTab = "conversations";
   state.threadStatus = "";
+  state.profile = "";
+  searchInput.value = "";
+  updateUrlState("pushState");
+  renderRoute({ syncUrl: false });
+}
+
+function navigateToProfile(profileId) {
+  if (!validProfiles.has(profileId)) return;
+  state.view = "profile";
+  state.profile = profileId;
+  state.profileTab = "conversations";
+  state.profileFollowed = false;
+  state.profileStatus = "";
+  state.circle = "";
+  state.thread = "";
+  state.query = "";
+  state.filter = "all";
   searchInput.value = "";
   updateUrlState("pushState");
   renderRoute({ syncUrl: false });
@@ -650,6 +714,10 @@ searchInput.addEventListener("input", (event) => {
   }
   if (state.view === "circle") {
     state.circle = "";
+    navigateToView("discover");
+    return;
+  }
+  if (state.view === "profile") {
     navigateToView("discover");
     return;
   }
@@ -793,6 +861,25 @@ document.querySelector("#threadReplyForm").addEventListener("submit", (event) =>
   state.threadStatus = "Your reply was added to the conversation.";
   event.target.reset();
   renderThread({ syncUrl: false });
+});
+document.querySelectorAll("[data-profile-route]").forEach((button) => button.addEventListener("click", () => navigateToProfile(button.dataset.profileRoute)));
+document.querySelectorAll("[data-profile-tab]").forEach((button) => button.addEventListener("click", () => {
+  state.profileTab = button.dataset.profileTab;
+  state.profileStatus = "";
+  renderProfile();
+}));
+document.querySelector("#followProfile").addEventListener("click", () => {
+  state.profileFollowed = !state.profileFollowed;
+  state.profileStatus = state.profileFollowed ? "You are now following Mina Park." : "You unfollowed Mina Park.";
+  renderProfile({ syncUrl: false });
+});
+document.querySelector("#profilePanel").addEventListener("click", (event) => {
+  const threadRoute = event.target.closest("[data-profile-thread]");
+  if (threadRoute) navigateToThread(threadRoute.dataset.profileThread);
+});
+document.querySelector("#profileCircleList").addEventListener("click", (event) => {
+  const circleRoute = event.target.closest("[data-profile-circle]");
+  if (circleRoute) navigateToCircle(circleRoute.dataset.profileCircle);
 });
 document.querySelectorAll("[data-toast]").forEach((button) => button.addEventListener("click", () => showToast(button.dataset.toast)));
 

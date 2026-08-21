@@ -217,6 +217,41 @@ async function runRuntimeChecks() {
     }));
     assert(replyState.count === 4 && replyState.status === "Your reply was added to the conversation." && replyState.input === "" && replyState.lastReply === "I keep thinking about the places that invite us to stay a little longer.", "Thread reply composer did not add a local reply and clear its draft");
     results.push({ id: "thread-reply-flow", verified: true, viewport: "1440x1000" });
+
+    await desktop.goto(DEFAULT_BASE_URL + "/index.html", { waitUntil: "networkidle" });
+    await desktop.locator("[data-profile-route]").first().click();
+    const profileRoute = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      profileHidden: document.querySelector("#profileView")?.hidden,
+      title: document.querySelector("#profileTitle")?.textContent,
+      tab: document.querySelector('[data-profile-tab][aria-selected="true"]')?.dataset.profileTab,
+    }));
+    assert(profileRoute.url.includes("view=profile") && profileRoute.url.includes("profile=mina") && profileRoute.homeHidden === true && profileRoute.profileHidden === false && profileRoute.title === "Mina Park" && profileRoute.tab === "conversations", "Profile route did not render from the account identity control");
+    await desktop.locator('[data-profile-tab="saved"]').click();
+    const profileSaved = await desktop.evaluate(() => ({
+      selected: document.querySelector('[data-profile-tab="saved"]').getAttribute("aria-selected"),
+      panel: document.querySelector("#profilePanel > :first-child")?.className,
+      status: document.querySelector("#profileStatus")?.textContent,
+    }));
+    assert(profileSaved.selected === "true" && profileSaved.panel === "profile-saved-panel" && profileSaved.status.includes("Saved by Mina Park"), "Profile Saved tab did not render its selected panel");
+    await desktop.locator('[data-profile-tab="conversations"]').click();
+    await desktop.locator("#followProfile").click();
+    const profileFollow = await desktop.evaluate(() => ({
+      pressed: document.querySelector("#followProfile").getAttribute("aria-pressed"),
+      label: document.querySelector("#followProfile").textContent.trim(),
+      status: document.querySelector("#profileStatus")?.textContent,
+    }));
+    assert(profileFollow.pressed === "true" && profileFollow.label === "Following" && profileFollow.status === "You are now following Mina Park.", "Profile follow state did not update with accessible feedback");
+    await desktop.goBack();
+    await wait(80);
+    const profileBack = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      profileHidden: document.querySelector("#profileView")?.hidden,
+    }));
+    assert(!profileBack.url.includes("view=profile") && profileBack.homeHidden === false && profileBack.profileHidden === true, "Browser back did not restore Home after leaving Profile");
+    results.push({ id: "profile-route-and-tabs", verified: true, viewport: "1440x1000" });
     await desktop.close();
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });

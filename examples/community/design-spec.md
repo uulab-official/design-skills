@@ -97,6 +97,8 @@ This prevents “community” from defaulting to one feed pattern. The selected 
 | Circle detail tabs | Conversations and About expose a selected tab, status copy, and a route-boundary action into Thread |
 | Thread route | A Circle conversation opens `view=thread&circle=City Makers&thread=city-map` with reading hierarchy, replies, and browser-back recovery |
 | Thread reply composer | A local deterministic reply validates, appends, clears its draft, updates the count, and announces success |
+| Profile route | The account identity opens `view=profile&profile=mina` with contribution context and browser-back recovery |
+| Profile tabs and follow | Conversations/Saved expose selected state; Follow updates `aria-pressed` and a polite status message |
 
 ## Prototype map
 
@@ -109,7 +111,7 @@ board.html
   ├─ Discover / Circles     ├─ open live prototype → index.html?view=discover
   ├─ Circle / City Makers  ├─ open live prototype → index.html?view=circle&circle=City%20Makers
   ├─ Thread / Conversation  ├─ open live prototype → index.html?view=thread&circle=City%20Makers&thread=city-map
-  ├─ Profile / Mina Park    │
+  ├─ Profile / Mina Park    ├─ open live prototype → index.html?view=profile&profile=mina
   └─ Mobile / Home ─────────┘
        ├─ Empty
        ├─ Loading
@@ -143,11 +145,13 @@ board.html
 | Circle mobile 390 × 844 | prototype-circle-390.jpg | Stacked circle hero, tab bar, conversation cards, side context cards, bottom navigation |
 | Thread desktop 1440 × 1000 | [`prototype-thread-1440.jpg`](evidence/prototype-thread-1440.jpg) | Reading hierarchy, author context, replies, Circle context rail, reply composer |
 | Thread mobile 390 × 844 | [`prototype-thread-390.jpg`](evidence/prototype-thread-390.jpg) | Stacked reading flow, reply list, fixed navigation, response composer and context cards |
+| Profile desktop 1440 × 1000 | [`prototype-profile-1440.jpg`](evidence/prototype-profile-1440.jpg) | Mina Park identity, contribution stats, conversations, saved context, circle rail |
+| Profile mobile 390 × 844 | [`prototype-profile-390.jpg`](evidence/prototype-profile-390.jpg) | Stacked identity cover, profile tabs, contribution cards, circle list and bottom navigation |
 | Native intent: iOS 390 pt / Android 360 dp | Platform translation artboards | Large-title/tab-bar and app-bar/FAB behavior are specified; native runtime remains a target, not a shipped surface |
 
 The live surface was checked after the direction, platform, and archetype boards were added. Runtime QA also exercised composer validation → recovery → publish success, feed filter state, mobile drawer open → Escape recovery, URL restoration, prototype and board history-state rehydration, local font loading, search URL synchronization, composer focus return, drawer focus return, 44 px mobile touch-target geometry, board dialog focus return, and skip-link navigation. The [evidence manifest](evidence/manifest.json) binds each capture and runtime assertion to its route, viewport, and represented state; run `npm run test:browser` and `npm run validate:evidence` to verify the interaction contract and JPEG dimensions. Evidence captures are committed under `examples/community/evidence/`; they are full-page JPEG screenshots produced from the local server at the viewport sizes named above. Reproduce the surface with the command in [Run locally](#run-locally), then open `/board.html` and `/index.html` at the declared sizes. The static example has no backend or network dependency; loading, empty, recovery, validation, and success are represented as deterministic prototype states. Contributors can regenerate the capture matrix with `npm install`, `npx playwright install chromium`, and `npm run capture:community`; the command reads the manifest instead of maintaining a second list of viewports.
 
-The live route flow now covers Discover → Circle / City Makers → Thread with shareable URLs, selected Conversations/About tabs, join-state feedback, author/reply context, local reply creation, and browser-back restoration. Circle and Thread desktop/mobile captures are included in the evidence matrix alongside the Discover route.
+The live route flow now covers Discover → Circle / City Makers → Thread → Profile with shareable URLs, selected Conversations/About and Conversations/Saved tabs, join/follow feedback, author/reply context, local reply creation, contribution history, and browser-back restoration. Circle, Thread, and Profile desktop/mobile captures are included in the evidence matrix alongside the Discover route.
 
 ### Review scores
 
@@ -180,7 +184,7 @@ Scores use the 0–4 rubric in `references/review-rubric.md` and only claim what
 
 - **medium — native runtime:** iOS/SwiftUI and Android/Jetpack Compose are platform-aware design targets, but no compiled native implementation or simulator evidence is included in this example.
 - **medium — data/runtime integration:** authentication, backend persistence, network retry, offline caching, analytics, and deployment checks still require product integration.
-- **low — visual regression review:** capture automation, six representative PNG baselines, and CI artifact review are available through `npm run capture:community` and `npm run test:visual`; the 3% threshold tolerates anti-aliasing variation, while full-page evidence remains a human visual review responsibility.
+- **low — visual regression review:** capture automation, seven representative PNG baselines, and CI artifact review are available through `npm run capture:community` and `npm run test:visual`; the 3% threshold tolerates anti-aliasing variation, while full-page evidence remains a human visual review responsibility.
 
 These findings intentionally prevent a `release-ready` claim. The next implementation slice should close the native/runtime evidence only when those targets are in scope.
 
