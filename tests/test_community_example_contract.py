@@ -28,11 +28,24 @@ class CommunityExampleContractTests(unittest.TestCase):
         self.assertIn('aria-live="polite"', self.html)
         self.assertIn('id="openSidebar"', self.html)
         self.assertIn('id="sidebarScrim"', self.html)
+        self.assertIn("readUrlState", self.js)
+        self.assertIn("syncUrlState", self.js)
+        self.assertIn("history.replaceState", self.js)
 
     def test_responsive_and_motion_contracts_are_present(self):
         self.assertIn('env(safe-area-inset-bottom)', self.css)
         self.assertIn('@media (prefers-reduced-motion: reduce)', self.css)
         self.assertIn('@media (max-width: 760px)', self.css)
+
+    def test_keyboard_and_focus_handoff_contracts_are_present(self):
+        self.assertIn('href="#mainContent"', self.html)
+        self.assertIn('class="skip-link"', self.html)
+        self.assertIn('id="composerDescription"', self.html)
+        self.assertIn('composerDialog.addEventListener("close"', self.js)
+        self.assertIn("state.composerTrigger", self.js)
+        self.assertIn("state.sidebarTrigger", self.js)
+        self.assertIn("restoreFocus", self.js)
+        self.assertIn(".skip-link:focus", self.css)
 
 
 if __name__ == "__main__":

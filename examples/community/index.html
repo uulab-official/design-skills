@@ -27,6 +27,7 @@
     <title>Gather — Community, with context.</title>
   </head>
   <body>
+    <a class="skip-link" href="#mainContent">Skip to main content</a>
     <svg class="icon-defs" aria-hidden="true" focusable="false">
       <symbol id="icon-home" viewBox="0 0 24 24"><path d="m4 10 8-6 8 6v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9Z" /></symbol>
       <symbol id="icon-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" /><path d="m15.3 8.7-1.8 4.8-4.8 1.8 1.8-4.8 4.8-1.8Z" /></symbol>
@@ -50,7 +51,7 @@
       <div class="sidebar-scrim" id="sidebarScrim"></div>
       <aside class="sidebar" id="sidebar" aria-label="Primary navigation">
         <div class="sidebar-top">
-          <a class="brand" href="#top" aria-label="Gather home">
+          <a class="brand" href="#mainContent" aria-label="Gather home">
             <span class="brand-mark" aria-hidden="true">g</span>
             <span>gather</span>
           </a>
@@ -102,7 +103,7 @@
         </div>
       </aside>
 
-      <main class="main-content" id="top">
+      <main class="main-content" id="mainContent" tabindex="-1">
         <header class="topbar">
           <div class="topbar-left">
             <button class="icon-button mobile-menu-button" id="openSidebar" type="button" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">
@@ -190,9 +191,9 @@
       <button class="mobile-nav-item" type="button" data-nav="Saved"><svg class="icon" aria-hidden="true"><use href="#icon-bookmark" /></svg><span>Saved</span></button>
     </nav>
 
-    <dialog class="composer-dialog" id="composerDialog" aria-labelledby="composerTitle">
+    <dialog class="composer-dialog" id="composerDialog" aria-labelledby="composerTitle" aria-describedby="composerDescription">
       <form id="composerForm" method="dialog" novalidate>
-        <div class="dialog-header"><div><p class="section-kicker">Make a little room</p><h2 id="composerTitle">Start a conversation</h2></div><button class="icon-button small" id="closeComposer" type="button" aria-label="Close composer"><svg class="icon" aria-hidden="true"><use href="#icon-close" /></svg></button></div>
+        <div class="dialog-header"><div><p class="section-kicker">Make a little room</p><h2 id="composerTitle">Start a conversation</h2><p class="sr-only" id="composerDescription">Write a title and optional context, then publish it to one of your circles.</p></div><button class="icon-button small" id="closeComposer" type="button" aria-label="Close composer"><svg class="icon" aria-hidden="true"><use href="#icon-close" /></svg></button></div>
         <label class="form-label" for="composerCircle">Share with</label>
         <select class="form-control" id="composerCircle"><option>City Makers</option><option>Quiet Mornings</option><option>Sunday Film Club</option><option>Open Table</option></select>
         <label class="form-label" for="composerTitleInput">A clear title</label>
@@ -204,6 +205,6 @@
       </form>
     </dialog>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="./app.js?v=0.2" defer></script>
+    <script src="./app.js?v=0.3" defer></script>
   </body>
 </html>

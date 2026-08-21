@@ -11,13 +11,19 @@ class CaptureAndPlatformContractTests(unittest.TestCase):
     def test_capture_tool_is_documented_and_manifest_driven(self):
         package = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
         script = (ROOT / "scripts" / "capture_community_evidence.mjs").read_text(encoding="utf-8")
+        browser_qa = (ROOT / "scripts" / "qa_community_runtime.mjs").read_text(encoding="utf-8")
         spec = (ROOT / "examples" / "community" / "design-spec.md").read_text(encoding="utf-8")
 
         self.assertEqual(package["scripts"]["capture:community"], "node scripts/capture_community_evidence.mjs")
+        self.assertEqual(package["scripts"]["test:browser"], "node scripts/qa_community_runtime.mjs")
         self.assertIn('"playwright"', json.dumps(package["devDependencies"]))
         self.assertIn("evidence/manifest.json", script)
         self.assertIn('resolve(COMMUNITY_ROOT, "evidence")', script)
         self.assertIn("page.screenshot", script)
+        self.assertIn("url-restoration", browser_qa)
+        self.assertIn("composer-focus-return", browser_qa)
+        self.assertIn("drawer-focus-return", browser_qa)
+        self.assertIn("npm run test:browser", spec)
         self.assertIn("npm run capture:community", spec)
 
     def test_platform_parity_note_covers_declared_targets_and_required_behaviors(self):

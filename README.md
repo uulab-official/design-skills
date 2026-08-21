@@ -37,7 +37,10 @@ The capture command reads [`evidence/manifest.json`](examples/community/evidence
 
 ```bash
 npm run validate:evidence
+npm run test:browser
 ```
+
+`npm run test:browser` proves URL restoration, search URL synchronization, composer focus return, mobile drawer focus return, and skip-link navigation in Chromium.
 
 ## Quality checks
 
@@ -47,7 +50,7 @@ Run the same checks used by the repository workflow:
 npm run ci:quality
 ```
 
-This runs the Python contract suite, evidence manifest validator, and dependency-light skill validator. Pull requests also render the evidence matrix in GitHub Actions and upload the generated images as an artifact for visual review. The workflow intentionally does not use a hard pixel-diff gate yet because font and remote demo-image rendering can vary across environments.
+This runs the Python contract suite, evidence manifest validator, and dependency-light skill validator. Pull requests also run the browser interaction assertions, render the evidence matrix in GitHub Actions, and upload the generated images as an artifact for visual review. The workflow intentionally does not use a hard pixel-diff gate yet because font and remote demo-image rendering can vary across environments.
 
 ## Design standard
 
@@ -59,4 +62,4 @@ The community reference surface is intentionally `review-ready`, not `release-re
 
 Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening a change. The short version is: preserve the existing product decisions, add evidence for new states or viewports, run `npm run ci:quality`, and describe any remaining finding with severity, evidence, and next action.
 
-The current roadmap is [`docs/superpowers/plans/2026-08-21-design-skills-v0.3-contributor-automation.md`](docs/superpowers/plans/2026-08-21-design-skills-v0.3-contributor-automation.md).
+The current roadmap is [`docs/superpowers/plans/2026-08-21-design-skills-v0.4-interaction-hardening.md`](docs/superpowers/plans/2026-08-21-design-skills-v0.4-interaction-hardening.md).

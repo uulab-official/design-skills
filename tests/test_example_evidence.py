@@ -16,7 +16,7 @@ class ExampleEvidenceTests(unittest.TestCase):
         result = validate_evidence(ROOT)
         self.assertTrue(result["ok"], result["errors"])
         self.assertEqual(result["metrics"]["captures"], 6)
-        self.assertEqual(result["metrics"]["runtime_checks"], 7)
+        self.assertEqual(result["metrics"]["runtime_checks"], 12)
 
     def test_capture_widths_match_declared_viewports(self):
         result = validate_evidence(ROOT)

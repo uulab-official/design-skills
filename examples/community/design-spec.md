@@ -83,6 +83,9 @@ This prevents “community” from defaulting to one feed pattern. The selected 
 | Publish | New post appears at top of feed and toast confirms success |
 | Mobile menu | Drawer and scrim open; Escape and scrim close them |
 | Cmd/Ctrl + K | Search receives focus |
+| Filter, circle scope, or search query | State is restored from and reflected in the URL without losing other query parameters |
+| Skip to main content | Keyboard users can bypass the navigation shell and focus the primary content landmark |
+| Composer or mobile drawer dismissal | Focus returns to the trigger after close, publish, or Escape recovery |
 
 ## Prototype map
 
@@ -126,7 +129,7 @@ board.html
 | Mobile 390 × 844 | [`board-390.jpg`](evidence/board-390.jpg), [`prototype-390.jpg`](evidence/prototype-390.jpg) | One-column cards, horizontal filters, bottom navigation, composer, empty/loading/recovery/success states |
 | Native intent: iOS 390 pt / Android 360 dp | Platform translation artboards | Large-title/tab-bar and app-bar/FAB behavior are specified; native runtime remains a target, not a shipped surface |
 
-The live surface was checked after the direction, platform, and archetype boards were added. Runtime QA also exercised composer validation → recovery → publish success, feed filter state, and mobile drawer open → Escape recovery. The [evidence manifest](evidence/manifest.json) binds each capture to its route, viewport, and represented states; run `python3 scripts/validate_example_evidence.py --path . --json` to verify the matrix and JPEG dimensions. Evidence captures are committed under `examples/community/evidence/`; they are full-page JPEG screenshots produced from the local server at the viewport sizes named above. Reproduce the surface with the command in [Run locally](#run-locally), then open `/board.html` and `/index.html` at the declared sizes. The static example has no backend or network dependency; loading, empty, recovery, validation, and success are represented as deterministic prototype states. Contributors can regenerate the capture matrix with `npm install`, `npx playwright install chromium`, and `npm run capture:community`; the command reads the manifest instead of maintaining a second list of viewports.
+The live surface was checked after the direction, platform, and archetype boards were added. Runtime QA also exercised composer validation → recovery → publish success, feed filter state, mobile drawer open → Escape recovery, URL restoration, search URL synchronization, composer focus return, drawer focus return, and skip-link navigation. The [evidence manifest](evidence/manifest.json) binds each capture and runtime assertion to its route, viewport, and represented state; run `npm run test:browser` and `npm run validate:evidence` to verify the interaction contract and JPEG dimensions. Evidence captures are committed under `examples/community/evidence/`; they are full-page JPEG screenshots produced from the local server at the viewport sizes named above. Reproduce the surface with the command in [Run locally](#run-locally), then open `/board.html` and `/index.html` at the declared sizes. The static example has no backend or network dependency; loading, empty, recovery, validation, and success are represented as deterministic prototype states. Contributors can regenerate the capture matrix with `npm install`, `npx playwright install chromium`, and `npm run capture:community`; the command reads the manifest instead of maintaining a second list of viewports.
 
 ### Review scores
 

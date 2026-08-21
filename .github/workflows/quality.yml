@@ -43,6 +43,8 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Capture declared viewport matrix
         run: npm run capture:community
+      - name: Run browser interaction assertions
+        run: npm run test:browser
       - name: Validate rendered evidence
         run: npm run validate:evidence
       - name: Upload rendered evidence

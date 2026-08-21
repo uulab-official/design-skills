@@ -23,6 +23,7 @@ class RepositoryQualityContractTests(unittest.TestCase):
             "npm run ci:quality",
             "npx playwright install --with-deps chromium",
             "npm run capture:community",
+            "npm run test:browser",
             "npm run validate:evidence",
             "actions/upload-artifact@v4",
         ):

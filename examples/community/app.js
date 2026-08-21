@@ -55,7 +55,9 @@ const state = {
   query: "",
   liked: new Set(),
   saved: new Set(),
-  toastTimer: null
+  toastTimer: null,
+  composerTrigger: null,
+  sidebarTrigger: null
 };
 
 const feedList = document.querySelector("#feedList");
@@ -65,6 +67,34 @@ const composerForm = document.querySelector("#composerForm");
 const composerTitleInput = document.querySelector("#composerTitleInput");
 const composerTitleError = document.querySelector("#composerTitleError");
 const toast = document.querySelector("#toast");
+const sidebar = document.querySelector("#sidebar");
+const sidebarScrim = document.querySelector("#sidebarScrim");
+const sidebarTrigger = document.querySelector("#openSidebar");
+
+const validFilters = new Set(["all", "following", "latest"]);
+const validCircles = new Set(["City Makers", "Quiet Mornings", "Sunday Film Club", "Open Table"]);
+
+function readUrlState() {
+  const params = new URLSearchParams(window.location.search);
+  const filter = params.get("filter");
+  const circle = params.get("circle");
+  state.filter = validFilters.has(filter) ? filter : "all";
+  state.circle = validCircles.has(circle) ? circle : "";
+  state.query = params.get("q")?.slice(0, 120) ?? "";
+  if (state.circle) state.filter = "all";
+  searchInput.value = state.query;
+}
+
+function syncUrlState() {
+  const url = new URL(window.location.href);
+  if (state.filter !== "all" && !state.circle) url.searchParams.set("filter", state.filter);
+  else url.searchParams.delete("filter");
+  if (state.circle) url.searchParams.set("circle", state.circle);
+  else url.searchParams.delete("circle");
+  if (state.query.trim()) url.searchParams.set("q", state.query.trim().slice(0, 120));
+  else url.searchParams.delete("q");
+  window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+}
 
 function icon(name) {
   return `<svg class="icon" aria-hidden="true"><use href="#icon-${name}"></use></svg>`;
@@ -139,9 +169,12 @@ function renderFeed() {
   document.querySelectorAll("[data-filter-circle]").forEach((button) => {
     button.setAttribute("aria-pressed", String(button.dataset.filterCircle === state.circle));
   });
+  syncUrlState();
 }
 
 function openComposer() {
+  if (composerDialog.open) return;
+  state.composerTrigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   if (typeof composerDialog.showModal === "function") {
     composerDialog.showModal();
     window.setTimeout(() => document.querySelector("#composerTitleInput")?.focus(), 30);
@@ -156,13 +189,25 @@ function closeComposer() {
   else {
     composerDialog.removeAttribute("open");
     composerDialog.setAttribute("class", composerDialog.getAttribute("class").replace(/\bis-open\b/g, "").replace(/\s+/g, " ").trim());
+    restoreFocus(state.composerTrigger);
+    state.composerTrigger = null;
   }
 }
 
 function toggleSidebar(open) {
-  document.querySelector("#sidebar").classList.toggle("is-open", open);
-  document.querySelector("#sidebarScrim").classList.toggle("is-visible", open);
-  document.querySelector("#openSidebar").setAttribute("aria-expanded", String(open));
+  if (open) state.sidebarTrigger = document.activeElement instanceof HTMLElement ? document.activeElement : sidebarTrigger;
+  sidebar.classList.toggle("is-open", open);
+  sidebarScrim.classList.toggle("is-visible", open);
+  sidebarTrigger.setAttribute("aria-expanded", String(open));
+  if (open) window.setTimeout(() => sidebar.querySelector("a, button")?.focus(), 30);
+  else {
+    restoreFocus(state.sidebarTrigger);
+    state.sidebarTrigger = null;
+  }
+}
+
+function restoreFocus(element) {
+  if (element instanceof HTMLElement && element.isConnected && !element.hasAttribute("disabled")) element.focus();
 }
 
 document.querySelectorAll("[data-filter]").forEach((button) => {
@@ -223,6 +268,10 @@ document.querySelector("#openComposer").addEventListener("click", openComposer);
 document.querySelector("#mobileCompose").addEventListener("click", openComposer);
 document.querySelector("#promptButton").addEventListener("click", openComposer);
 document.querySelector("#closeComposer").addEventListener("click", closeComposer);
+composerDialog.addEventListener("close", () => {
+  restoreFocus(state.composerTrigger);
+  state.composerTrigger = null;
+});
 
 composerTitleInput.addEventListener("input", () => {
   if (composerTitleInput.value.trim()) setComposerError(false);
@@ -268,8 +317,8 @@ composerForm.addEventListener("submit", (event) => {
   showToast("Conversation published to your circles");
 });
 
-document.querySelector("#openSidebar").addEventListener("click", () => toggleSidebar(true));
-document.querySelector("#sidebarScrim").addEventListener("click", () => toggleSidebar(false));
+sidebarTrigger.addEventListener("click", () => toggleSidebar(true));
+sidebarScrim.addEventListener("click", () => toggleSidebar(false));
 document.querySelector("#scrollToCircles").addEventListener("click", () => document.querySelector("#circlesSection")?.scrollIntoView({ behavior: "smooth", block: "center" }));
 
 document.querySelectorAll("[data-nav]").forEach((button) => {
@@ -292,7 +341,11 @@ document.addEventListener("keydown", (event) => {
     event.preventDefault();
     searchInput.focus();
   }
-  if (event.key === "Escape") toggleSidebar(false);
+  if (event.key === "Escape" && sidebar.classList.contains("is-open")) {
+    event.preventDefault();
+    toggleSidebar(false);
+  }
 });
 
+readUrlState();
 renderFeed();

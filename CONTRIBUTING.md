@@ -23,10 +23,11 @@ When a change affects the community reference surface, regenerate the declared c
 
 ```bash
 npm run capture:community
+npm run test:browser
 npm run validate:evidence
 ```
 
-The capture tool reads [`examples/community/evidence/manifest.json`](examples/community/evidence/manifest.json). Add a manifest entry when a new route, target viewport, or state is important enough to review; do not maintain a second undocumented screenshot list.
+The capture tool reads [`examples/community/evidence/manifest.json`](examples/community/evidence/manifest.json). Add a manifest entry when a new route, target viewport, or state is important enough to review; do not maintain a second undocumented screenshot list. Browser assertions for important URL and focus behavior belong in `scripts/qa_community_runtime.mjs` and the manifest runtime checks.
 
 ## Design changes
 
