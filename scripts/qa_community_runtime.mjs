@@ -118,6 +118,30 @@ async function runRuntimeChecks() {
     const updatedNavState = await desktop.evaluate(() => Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav));
     assert(updatedNavState.length === 2 && updatedNavState.every((label) => label === "Discover"), "Navigation current state did not move to the selected destination");
     results.push({ id: "navigation-current-state", verified: true, viewport: "1440x1000" });
+
+    await desktop.goto(`${DEFAULT_BASE_URL}/index.html`, { waitUntil: "networkidle" });
+    await desktop.evaluate(() => window.scrollTo({ top: 700, left: 0 }));
+    await desktop.locator('.nav-item[data-nav="Discover"]').first().click();
+    const discoverRoute = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      discoverHidden: document.querySelector("#discoverView")?.hidden,
+      current: Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav),
+      scrollY: window.scrollY,
+      heading: document.querySelector("#discoverTitle")?.textContent,
+    }));
+    assert(discoverRoute.url.includes("view=discover") && discoverRoute.homeHidden === true && discoverRoute.discoverHidden === false && discoverRoute.current.length === 2 && discoverRoute.current.every((label) => label === "Discover") && discoverRoute.scrollY === 0 && discoverRoute.heading === "Find your next circle.", "Discover route did not render as a real view with a top reset");
+    await desktop.goBack();
+    await wait(80);
+    const homeRoute = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      discoverHidden: document.querySelector("#discoverView")?.hidden,
+      current: Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav),
+      scrollY: window.scrollY,
+    }));
+    assert(!homeRoute.url.includes("view=discover") && homeRoute.homeHidden === false && homeRoute.discoverHidden === true && homeRoute.current.length === 2 && homeRoute.current.every((label) => label === "Home") && homeRoute.scrollY === 0, "Browser back did not restore the Home route and top position");
+    results.push({ id: "discover-route-and-scroll-reset", verified: true, viewport: "1440x1000" });
     await desktop.close();
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });

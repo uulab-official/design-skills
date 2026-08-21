@@ -108,7 +108,7 @@
             <button class="icon-button mobile-menu-button" id="openSidebar" type="button" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">
               <svg class="icon" aria-hidden="true"><use href="#icon-menu" /></svg>
             </button>
-            <div class="breadcrumb"><span>Home</span><span class="breadcrumb-separator">/</span><strong>For you</strong></div>
+            <div class="breadcrumb"><span id="breadcrumbRoot">Home</span><span class="breadcrumb-separator">/</span><strong id="breadcrumbCurrent">For you</strong></div>
           </div>
           <div class="topbar-actions">
             <label class="search-field" for="searchInput">
@@ -123,7 +123,7 @@
           </div>
         </header>
 
-        <div class="page-content">
+        <div class="page-content" id="homeView">
           <section class="welcome-section" aria-labelledby="welcome-title">
             <div class="welcome-copy">
               <p class="eyebrow"><span class="eyebrow-line"></span>Tuesday, 18 June 2024</p>
@@ -180,6 +180,51 @@
             </aside>
           </section>
         </div>
+
+        <section class="discover-view" id="discoverView" aria-labelledby="discoverTitle" hidden>
+          <div class="discover-hero">
+            <div class="discover-hero-copy">
+              <p class="eyebrow"><span class="eyebrow-line"></span>A little further</p>
+              <h1 id="discoverTitle">Find your next <em>circle.</em></h1>
+              <p class="discover-hero-description">Browse small, generous spaces built around a shared curiosity. Join one that gives your attention somewhere good to land.</p>
+              <div class="discover-hero-meta"><span><strong>24</strong> open circles</span><span class="meta-separator">·</span><span><strong>8</strong> active this week</span></div>
+            </div>
+            <div class="discover-hero-art" aria-hidden="true"><div class="discover-art-ring discover-art-ring-one"></div><div class="discover-art-ring discover-art-ring-two"></div><div class="discover-art-center"><span>good<br />company</span></div><span class="discover-art-dot discover-art-dot-one">CM</span><span class="discover-art-dot discover-art-dot-two">QM</span><span class="discover-art-dot discover-art-dot-three">SF</span></div>
+          </div>
+
+          <div class="discover-toolbar">
+            <div><p class="section-kicker">Browse by feeling</p><div class="discover-filters" role="group" aria-label="Filter circles by feeling">
+              <button class="discover-filter is-active" type="button" data-discover-filter="all" aria-pressed="true">All circles</button>
+              <button class="discover-filter" type="button" data-discover-filter="make" aria-pressed="false">Make things</button>
+              <button class="discover-filter" type="button" data-discover-filter="slow" aria-pressed="false">Take it slow</button>
+              <button class="discover-filter" type="button" data-discover-filter="notice" aria-pressed="false">Notice more</button>
+            </div></div>
+            <span class="discover-result-note" id="discoverStatus" role="status" aria-live="polite" aria-atomic="true"></span>
+          </div>
+
+          <div class="discover-grid" id="discoverGrid">
+            <article class="discover-card discover-card-coral" data-discover-card data-discover-category="make" data-discover-search="city makers urbanism projects neighborhood">
+              <div class="discover-card-top"><span class="circle-symbol">CM</span><span class="discover-card-tag">Make things</span></div><p class="discover-card-kicker">CITY / MAKING</p><h2>City Makers</h2><p>For people turning small observations into useful things for the places they live.</p><div class="discover-card-footer"><span class="member-stack" aria-label="18 members"><b>MP</b><b>HL</b><b>JK</b><b>+15</b></span><button class="discover-card-action" type="button" data-toast="City Makers circle route coming next" aria-label="Visit City Makers circle">Visit circle <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+            </article>
+            <article class="discover-card discover-card-lilac" data-discover-card data-discover-category="slow" data-discover-search="quiet mornings rituals rest focus workday">
+              <div class="discover-card-top"><span class="circle-symbol">QM</span><span class="discover-card-tag">Take it slow</span></div><p class="discover-card-kicker">RITUAL / FOCUS</p><h2>Quiet Mornings</h2><p>A soft place for protecting the first hour, and sharing what helps you begin.</p><div class="discover-card-footer"><span class="member-stack" aria-label="6 members"><b>JK</b><b>SO</b><b>+4</b></span><button class="discover-card-action" type="button" data-toast="Quiet Mornings circle route coming next" aria-label="Visit Quiet Mornings circle">Visit circle <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+            </article>
+            <article class="discover-card discover-card-moss" data-discover-card data-discover-category="notice" data-discover-search="sunday film club cinema endings stories watch">
+              <div class="discover-card-top"><span class="circle-symbol">SF</span><span class="discover-card-tag">Notice more</span></div><p class="discover-card-kicker">FILM / AFTERGLOW</p><h2>Sunday Film Club</h2><p>Three films, one generous question, and the thoughts that stay after the credits.</p><div class="discover-card-footer"><span class="member-stack" aria-label="2 members"><b>SP</b><b>HN</b></span><button class="discover-card-action" type="button" data-toast="Sunday Film Club route coming next" aria-label="Visit Sunday Film Club circle">Visit circle <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+            </article>
+            <article class="discover-card discover-card-blue" data-discover-card data-discover-category="make" data-discover-search="open table conversation questions work practice">
+              <div class="discover-card-top"><span class="circle-symbol">OT</span><span class="discover-card-tag">Make things</span></div><p class="discover-card-kicker">QUESTIONS / PRACTICE</p><h2>Open Table</h2><p>Bring the half-formed idea. Leave with a better question and a little more courage.</p><div class="discover-card-footer"><span class="member-stack" aria-label="12 members"><b>AV</b><b>MP</b><b>HL</b><b>+9</b></span><button class="discover-card-action" type="button" data-toast="Open Table circle route coming next" aria-label="Visit Open Table circle">Visit circle <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+            </article>
+            <article class="discover-card discover-card-sand" data-discover-card data-discover-category="notice" data-discover-search="tiny libraries books reading neighborhood exchange">
+              <div class="discover-card-top"><span class="circle-symbol">TL</span><span class="discover-card-tag">Notice more</span></div><p class="discover-card-kicker">BOOKS / NEIGHBORHOOD</p><h2>Tiny Libraries</h2><p>Notes from the shelves, street corners, and little exchanges that make a city feel shared.</p><div class="discover-card-footer"><span class="member-stack" aria-label="9 members"><b>JM</b><b>SO</b><b>+7</b></span><button class="discover-card-action" type="button" data-toast="Tiny Libraries circle route coming next" aria-label="Visit Tiny Libraries circle">Visit circle <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+            </article>
+            <article class="discover-card discover-card-ink" data-discover-card data-discover-category="slow" data-discover-search="field notes walking nature attention daily">
+              <div class="discover-card-top"><span class="circle-symbol">FN</span><span class="discover-card-tag">Take it slow</span></div><p class="discover-card-kicker">WALK / ATTENTION</p><h2>Field Notes</h2><p>A weekly pause to look closely, walk without a destination, and bring one detail back.</p><div class="discover-card-footer"><span class="member-stack" aria-label="14 members"><b>HL</b><b>JK</b><b>MP</b><b>+11</b></span><button class="discover-card-action" type="button" data-toast="Field Notes circle route coming next" aria-label="Visit Field Notes circle">Visit circle <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+            </article>
+          </div>
+
+          <div class="discover-invite"><div><p class="section-kicker">Couldn’t find the right room?</p><h2>Start with the question you’re carrying.</h2></div><button class="button button-primary" id="discoverStartConversation" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-plus" /></svg> Start a conversation</button></div>
+        </section>
       </main>
     </div>
 

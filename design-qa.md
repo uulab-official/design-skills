@@ -1,7 +1,7 @@
 # Design QA
 
 Date: 2026-08-21  
-Scope: Gather community example — `Home / For you`, desktop and mobile handoff
+Scope: Gather community example — `Home / For you` and `Discover / Circles`, desktop and mobile handoff
 
 ## Comparison inputs
 
@@ -13,6 +13,7 @@ The source and implementation were captured and reviewed together before judging
 | Desktop comparison | [`home-source-vs-implementation.png`](examples/community/evidence/qa/home-source-vs-implementation.png) | Same comparison input | 1280 × 720 CSS px per panel / 2584 × 768 composite px | 1× |
 | Mobile responsive set | [`board-390.jpg`](examples/community/evidence/board-390.jpg) | [`prototype-390.jpg`](examples/community/evidence/prototype-390.jpg) | 390 × 844 CSS px / full-page evidence | 1× |
 | Mobile comparison | [`mobile-source-vs-implementation.png`](examples/community/evidence/qa/mobile-source-vs-implementation.png) | Same comparison input | 390 × 844 CSS px viewport, full-page composite | 1× |
+| Discover route review | [prototype-discover-1440.jpg](examples/community/evidence/prototype-discover-1440.jpg), [prototype-discover-390.jpg](examples/community/evidence/prototype-discover-390.jpg) | Same implementation route at desktop and mobile | 1440 × 1000 and 390 × 844 CSS px / full-page evidence | 1× |
 
 The desktop source is the refreshed `A / 01 · Home / For you` artboard with its screen content aligned to the viewport. The mobile source is the responsive design board containing `A / 06 · Mobile / Home`; the implementation is the runnable prototype at the same mobile viewport.
 
@@ -22,13 +23,14 @@ The source and implementation share the same editorial hierarchy: forest navigat
 
 ## Focused comparison
 
-The focused desktop pass inspected the hero baseline, orbit artwork, feed heading/filter group, featured card split, image crop, and right rail. The focused mobile pass inspected the top bar, hero wrap, primary action, orbit, featured card, bottom navigation, and touch-target geometry. No overlap, clipping, broken wrapping, or hierarchy collapse was found in the reviewed states.
+The focused desktop pass inspected the hero baseline, orbit artwork, feed heading/filter group, featured card split, image crop, and right rail. The focused mobile pass inspected the top bar, hero wrap, primary action, orbit, featured card, bottom navigation, and touch-target geometry. The Discover pass inspected the dark directory hero, orbit art, topic filter row, six-card grid, route CTA, and mobile bottom navigation at both target sizes. No overlap, clipping, broken wrapping, or hierarchy collapse was found in the reviewed states.
 
 ## Findings and comparison history
 
 | ID | Severity | Surface | Initial finding | Resolution |
 | --- | --- | --- | --- | --- |
 | DQ-001 | P2 | Layout / handoff fidelity | The `Home / For you` board preview omitted the desktop circles rail and rendered the featured story full width, while the implementation used a main column plus `Circles you’re in` rail. This could cause contributors to reproduce a different desktop composition from the design board. | Resolved by adding the miniature rail to `examples/community/board.html` and matching the board grid in `examples/community/board.css`. Re-captured and re-reviewed after the change. |
+| DQ-002 | P2 | Route / implementation coverage | The board defined Discover / Circles as a screen, but the runnable navigation stopped at a route-boundary toast. This made the board-to-prototype handoff incomplete for the first discovery task. | Resolved by adding a shareable Discover view with topic filters, global search feedback, instant scroll reset, browser-back recovery, responsive evidence, and a dedicated visual baseline. |
 
 P0 findings: none.  
 P1 findings: none.  
@@ -46,28 +48,30 @@ The v0.13 route-feedback pass is also behavior-only: the featured story's visibl
 
 The v0.14 navigation-state pass is behavior-only: the sidebar and mobile navigation now expose named landmarks and a synchronized `aria-current="page"` destination while preserving the same visual active treatment.
 
+The v0.15 Discover-route pass closes the first screen-coverage gap: Discover now renders a real responsive directory from the board’s dark editorial direction, preserves its state in the URL, resets scroll on route entry/history restoration, and returns to Home through browser back. The new route is captured at desktop and mobile sizes and included in visual regression.
+
 ## Rubric pass
 
 - Typography: local fonts, weight hierarchy, serif display treatment, wrapping, and line-height remain coherent across source and implementation.
-- Spacing and layout: the desktop rail/feature split now matches the handoff; mobile composition stays single-column with bottom navigation.
+- Spacing and layout: the desktop rail/feature split now matches the handoff; Discover adds a balanced three-column directory and mobile composition stays single-column with bottom navigation.
 - Viewport resilience: browser QA passed at 1440 × 1000 and 390 × 844; no overlap or unusable collapse was observed.
 - Colors and tokens: forest, paper, coral, lilac, moss, borders, and surface treatments map consistently across the board and prototype.
 - Image quality and assets: the featured story uses the same local editorial asset and preserves its crop; no placeholder image replaces a designed asset.
 - Copy and content: source and implementation use the same product copy and state labels for the reviewed home surface.
 - Icons: board symbols and implementation SVG sprite icons are present, aligned, and stylistically consistent.
-- States and interactions: URL state, history restoration, dedicated feed-status announcement, Featured story route feedback, synchronized navigation current state, composer focus return, drawer focus return, skip-link navigation, board state, and board dialog focus return passed runtime checks.
+- States and interactions: URL state, history restoration, Discover route entry/back and instant scroll reset, topic filters, dedicated feed-status announcement, Featured story route feedback, synchronized navigation current state, composer focus return, drawer focus return, skip-link navigation, board state, and board dialog focus return passed runtime checks.
 - Feed action focus: Like/Save rerendering preserves the focused action and its updated pressed state in browser QA.
 - Accessibility: semantic controls, visible focus treatment, dedicated live status messaging, reduced-motion support, image alt text, and minimum 44 × 44 px mobile control geometry are covered by the example contract and runtime QA.
 - AI shortcut artifacts: no generic placeholder card, fake product image, or mismatched decorative surface was found in the reviewed home surface; the orbit treatment is a deliberate shared motif.
 
 ## Verification
 
-- `npm run capture:community` — refreshed 6 evidence captures.
+- `npm run capture:community` — refreshed 8 evidence captures, including Discover at desktop and mobile.
 - QA comparison capture — refreshed source and implementation panels at 1280 × 720 CSS px / 1× density.
-- `npm run validate:evidence` — 6 captures and 22 documented runtime assertions passed.
-- `npm run test:browser` — 15 / 15 runtime checks passed, including navigation current state, dedicated feed-status announcements, Featured story CTA feedback, and Like action focus retention after feed rerender.
-- `npm run test:visual` — 3 / 3 targets passed with `mismatchRatio: 0`.
+- `npm run validate:evidence` — 8 captures and 23 documented runtime assertions passed.
+- `npm run test:browser` — 16 / 16 runtime checks passed, including Discover route entry/back recovery with instant scroll reset, navigation current state, dedicated feed-status announcements, Featured story CTA feedback, and Like action focus retention after feed rerender.
+- `npm run test:visual` — 4 / 4 targets passed with `mismatchRatio: 0`.
 - `python3 -m unittest tests.test_community_example_contract.CommunityExampleContractTests.test_responsive_and_motion_contracts_are_present` — safe-area contract passed after the intentional RED → GREEN cycle.
-- Browser console sweep — 0 console errors and 0 page errors across prototype desktop/mobile and board desktop.
+- Browser console sweep — 0 console errors and 0 page errors across Home desktop/mobile, Discover desktop/mobile, and board desktop.
 
 final result: passed

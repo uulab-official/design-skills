@@ -92,6 +92,7 @@ This prevents “community” from defaulting to one feed pattern. The selected 
 | Feed status announcement | Filter and search result counts use a dedicated polite status region; post-card actions do not re-announce the entire feed |
 | Featured story CTA | The primary featured-story affordance provides explicit route-boundary feedback until the conversation route is implemented |
 | Navigation current state | Sidebar and mobile navigation share named landmarks and expose the selected destination with `aria-current="page"` |
+| Discover route | Discover opens as a shareable `view=discover` route, resets scroll instantly, filters circle cards, and restores Home through browser back |
 
 ## Prototype map
 
@@ -101,7 +102,7 @@ board.html
   ├─ Conversation / Events  ├─ archetype exploration board
   ├─ Knowledge commons ────┘
   ├─ Web / iOS / Android    ├─ platform translation board
-  ├─ Discover / Circles     ├─ open live prototype → index.html
+  ├─ Discover / Circles     ├─ open live prototype → index.html?view=discover
   ├─ Circle / City Makers  │
   ├─ Thread / Conversation  │
   ├─ Profile / Mina Park    │
@@ -132,7 +133,8 @@ board.html
 | Desktop 1440 × 1000 | [`board-1440.jpg`](evidence/board-1440.jpg), [`prototype-1440.jpg`](evidence/prototype-1440.jpg) | Primary wide review of the design board and runnable surface |
 | Desktop 1280 × 900 | [`board-1280.jpg`](evidence/board-1280.jpg) | Directions, archetypes, platform translations, home, discover, circle, thread, profile |
 | Desktop 1024 × 900 | [`board-1024.jpg`](evidence/board-1024.jpg) | Sidebar-to-drawer boundary and content reflow |
-| Mobile 390 × 844 | [`board-390.jpg`](evidence/board-390.jpg), [`prototype-390.jpg`](evidence/prototype-390.jpg) | One-column cards, horizontal filters, bottom navigation, composer, empty/loading/recovery/success states |
+| Mobile 390 × 844 | [`board-390.jpg`](evidence/board-390.jpg), [`prototype-390.jpg`](evidence/prototype-390.jpg), [`prototype-discover-390.jpg`](evidence/prototype-discover-390.jpg) | One-column cards, horizontal filters, bottom navigation, Discover directory, composer, empty/loading/recovery/success states |
+| Discover desktop 1440 × 1000 | [`prototype-discover-1440.jpg`](evidence/prototype-discover-1440.jpg) | Dark editorial hero, circle directory cards, topic filters, route-boundary state |
 | Native intent: iOS 390 pt / Android 360 dp | Platform translation artboards | Large-title/tab-bar and app-bar/FAB behavior are specified; native runtime remains a target, not a shipped surface |
 
 The live surface was checked after the direction, platform, and archetype boards were added. Runtime QA also exercised composer validation → recovery → publish success, feed filter state, mobile drawer open → Escape recovery, URL restoration, prototype and board history-state rehydration, local font loading, search URL synchronization, composer focus return, drawer focus return, 44 px mobile touch-target geometry, board dialog focus return, and skip-link navigation. The [evidence manifest](evidence/manifest.json) binds each capture and runtime assertion to its route, viewport, and represented state; run `npm run test:browser` and `npm run validate:evidence` to verify the interaction contract and JPEG dimensions. Evidence captures are committed under `examples/community/evidence/`; they are full-page JPEG screenshots produced from the local server at the viewport sizes named above. Reproduce the surface with the command in [Run locally](#run-locally), then open `/board.html` and `/index.html` at the declared sizes. The static example has no backend or network dependency; loading, empty, recovery, validation, and success are represented as deterministic prototype states. Contributors can regenerate the capture matrix with `npm install`, `npx playwright install chromium`, and `npm run capture:community`; the command reads the manifest instead of maintaining a second list of viewports.

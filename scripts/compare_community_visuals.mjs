@@ -16,6 +16,7 @@ const MAX_MISMATCH_RATIO = 0.03;
 const targets = [
   { id: "prototype-wide", route: "/index.html?evidence=visual", viewport: { width: 1440, height: 1000 } },
   { id: "prototype-mobile", route: "/index.html?evidence=visual", viewport: { width: 390, height: 844 } },
+  { id: "prototype-discover-wide", route: "/index.html?evidence=visual&view=discover", viewport: { width: 1440, height: 1000 } },
   { id: "board-wide", route: "/board.html?evidence=visual", viewport: { width: 1440, height: 1000 } },
 ];
 

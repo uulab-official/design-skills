@@ -50,9 +50,11 @@ const posts = [
 ];
 
 const state = {
+  view: "home",
   filter: "all",
   circle: "",
   query: "",
+  discoverFilter: "all",
   liked: new Set(),
   saved: new Set(),
   toastTimer: null,
@@ -63,6 +65,9 @@ const state = {
 const feedList = document.querySelector("#feedList");
 const feedStatus = document.querySelector("#feedStatus");
 const searchInput = document.querySelector("#searchInput");
+const homeView = document.querySelector("#homeView");
+const discoverView = document.querySelector("#discoverView");
+const discoverStatus = document.querySelector("#discoverStatus");
 const composerDialog = document.querySelector("#composerDialog");
 const composerForm = document.querySelector("#composerForm");
 const composerTitleInput = document.querySelector("#composerTitleInput");
@@ -74,27 +79,43 @@ const sidebarTrigger = document.querySelector("#openSidebar");
 
 const validFilters = new Set(["all", "following", "latest"]);
 const validCircles = new Set(["City Makers", "Quiet Mornings", "Sunday Film Club", "Open Table"]);
+const validViews = new Set(["home", "discover"]);
+const validDiscoverFilters = new Set(["all", "make", "slow", "notice"]);
 
 function readUrlState() {
   const params = new URLSearchParams(window.location.search);
+  const view = params.get("view");
   const filter = params.get("filter");
   const circle = params.get("circle");
+  const discoverFilter = params.get("topic");
+  state.view = validViews.has(view) ? view : "home";
   state.filter = validFilters.has(filter) ? filter : "all";
   state.circle = validCircles.has(circle) ? circle : "";
   state.query = params.get("q")?.slice(0, 120) ?? "";
+  state.discoverFilter = validDiscoverFilters.has(discoverFilter) ? discoverFilter : "all";
   if (state.circle) state.filter = "all";
   searchInput.value = state.query;
 }
 
-function syncUrlState() {
+function updateUrlState(historyMethod = "replaceState") {
   const url = new URL(window.location.href);
+  if (state.view === "discover") url.searchParams.set("view", "discover");
+  else url.searchParams.delete("view");
   if (state.filter !== "all" && !state.circle) url.searchParams.set("filter", state.filter);
   else url.searchParams.delete("filter");
   if (state.circle) url.searchParams.set("circle", state.circle);
   else url.searchParams.delete("circle");
   if (state.query.trim()) url.searchParams.set("q", state.query.trim().slice(0, 120));
   else url.searchParams.delete("q");
-  window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+  if (state.view === "discover" && state.discoverFilter !== "all") url.searchParams.set("topic", state.discoverFilter);
+  else url.searchParams.delete("topic");
+  const nextUrl = url.pathname + url.search + url.hash;
+  if (historyMethod === "pushState") window.history.pushState({}, "", nextUrl);
+  else window.history.replaceState({}, "", nextUrl);
+}
+
+function syncUrlState() {
+  updateUrlState();
 }
 
 function icon(name) {
@@ -150,7 +171,7 @@ function setComposerError(hasError) {
   }
 }
 
-function renderFeed({ focusPostId = null, focusAction = "" } = {}) {
+function renderFeed({ focusPostId = null, focusAction = "", syncUrl = true } = {}) {
   const query = state.query.trim().toLowerCase();
   const visiblePosts = posts.filter((post) => {
     const matchesFilter = state.filter === "all" || post.filter === state.filter;
@@ -178,10 +199,51 @@ function renderFeed({ focusPostId = null, focusAction = "" } = {}) {
   document.querySelectorAll("[data-filter-circle]").forEach((button) => {
     button.setAttribute("aria-pressed", String(button.dataset.filterCircle === state.circle));
   });
-  syncUrlState();
+  if (syncUrl) syncUrlState();
   if (focusPostId !== null && focusAction) {
     feedList.querySelector(`[data-post-id="${focusPostId}"] [data-post-action="${focusAction}"]`)?.focus();
   }
+}
+
+function renderDiscover({ syncUrl = true } = {}) {
+  const query = state.query.trim().toLowerCase();
+  const cards = Array.from(document.querySelectorAll("[data-discover-card]"));
+  let visibleCount = 0;
+  cards.forEach((card) => {
+    const matchesFilter = state.discoverFilter === "all" || card.dataset.discoverCategory === state.discoverFilter;
+    const matchesQuery = !query || card.dataset.discoverSearch.includes(query);
+    const visible = matchesFilter && matchesQuery;
+    card.hidden = !visible;
+    if (visible) visibleCount += 1;
+  });
+  document.querySelectorAll("[data-discover-filter]").forEach((button) => {
+    const isActive = button.dataset.discoverFilter === state.discoverFilter;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+  if (discoverStatus) {
+    const queryCopy = query ? " matching “" + state.query.trim() + "”" : "";
+    discoverStatus.textContent = visibleCount + " circle" + (visibleCount === 1 ? "" : "s") + queryCopy;
+  }
+  if (syncUrl) syncUrlState();
+}
+
+function renderRoute({ syncUrl = true, scroll = true } = {}) {
+  const isDiscover = state.view === "discover";
+  homeView.hidden = isDiscover;
+  discoverView.hidden = !isDiscover;
+  document.querySelector("#breadcrumbRoot").textContent = isDiscover ? "Discover" : "Home";
+  document.querySelector("#breadcrumbCurrent").textContent = isDiscover ? "Circles" : "For you";
+  setActiveNavigation(isDiscover ? "Discover" : "Home");
+  if (isDiscover) renderDiscover({ syncUrl });
+  else renderFeed({ syncUrl });
+  if (scroll) window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+}
+
+function navigateToView(view) {
+  state.view = validViews.has(view) ? view : "home";
+  updateUrlState("pushState");
+  renderRoute({ syncUrl: false });
 }
 
 function openComposer() {
@@ -272,6 +334,10 @@ feedList.addEventListener("click", (event) => {
 
 searchInput.addEventListener("input", (event) => {
   state.query = event.target.value;
+  if (state.view === "discover") {
+    renderDiscover();
+    return;
+  }
   state.circle = "";
   state.filter = "all";
   renderFeed();
@@ -323,10 +389,11 @@ composerForm.addEventListener("submit", (event) => {
   });
   state.filter = "all";
   state.circle = "";
+  state.view = "home";
   composerForm.reset();
   setComposerError(false);
   closeComposer();
-  renderFeed();
+  renderRoute({ syncUrl: true, scroll: false });
   showToast("Conversation published to your circles");
 });
 
@@ -347,12 +414,24 @@ function setActiveNavigation(label) {
 document.querySelectorAll("[data-nav]").forEach((button) => {
   button.addEventListener("click", () => {
     const label = button.dataset.nav;
-    setActiveNavigation(label);
     toggleSidebar(false);
+    if (label === "Home" || label === "Discover") {
+      navigateToView(label === "Discover" ? "discover" : "home");
+      return;
+    }
+    setActiveNavigation(label);
     if (label !== "Home") showToast(`${label} is mapped for the next route`);
   });
 });
 
+document.querySelectorAll("[data-discover-filter]").forEach((button) => {
+  button.addEventListener("click", () => {
+    state.discoverFilter = validDiscoverFilters.has(button.dataset.discoverFilter) ? button.dataset.discoverFilter : "all";
+    renderDiscover();
+  });
+});
+
+document.querySelector("#discoverStartConversation").addEventListener("click", openComposer);
 document.querySelectorAll("[data-toast]").forEach((button) => button.addEventListener("click", () => showToast(button.dataset.toast)));
 
 document.addEventListener("keydown", (event) => {
@@ -368,9 +447,8 @@ document.addEventListener("keydown", (event) => {
 
 window.addEventListener("popstate", () => {
   readUrlState();
-  renderFeed();
+  renderRoute({ syncUrl: false });
 });
 
-setActiveNavigation("Home");
 readUrlState();
-renderFeed();
+renderRoute({ syncUrl: false, scroll: false });

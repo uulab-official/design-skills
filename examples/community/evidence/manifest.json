@@ -44,6 +44,20 @@
       "viewport": {"width": 390, "height": 844},
       "file": "prototype-390.jpg",
       "states": ["mobile navigation", "bottom action", "stacked feed"]
+    },
+    {
+      "id": "prototype-discover-wide",
+      "route": "/index.html?evidence=0.2&view=discover",
+      "viewport": {"width": 1440, "height": 1000},
+      "file": "prototype-discover-1440.jpg",
+      "states": ["Discover route", "circle directory", "desktop"]
+    },
+    {
+      "id": "prototype-discover-mobile",
+      "route": "/index.html?evidence=0.2&view=discover",
+      "viewport": {"width": 390, "height": 844},
+      "file": "prototype-discover-390.jpg",
+      "states": ["Discover route", "circle directory", "mobile recomposition"]
     }
   ],
   "runtime_checks": [
@@ -64,6 +78,7 @@
     {"id": "feed-action-focus", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "Like/Save rerendering preserves focus on the activated action and its pressed state."},
     {"id": "featured-story-feedback", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "The featured-story CTA provides explicit feedback for its next-route boundary."},
     {"id": "navigation-current-state", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "Named navigation landmarks expose a shared aria-current page destination across sidebar and mobile navigation."},
+    {"id": "discover-route-and-scroll-reset", "route": "/index.html?view=discover", "viewport": "1440x1000", "verified": true, "assertion": "Discover is a real shareable view with route-boundary navigation, instant top reset, and browser-back restoration to Home."},
     {"id": "drawer-focus-return", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Mobile drawer focus moves inside on open and returns to the menu trigger on Escape."},
     {"id": "mobile-touch-targets", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Core mobile controls render with at least 44 × 44 px usable geometry."},
     {"id": "board-url-state", "route": "/board.html?source=qa&view=mobile&filter=platforms", "viewport": "1440x1000", "verified": true, "assertion": "The design board restores view and filter state from a shareable URL while preserving unknown parameters."},
