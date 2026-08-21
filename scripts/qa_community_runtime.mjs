@@ -97,6 +97,12 @@ async function runRuntimeChecks() {
     }));
     assert(drawerClosed.active === "openSidebar" && drawerClosed.expanded === "false", "Drawer focus did not return after Escape");
     results.push({ id: "drawer-focus-return", verified: true, viewport: "390x844" });
+    const touchTargets = await mobile.evaluate(() => Array.from(document.querySelectorAll("#openSidebar, .filter-chip, .post-action, .circle-row, .mobile-nav-item, .mobile-compose, .round-arrow")).map((element) => {
+      const rect = element.getBoundingClientRect();
+      return { width: rect.width, height: rect.height };
+    }));
+    assert(touchTargets.length > 0 && touchTargets.every(({ width, height }) => width >= 44 && height >= 44), "A mobile interaction target is smaller than 44px");
+    results.push({ id: "mobile-touch-targets", verified: true, viewport: "390x844" });
     await mobile.close();
 
     const board = await browser.newPage({ viewport: { width: 1440, height: 1000 } });

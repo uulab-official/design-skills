@@ -37,6 +37,9 @@ class CommunityExampleContractTests(unittest.TestCase):
         self.assertIn('env(safe-area-inset-bottom)', self.css)
         self.assertIn('@media (prefers-reduced-motion: reduce)', self.css)
         self.assertIn('@media (max-width: 760px)', self.css)
+        self.assertIn('.filter-chip { min-height: 44px;', self.css)
+        self.assertIn('.post-action { min-width: 44px; min-height: 44px;', self.css)
+        self.assertIn('.round-arrow { width: 44px; height: 44px;', self.css)
 
     def test_keyboard_and_focus_handoff_contracts_are_present(self):
         self.assertIn('href="#mainContent"', self.html)
