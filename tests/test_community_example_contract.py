@@ -56,6 +56,7 @@ class CommunityExampleContractTests(unittest.TestCase):
     def test_design_board_exposes_shareable_state_and_dialog_focus(self):
         board_html = (EXAMPLE / "board.html").read_text(encoding="utf-8")
         board_js = (EXAMPLE / "board.js").read_text(encoding="utf-8")
+        self.assertIn('class="version-chip">v0.11 · review</span>', board_html)
         self.assertIn('aria-label="Preview size"', board_html)
         self.assertIn('data-view-toggle="desktop" aria-pressed="true"', board_html)
         self.assertIn('data-board-filter="all" aria-pressed="true"', board_html)

@@ -59,8 +59,12 @@
     {"id": "url-sync", "route": "/index.html?source=qa", "viewport": "1440x1000", "verified": true, "assertion": "Changing search updates the URL while preserving unknown query parameters."},
     {"id": "composer-focus-return", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "Composer open focuses the title and Escape returns focus to its trigger."},
     {"id": "skip-link", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "The first keyboard target skips the shell and focuses main content."},
+    {"id": "prototype-history-state", "route": "/index.html?filter=latest", "viewport": "1440x1000", "verified": true, "assertion": "A browser history change rehydrates the prototype filter and matching feed."},
+    {"id": "feed-action-focus", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "Like/Save rerendering preserves focus on the activated action and its pressed state."},
     {"id": "drawer-focus-return", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Mobile drawer focus moves inside on open and returns to the menu trigger on Escape."},
+    {"id": "mobile-touch-targets", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Core mobile controls render with at least 44 × 44 px usable geometry."},
     {"id": "board-url-state", "route": "/board.html?source=qa&view=mobile&filter=platforms", "viewport": "1440x1000", "verified": true, "assertion": "The design board restores view and filter state from a shareable URL while preserving unknown parameters."},
+    {"id": "board-history-state", "route": "/board.html?view=desktop&filter=screens", "viewport": "1440x1000", "verified": true, "assertion": "A browser history change rehydrates the board view, filter, and visible screens."},
     {"id": "board-dialog-focus-return", "route": "/board.html?source=qa&view=mobile&filter=platforms", "viewport": "1440x1000", "verified": true, "assertion": "Opening a screen handoff dialog focuses its close control and Escape returns focus to the invoking artboard."}
   ]
 }
