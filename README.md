@@ -40,7 +40,7 @@ npm run validate:evidence
 npm run test:browser
 ```
 
-`npm run test:browser` proves URL restoration, search URL synchronization, composer focus return, mobile drawer focus return, and skip-link navigation in Chromium.
+`npm run test:browser` proves URL restoration, local font loading, search URL synchronization, composer focus return, mobile drawer focus return, and skip-link navigation in Chromium.
 
 ## Quality checks
 
@@ -51,6 +51,8 @@ npm run ci:quality
 ```
 
 This runs the Python contract suite, evidence manifest validator, and dependency-light skill validator. Pull requests also run the browser interaction assertions, render the evidence matrix in GitHub Actions, and upload the generated images as an artifact for visual review. Demo imagery is checked into `examples/community/assets/editorial/` so captures do not depend on an image CDN; the workflow intentionally does not use a hard pixel-diff gate yet because font rendering can still vary across environments.
+
+The community reference surface also ships its DM Sans and Fraunces WOFF2 files in `examples/community/assets/fonts/`, with the applicable OFL text beside them. The pages load `assets/fonts.css` locally so typography remains reviewable offline and capture output is not dependent on Google Fonts availability.
 
 ## Design standard
 

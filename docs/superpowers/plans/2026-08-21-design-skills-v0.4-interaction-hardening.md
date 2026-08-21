@@ -1,6 +1,6 @@
 # Design Skills v0.4 Interaction Hardening Roadmap
 
-> **Status:** In progress. URL state and keyboard/focus handoff are implemented for the community web reference surface; backend and native interaction evidence remain scope-dependent.
+> **Status:** Complete for the community web reference surface. Backend and native interaction evidence remain scope-dependent.
 
 ## Goal
 
@@ -26,7 +26,7 @@ Make the polished web prototype behave like a production handoff at the moments 
 - [x] Add contract coverage for URL state and focus handoff.
 - [x] Add browser assertions for URL restoration, focus return, and skip-link navigation to the runtime evidence manifest.
 - [x] Replace external demo imagery with local editorial assets so evidence crops are deterministic.
-- [ ] Add deterministic local font assets before enforcing pixel-diff thresholds in CI.
+- [x] Add deterministic local font assets before enforcing pixel-diff thresholds in CI.
 
 ### 4. Scope boundaries
 

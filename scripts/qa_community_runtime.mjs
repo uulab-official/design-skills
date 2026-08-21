@@ -27,6 +27,20 @@ async function runRuntimeChecks() {
     assert(restored.posts === 1, "Restored URL state rendered the wrong feed");
     results.push({ id: "url-restoration", verified: true, viewport: "1440x1000" });
 
+    const localFonts = await desktop.evaluate(async () => {
+      await document.fonts.ready;
+      return {
+        status: document.fonts.status,
+        sans: document.fonts.check('700 16px "DM Sans"'),
+        serif: document.fonts.check('500 32px "Fraunces"'),
+        remoteStylesheet: Boolean(document.querySelector('link[href*="fonts.googleapis.com"]')),
+      };
+    });
+    assert(localFonts.status === "loaded", "Local font set did not finish loading");
+    assert(localFonts.sans && localFonts.serif, "Local display and UI fonts were not available");
+    assert(!localFonts.remoteStylesheet, "The prototype still depends on a remote font stylesheet");
+    results.push({ id: "local-fonts", verified: true, viewport: "1440x1000" });
+
     await desktop.fill("#searchInput", "people");
     const syncedUrl = await desktop.evaluate(() => window.location.search);
     assert(syncedUrl.includes("source=qa") && syncedUrl.includes("q=people"), "Search state was not reflected in the URL");

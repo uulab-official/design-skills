@@ -53,4 +53,4 @@ Keep changes focused and explain the product reason in the pull request descript
 
 Use clear, scoped commits such as `feat: add ...`, `fix: correct ...`, or `docs: clarify ...`. Never commit `node_modules`; it is ignored by the repository.
 
-GitHub Actions runs `npm run ci:quality` and a separate Chromium evidence render on every push to `main` and pull request. Demo imagery is local to keep those renders stable; the rendered images are uploaded for review and are not treated as a pixel-perfect baseline until the repository has deterministic font loading and a stable cross-environment diff policy.
+GitHub Actions runs `npm run ci:quality` and a separate Chromium evidence render on every push to `main` and pull request. Demo imagery and prototype fonts are local to keep those renders stable; the rendered images are uploaded for review and are not treated as a pixel-perfect baseline until the repository has a stable cross-environment rasterization policy.

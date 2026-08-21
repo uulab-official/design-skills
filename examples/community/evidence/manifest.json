@@ -55,6 +55,7 @@
     {"id": "mobile-drawer", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Drawer opens with aria-expanded and closes from Escape."},
     {"id": "recovery", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Input recovery clears the validation error before publish."},
     {"id": "url-restoration", "route": "/index.html?filter=following&q=work", "viewport": "1440x1000", "verified": true, "assertion": "A shared URL restores the selected feed filter, search query, and matching posts."},
+    {"id": "local-fonts", "route": "/index.html?source=qa&filter=following&q=work", "viewport": "1440x1000", "verified": true, "assertion": "The local DM Sans and Fraunces files finish loading without a Google Fonts stylesheet dependency."},
     {"id": "url-sync", "route": "/index.html?source=qa", "viewport": "1440x1000", "verified": true, "assertion": "Changing search updates the URL while preserving unknown query parameters."},
     {"id": "composer-focus-return", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "Composer open focuses the title and Escape returns focus to its trigger."},
     {"id": "skip-link", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "The first keyboard target skips the shell and focuses main content."},

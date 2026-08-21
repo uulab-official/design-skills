@@ -52,6 +52,30 @@ class CaptureAndPlatformContractTests(unittest.TestCase):
             self.assertGreater(asset.stat().st_size, 1024, relative_path)
             self.assertIn(relative_path, combined)
 
+    def test_community_metadata_and_fonts_are_local(self):
+        community = ROOT / "examples" / "community"
+        for page_name in ("index.html", "board.html"):
+            page = (community / page_name).read_text(encoding="utf-8")
+            self.assertIn('rel="icon"', page)
+            self.assertIn('property="og:image"', page)
+            self.assertIn('name="twitter:image"', page)
+            self.assertIn('./assets/fonts.css', page)
+            self.assertNotIn("fonts.googleapis.com", page)
+
+        fonts_css = (community / "assets" / "fonts.css").read_text(encoding="utf-8")
+        self.assertNotIn("fonts.gstatic.com", fonts_css)
+        self.assertIn("dm-sans-latin.woff2", fonts_css)
+        self.assertIn("fraunces-latin.woff2", fonts_css)
+        for font_name in (
+            "assets/fonts/dm-sans-latin.woff2",
+            "assets/fonts/dm-sans-latin-ext.woff2",
+            "assets/fonts/fraunces-latin.woff2",
+            "assets/fonts/fraunces-latin-ext.woff2",
+        ):
+            font = community / font_name
+            self.assertTrue(font.is_file(), font_name)
+            self.assertGreater(font.stat().st_size, 1024, font_name)
+
 
 if __name__ == "__main__":
     unittest.main()

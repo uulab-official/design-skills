@@ -25,7 +25,7 @@ Make the design-quality contract easy to run in a clean checkout and easy to rev
 - [x] Run contract checks on pushes to `main` and pull requests.
 - [x] Render the declared community viewport matrix in a separate Chromium job.
 - [x] Upload generated evidence as a short-retention artifact for human visual review.
-- [ ] Establish a cross-environment pixel-diff baseline and threshold after font sources are deterministic.
+- [ ] Establish a cross-environment pixel-diff baseline and threshold with fixed local font and image assets.
 
 ### 4. Scope boundaries
 
