@@ -96,6 +96,7 @@ const validFilters = new Set(["all", "following", "latest"]);
 const validCircles = new Set(["City Makers", "Quiet Mornings", "Sunday Film Club", "Open Table", "Tiny Libraries", "Field Notes"]);
 const validViews = new Set(["home", "discover", "circle", "thread", "profile"]);
 const validDiscoverFilters = new Set(["all", "make", "slow", "notice"]);
+const validProfileTabs = new Set(["conversations", "saved"]);
 const circleProfiles = {
   "City Makers": {
     eyebrow: "City / making",
@@ -321,12 +322,14 @@ function readUrlState() {
   const circle = params.get("circle");
   const thread = params.get("thread");
   const profile = params.get("profile");
+  const profileTab = params.get("tab");
   const discoverFilter = params.get("topic");
   state.view = validViews.has(view) ? view : "home";
   state.filter = validFilters.has(filter) ? filter : "all";
   state.circle = validCircles.has(circle) ? circle : "";
   state.thread = validThreads.has(thread) ? thread : "";
   state.profile = validProfiles.has(profile) ? profile : "";
+  state.profileTab = validProfileTabs.has(profileTab) ? profileTab : "conversations";
   if (state.view === "circle" && !state.circle) state.view = "home";
   if (state.view === "thread" && !state.thread) state.view = "home";
   if (state.view === "profile" && !state.profile) state.view = "home";
@@ -349,6 +352,8 @@ function updateUrlState(historyMethod = "replaceState") {
   else url.searchParams.delete("thread");
   if (state.view === "profile" && state.profile) url.searchParams.set("profile", state.profile);
   else url.searchParams.delete("profile");
+  if (state.view === "profile" && state.profileTab !== "conversations") url.searchParams.set("tab", state.profileTab);
+  else url.searchParams.delete("tab");
   if (state.query.trim()) url.searchParams.set("q", state.query.trim().slice(0, 120));
   else url.searchParams.delete("q");
   if (state.view === "discover" && state.discoverFilter !== "all") url.searchParams.set("topic", state.discoverFilter);
@@ -568,7 +573,8 @@ function renderRoute({ syncUrl = true, scroll = true } = {}) {
   profileView.hidden = !isProfile;
   document.querySelector("#breadcrumbRoot").textContent = isCircle || isThread ? "Circles" : isProfile ? "Profile" : isDiscover ? "Discover" : "Home";
   document.querySelector("#breadcrumbCurrent").textContent = isThread ? threadProfiles[state.thread]?.title || "Conversation" : isCircle ? state.circle : isProfile ? profileProfiles[state.profile]?.name || "Mina Park" : isDiscover ? "Circles" : "For you";
-  setActiveNavigation(isCircle || isThread ? "Your circles" : isDiscover ? "Discover" : isProfile ? "" : "Home");
+  const activeNavigation = isCircle || isThread ? "Your circles" : isDiscover ? "Discover" : isProfile && state.profileTab === "saved" ? "Saved" : isProfile ? "" : "Home";
+  setActiveNavigation(activeNavigation);
   if (isDiscover) renderDiscover({ syncUrl });
   else if (isCircle) renderCircle({ syncUrl });
   else if (isThread) renderThread({ syncUrl });
@@ -625,6 +631,21 @@ function navigateToProfile(profileId) {
   state.view = "profile";
   state.profile = profileId;
   state.profileTab = "conversations";
+  state.profileFollowed = false;
+  state.profileStatus = "";
+  state.circle = "";
+  state.thread = "";
+  state.query = "";
+  state.filter = "all";
+  searchInput.value = "";
+  updateUrlState("pushState");
+  renderRoute({ syncUrl: false });
+}
+
+function navigateToSaved() {
+  state.view = "profile";
+  state.profile = "mina";
+  state.profileTab = "saved";
   state.profileFollowed = false;
   state.profileStatus = "";
   state.circle = "";
@@ -820,6 +841,10 @@ document.querySelectorAll("[data-nav]").forEach((button) => {
         return;
       }
       navigateToView(label === "Discover" ? "discover" : "home");
+      return;
+    }
+    if (label === "Saved") {
+      navigateToSaved();
       return;
     }
     setActiveNavigation(label);

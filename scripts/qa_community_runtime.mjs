@@ -293,6 +293,25 @@ async function runRuntimeChecks() {
     }));
     assert(!profileBack.url.includes("view=profile") && profileBack.homeHidden === false && profileBack.profileHidden === true, "Browser back did not restore Home after leaving Profile");
     results.push({ id: "profile-route-and-tabs", verified: true, viewport: "1440x1000" });
+
+    await desktop.locator('.nav-item[data-nav="Saved"]').click();
+    const savedRoute = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      profileHidden: document.querySelector("#profileView")?.hidden,
+      tab: document.querySelector('[data-profile-tab][aria-selected="true"]')?.dataset.profileTab,
+      current: Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav),
+    }));
+    assert(savedRoute.url.includes("view=profile") && savedRoute.url.includes("profile=mina") && savedRoute.url.includes("tab=saved") && savedRoute.homeHidden === true && savedRoute.profileHidden === false && savedRoute.tab === "saved" && savedRoute.current.length === 2 && savedRoute.current.every((label) => label === "Saved"), "Global Saved navigation did not open the shareable Profile Saved route");
+    await desktop.goBack();
+    await wait(80);
+    const savedBack = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      profileHidden: document.querySelector("#profileView")?.hidden,
+    }));
+    assert(!savedBack.url.includes("view=profile") && savedBack.homeHidden === false && savedBack.profileHidden === true, "Browser back did not restore Home after leaving Global Saved");
+    results.push({ id: "global-saved-route", verified: true, viewport: "1440x1000" });
     await desktop.close();
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
