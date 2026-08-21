@@ -128,6 +128,22 @@
       "viewport": {"width": 390, "height": 844},
       "file": "prototype-settings-390.jpg",
       "states": ["Settings route", "preference toggles", "mobile recomposition"]
+    },
+    {
+      "id": "prototype-workspace-wide",
+      "route": "/index.html?evidence=0.2",
+      "viewport": {"width": 1440, "height": 1000},
+      "file": "prototype-workspace-1440.jpg",
+      "actions": [{"click": "#workspaceSwitcher"}],
+      "states": ["Workspace picker", "active context", "desktop"]
+    },
+    {
+      "id": "prototype-workspace-mobile",
+      "route": "/index.html?evidence=0.2",
+      "viewport": {"width": 390, "height": 844},
+      "file": "prototype-workspace-390.jpg",
+      "actions": [{"click": "#openSidebar"}, {"click": "#workspaceSwitcher"}],
+      "states": ["Workspace picker", "mobile drawer", "mobile recomposition"]
     }
   ],
   "runtime_checks": [
@@ -162,6 +178,7 @@
     {"id": "mobile-touch-targets", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Core mobile controls render with at least 44 × 44 px usable geometry."},
     {"id": "board-url-state", "route": "/board.html?source=qa&view=mobile&filter=platforms", "viewport": "1440x1000", "verified": true, "assertion": "The design board restores view and filter state from a shareable URL while preserving unknown parameters."},
     {"id": "board-history-state", "route": "/board.html?view=desktop&filter=screens", "viewport": "1440x1000", "verified": true, "assertion": "A browser history change rehydrates the board view, filter, and visible screens."},
-    {"id": "board-dialog-focus-return", "route": "/board.html?source=qa&view=mobile&filter=platforms", "viewport": "1440x1000", "verified": true, "assertion": "Opening Home, Settings, and Notifications screen handoff dialogs focuses the close control, exposes declared metadata, and Escape returns focus to the invoking artboard."}
+    {"id": "board-dialog-focus-return", "route": "/board.html?source=qa&view=mobile&filter=platforms", "viewport": "1440x1000", "verified": true, "assertion": "Opening Home, Settings, Notifications, and Workspace screen handoff dialogs focuses the close control, exposes declared metadata, and Escape returns focus to the invoking artboard."},
+    {"id": "workspace-switcher-focus-return", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "Workspace picker opens with the active space focused, selecting a space updates the sidebar context, and Escape restores focus to the trigger."}
   ]
 }

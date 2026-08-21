@@ -19,6 +19,8 @@ class CaptureAndPlatformContractTests(unittest.TestCase):
         self.assertIn('"playwright"', json.dumps(package["devDependencies"]))
         self.assertIn("evidence/manifest.json", script)
         self.assertIn('resolve(COMMUNITY_ROOT, "evidence")', script)
+        self.assertIn("captureSpec.actions", script)
+        self.assertIn("page.locator", script)
         self.assertIn("page.screenshot", script)
         visual = (ROOT / "scripts" / "compare_community_visuals.mjs").read_text(encoding="utf-8")
         self.assertIn("pixelmatch", visual)

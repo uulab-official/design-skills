@@ -1,7 +1,7 @@
 # Design QA
 
 Date: 2026-08-21  
-Scope: Gather community example — `Home / For you`, `Discover / Circles`, `Thread / Conversation`, `Profile / Mina Park`, `Notifications`, and `Settings`, desktop and mobile handoff
+Scope: Gather community example — `Home / For you`, `Discover / Circles`, `Thread / Conversation`, `Profile / Mina Park`, `Notifications`, `Settings`, and `Workspace / Picker`, desktop and mobile handoff
 
 ## Comparison inputs
 
@@ -19,6 +19,7 @@ The source and implementation were captured and reviewed together before judging
 | Profile route review | [prototype-profile-1440.jpg](examples/community/evidence/prototype-profile-1440.jpg), [prototype-profile-390.jpg](examples/community/evidence/prototype-profile-390.jpg) | Same implementation route at desktop and mobile | 1440 × 1000 and 390 × 844 CSS px / full-page evidence | 1× |
 | Notifications route review | [prototype-notifications-1440.jpg](examples/community/evidence/prototype-notifications-1440.jpg), [prototype-notifications-390.jpg](examples/community/evidence/prototype-notifications-390.jpg) | Same implementation route at desktop and mobile | 1440 × 1000 and 390 × 844 CSS px / full-page evidence | 1× |
 | Settings route review | [prototype-settings-1440.jpg](examples/community/evidence/prototype-settings-1440.jpg), [prototype-settings-390.jpg](examples/community/evidence/prototype-settings-390.jpg) | Same implementation route at desktop and mobile | 1440 × 1000 and 390 × 844 CSS px / full-page evidence | 1× |
+| Workspace picker review | [prototype-workspace-1440.jpg](examples/community/evidence/prototype-workspace-1440.jpg), [prototype-workspace-390.jpg](examples/community/evidence/prototype-workspace-390.jpg) | Active-space dialog at desktop and drawer-plus-bottom-sheet at mobile | 1440 × 1000 and 390 × 844 CSS px / full-page evidence | 1× |
 
 The desktop source is the refreshed `A / 01 · Home / For you` artboard with its screen content aligned to the viewport. The mobile source is the responsive design board containing `A / 08 · Mobile / Home`; the implementation is the runnable prototype at the same mobile viewport.
 
@@ -28,7 +29,7 @@ The source and implementation share the same editorial hierarchy: forest navigat
 
 ## Focused comparison
 
-The focused desktop pass inspected the hero baseline, orbit artwork, feed heading/filter group, featured card split, image crop, and right rail. The focused mobile pass inspected the top bar, hero wrap, primary action, orbit, featured card, bottom navigation, and touch-target geometry. The Discover pass inspected the dark directory hero, orbit art, topic filter row, six-card grid, route CTA, and mobile bottom navigation at both target sizes. The Circle pass inspected the identity hero, orbit artwork, tab bar, conversation cards, context rail, join CTA, and mobile recomposition. The Thread pass inspected the reading hierarchy, author context, reply rhythm, context rail, local reply composer, and mobile fixed navigation interaction. The Profile pass inspected the identity cover, contribution stats, tab state, profile cards, circle list, follow CTA, and mobile recomposition. The Notifications pass inspected the Stay close hero, orbit art, unread card rhythm, mark-all-read feedback, route follow-through, context rail, and mobile recomposition. The Settings pass inspected the lilac/forest hero split, account context card, preference toggle rhythm, dirty/saved feedback, defaults rail, and mobile recomposition. No overlap, clipping, broken wrapping, or hierarchy collapse was found in the reviewed states.
+The focused desktop pass inspected the hero baseline, orbit artwork, feed heading/filter group, featured card split, image crop, and right rail. The focused mobile pass inspected the top bar, hero wrap, primary action, orbit, featured card, bottom navigation, and touch-target geometry. The Discover pass inspected the dark directory hero, orbit art, topic filter row, six-card grid, route CTA, and mobile bottom navigation at both target sizes. The Circle pass inspected the identity hero, orbit artwork, tab bar, conversation cards, context rail, join CTA, and mobile recomposition. The Thread pass inspected the reading hierarchy, author context, reply rhythm, context rail, local reply composer, and mobile fixed navigation interaction. The Profile pass inspected the identity cover, contribution stats, tab state, profile cards, circle list, follow CTA, and mobile recomposition. The Notifications pass inspected the Stay close hero, orbit art, unread card rhythm, mark-all-read feedback, route follow-through, context rail, and mobile recomposition. The Settings pass inspected the lilac/forest hero split, account context card, preference toggle rhythm, dirty/saved feedback, defaults rail, and mobile recomposition. The Workspace pass inspected the backdrop hierarchy, selected-space state, option rhythm, desktop dialog, mobile bottom-sheet composition, and focus return. No overlap, clipping, broken wrapping, or hierarchy collapse was found in the reviewed states.
 
 ## Findings and comparison history
 
@@ -46,6 +47,7 @@ The focused desktop pass inspected the hero baseline, orbit artwork, feed headin
 | DQ-010 | P2 | Route / implementation coverage | Sidebar Settings stopped at a route-boundary toast, leaving the board’s account and preference surface without a runnable destination or saved-state feedback. | Resolved by adding a responsive Settings route with account context, accessible preference toggles, dirty/saved status feedback, browser-back recovery, evidence captures, and a visual baseline. |
 | DQ-011 | P2 | Handoff parity | Settings became a real route, but the public board still promised the older eight-screen set and had no inspectable Settings artboard or metadata. | Resolved by adding the ninth Settings / Preferences artboard, updating the board marker and inventory, adding responsive board styling, and testing Settings dialog metadata/focus recovery. |
 | DQ-012 | P2 | Handoff parity | Notifications became a real route, but the public board still had no inspectable Stay close artboard or declared metadata for unread activity and follow-through. | Resolved by adding the tenth Notifications / Stay close artboard, updating the board marker and inventory, adding responsive board styling, and testing Notifications dialog metadata/focus recovery. |
+| DQ-013 | P2 | Interaction / handoff coverage | The sidebar workspace switcher stopped at a “coming next” toast, leaving space context and the board’s shell state without a usable selection flow. | Resolved by adding the Workspace / Picker dialog, active-space selection, context continuity, focus recovery, desktop/mobile evidence, and the eleventh board artboard with handoff metadata. |
 
 P0 findings: none.  
 P1 findings: none.  
@@ -85,6 +87,8 @@ The v0.24 Settings-board parity pass closes the handoff gap introduced by that r
 
 The v0.25 Notifications-board parity pass closes the next handoff gap: the public board now carries a tenth Notifications / Stay close artboard, its detail dialog exposes the declared unread/follow-through/recovery metadata, the header marker is refreshed to `v0.25 · review`, and the board/prototype evidence is re-captured at desktop and mobile sizes.
 
+The v0.26 Workspace-picker pass closes the last prominent shell dead-end: the workspace switcher now opens an accessible three-space picker, focuses the active space, updates the sidebar context without changing route/search state, recovers focus on close or Escape, and is represented by an eleventh Workspace / Picker artboard. Desktop/mobile state captures and manifest-defined interaction actions are included in the handoff.
+
 ## Rubric pass
 
 - Typography: local fonts, weight hierarchy, serif display treatment, wrapping, and line-height remain coherent across source and implementation.
@@ -101,12 +105,12 @@ The v0.25 Notifications-board parity pass closes the next handoff gap: the publi
 
 ## Verification
 
-- `npm run capture:community` — refreshed 18 evidence captures, including Discover, City Makers Circle, the featured “A little more daylight” Thread, Mina Park Profile, Notifications, and Settings at desktop and mobile, with the 10-screen board inventory visible in the board captures.
+- `npm run capture:community` — refreshed 20 evidence captures, including Discover, City Makers Circle, the featured “A little more daylight” Thread, Mina Park Profile, Notifications, Settings, and Workspace picker states at desktop and mobile, with the 11-screen board inventory visible in the board captures.
 - QA comparison capture — refreshed source and implementation panels at 1280 × 720 CSS px / 1× density.
-- `npm run validate:evidence` — 18 captures and 32 documented runtime assertions passed.
-- `npm run test:browser` — 25 / 25 runtime checks passed, including Home circles rail → Discover, global Saved → Profile Saved, Notifications unread/read state, Settings dirty/saved preference state, Settings and Notifications board-artboard metadata/focus recovery, and Home → Featured Thread plus Discover → Circle → Thread → Profile route entry/back recovery, Circle tab/join state, Thread reply creation, Profile tab/follow feedback, instant scroll reset, navigation current state, dedicated feed-status announcements, and Like action focus retention after feed rerender.
+- `npm run validate:evidence` — 20 captures and 33 documented runtime assertions passed.
+- `npm run test:browser` — 26 / 26 runtime checks passed, including Home circles rail → Discover, global Saved → Profile Saved, Notifications unread/read state, Settings dirty/saved preference state, Workspace picker selection/focus recovery, Settings, Notifications, and Workspace board-artboard metadata/focus recovery, and Home → Featured Thread plus Discover → Circle → Thread → Profile route entry/back recovery, Circle tab/join state, Thread reply creation, Profile tab/follow feedback, instant scroll reset, navigation current state, dedicated feed-status announcements, and Like action focus retention after feed rerender.
 - `npm run test:visual` — 9 / 9 targets passed with `mismatchRatio: 0`.
 - `python3 -m unittest tests.test_community_example_contract.CommunityExampleContractTests.test_responsive_and_motion_contracts_are_present` — safe-area contract passed after the intentional RED → GREEN cycle.
-- Browser console sweep — 0 console errors, 0 page errors, and 0 invalid links across Home, Featured Thread, Discover, City Makers Circle, City Makers Thread, Mina Park Profile, Notifications, Settings, and board desktop/mobile states.
+- Browser console sweep — 0 console errors, 0 page errors, and 0 invalid links across Home, Featured Thread, Discover, City Makers Circle, City Makers Thread, Mina Park Profile, Notifications, Settings, Workspace picker, and board desktop/mobile states.
 
 final result: passed

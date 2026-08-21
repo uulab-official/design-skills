@@ -67,6 +67,7 @@ const state = {
   profileTab: "conversations",
   profileFollowed: false,
   profileStatus: "",
+  workspace: "seoul",
   notificationsRead: false,
   settings: { digest: true, replies: true, quietHours: false },
   settingsDirty: false,
@@ -75,6 +76,7 @@ const state = {
   saved: new Set(),
   toastTimer: null,
   composerTrigger: null,
+  workspaceTrigger: null,
   sidebarTrigger: null
 };
 
@@ -90,6 +92,13 @@ const profileView = document.querySelector("#profileView");
 const notificationsView = document.querySelector("#notificationsView");
 const settingsView = document.querySelector("#settingsView");
 const composerDialog = document.querySelector("#composerDialog");
+const workspaceSwitcher = document.querySelector("#workspaceSwitcher");
+const workspaceAvatar = document.querySelector("#workspaceAvatar");
+const workspaceName = document.querySelector("#workspaceName");
+const workspaceType = document.querySelector("#workspaceType");
+const workspaceDialog = document.querySelector("#workspaceDialog");
+const workspaceOptions = document.querySelector("#workspaceOptions");
+const closeWorkspaceDialog = document.querySelector("#closeWorkspaceDialog");
 const composerForm = document.querySelector("#composerForm");
 const composerTitleInput = document.querySelector("#composerTitleInput");
 const composerTitleError = document.querySelector("#composerTitleError");
@@ -103,6 +112,11 @@ const validCircles = new Set(["City Makers", "Quiet Mornings", "Sunday Film Club
 const validViews = new Set(["home", "discover", "circle", "thread", "profile", "notifications", "settings"]);
 const validDiscoverFilters = new Set(["all", "make", "slow", "notice"]);
 const validProfileTabs = new Set(["conversations", "saved"]);
+const workspaceProfiles = {
+  seoul: { name: "Seoul circles", type: "Personal space", initials: "S", avatarClass: "workspace-avatar-moss" },
+  quiet: { name: "Quiet Mornings", type: "Shared circle", initials: "QM", avatarClass: "workspace-avatar-lilac" },
+  city: { name: "City Makers", type: "Shared circle", initials: "CM", avatarClass: "workspace-avatar-coral" },
+};
 const circleProfiles = {
   "City Makers": {
     eyebrow: "City / making",
@@ -729,6 +743,32 @@ function openComposer() {
   }
 }
 
+function openWorkspacePicker() {
+  if (workspaceDialog.open) return;
+  state.workspaceTrigger = document.activeElement instanceof HTMLElement ? document.activeElement : workspaceSwitcher;
+  renderWorkspacePicker();
+  workspaceSwitcher.setAttribute("aria-expanded", "true");
+  if (typeof workspaceDialog.showModal === "function") {
+    workspaceDialog.showModal();
+    window.setTimeout(() => workspaceOptions.querySelector('[aria-selected="true"]')?.focus(), 30);
+  } else {
+    workspaceDialog.setAttribute("open", "");
+    workspaceDialog.setAttribute("class", `${workspaceDialog.getAttribute("class")} is-open`);
+    workspaceOptions.querySelector('[aria-selected="true"]')?.focus();
+  }
+}
+
+function closeWorkspacePicker() {
+  if (typeof workspaceDialog.close === "function") workspaceDialog.close();
+  else {
+    workspaceDialog.removeAttribute("open");
+    workspaceDialog.setAttribute("class", workspaceDialog.getAttribute("class").replace(/\bis-open\b/g, "").replace(/\s+/g, " ").trim());
+    workspaceSwitcher.setAttribute("aria-expanded", "false");
+    restoreFocus(state.workspaceTrigger);
+    state.workspaceTrigger = null;
+  }
+}
+
 function closeComposer() {
   if (typeof composerDialog.close === "function") composerDialog.close();
   else {
@@ -753,6 +793,19 @@ function toggleSidebar(open) {
 
 function restoreFocus(element) {
   if (element instanceof HTMLElement && element.isConnected && !element.hasAttribute("disabled")) element.focus();
+}
+
+function renderWorkspacePicker() {
+  const workspace = workspaceProfiles[state.workspace] || workspaceProfiles.seoul;
+  workspaceAvatar.textContent = workspace.initials;
+  workspaceAvatar.className = `workspace-avatar ${workspace.avatarClass}`;
+  workspaceName.textContent = workspace.name;
+  workspaceType.textContent = workspace.type;
+  workspaceOptions.querySelectorAll("[data-workspace-id]").forEach((option) => {
+    const selected = option.dataset.workspaceId === state.workspace;
+    option.classList.toggle("is-selected", selected);
+    option.setAttribute("aria-selected", String(selected));
+  });
 }
 
 document.querySelectorAll("[data-filter]").forEach((button) => {
@@ -827,9 +880,24 @@ document.querySelector("#openComposer").addEventListener("click", openComposer);
 document.querySelector("#mobileCompose").addEventListener("click", openComposer);
 document.querySelector("#promptButton").addEventListener("click", openComposer);
 document.querySelector("#closeComposer").addEventListener("click", closeComposer);
+workspaceSwitcher.addEventListener("click", openWorkspacePicker);
+closeWorkspaceDialog.addEventListener("click", closeWorkspacePicker);
+workspaceOptions.addEventListener("click", (event) => {
+  const option = event.target.closest("[data-workspace-id]");
+  if (!option) return;
+  state.workspace = option.dataset.workspaceId;
+  renderWorkspacePicker();
+  closeWorkspacePicker();
+  showToast(`Now exploring ${workspaceProfiles[state.workspace].name}`);
+});
 composerDialog.addEventListener("close", () => {
   restoreFocus(state.composerTrigger);
   state.composerTrigger = null;
+});
+workspaceDialog.addEventListener("close", () => {
+  workspaceSwitcher.setAttribute("aria-expanded", "false");
+  restoreFocus(state.workspaceTrigger);
+  state.workspaceTrigger = null;
 });
 
 composerTitleInput.addEventListener("input", () => {
@@ -1032,5 +1100,6 @@ window.addEventListener("popstate", () => {
   renderRoute({ syncUrl: false });
 });
 
+renderWorkspacePicker();
 readUrlState();
 renderRoute({ syncUrl: false, scroll: false });

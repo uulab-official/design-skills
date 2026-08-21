@@ -53,10 +53,20 @@ class CommunityExampleContractTests(unittest.TestCase):
         self.assertIn("restoreFocus", self.js)
         self.assertIn(".skip-link:focus", self.css)
 
+    def test_workspace_switcher_exposes_an_accessible_picker(self):
+        self.assertIn('id="workspaceSwitcher"', self.html)
+        self.assertIn('aria-haspopup="dialog"', self.html)
+        self.assertIn('id="workspaceDialog"', self.html)
+        self.assertIn('data-workspace-id="quiet"', self.html)
+        self.assertIn('workspaceDialog.addEventListener("close"', self.js)
+        self.assertIn("state.workspaceTrigger", self.js)
+        self.assertIn("renderWorkspacePicker", self.js)
+        self.assertIn(".workspace-dialog", self.css)
+
     def test_design_board_exposes_shareable_state_and_dialog_focus(self):
         board_html = (EXAMPLE / "board.html").read_text(encoding="utf-8")
         board_js = (EXAMPLE / "board.js").read_text(encoding="utf-8")
-        self.assertIn('class="version-chip">v0.25 · review</span>', board_html)
+        self.assertIn('class="version-chip">v0.26 · review</span>', board_html)
         self.assertIn('aria-label="Preview size"', board_html)
         self.assertIn('data-view-toggle="desktop" aria-pressed="true"', board_html)
         self.assertIn('data-board-filter="all" aria-pressed="true"', board_html)
@@ -67,11 +77,12 @@ class CommunityExampleContractTests(unittest.TestCase):
         self.assertIn('boardDialog.addEventListener("cancel"', board_js)
         self.assertIn('aria-describedby="dialogDescription"', board_html)
         self.assertIn('window.addEventListener("popstate", readUrlState)', board_js)
-        self.assertEqual(len(re.findall(r'data-artboard-title="[^"]+"', board_html)), 10)
+        self.assertEqual(len(re.findall(r'data-artboard-title="[^"]+"', board_html)), 11)
         self.assertIn('data-artboard-title="Home / Following"', board_html)
         self.assertIn('data-artboard-title="Composer / Modal"', board_html)
         self.assertIn('data-artboard-title="Settings / Preferences"', board_html)
         self.assertIn('data-artboard-title="Notifications / Stay close"', board_html)
+        self.assertIn('data-artboard-title="Workspace / Picker"', board_html)
 
     def test_prototype_rehydrates_url_state_after_history_changes(self):
         self.assertIn('window.addEventListener("popstate"', self.js)

@@ -41,6 +41,35 @@ async function runRuntimeChecks() {
     assert(!localFonts.remoteStylesheet, "The prototype still depends on a remote font stylesheet");
     results.push({ id: "local-fonts", verified: true, viewport: "1440x1000" });
 
+    await desktop.goto(`${DEFAULT_BASE_URL}/index.html?source=qa`, { waitUntil: "networkidle" });
+    await desktop.click("#workspaceSwitcher");
+    await wait(80);
+    const workspaceDialogOpen = await desktop.evaluate(() => ({
+      active: document.activeElement.dataset.workspaceId,
+      expanded: document.querySelector("#workspaceSwitcher").getAttribute("aria-expanded"),
+      open: document.querySelector("#workspaceDialog").open,
+      selected: document.querySelector('[data-workspace-id="seoul"]').getAttribute("aria-selected"),
+    }));
+    assert(workspaceDialogOpen.active === "seoul" && workspaceDialogOpen.expanded === "true" && workspaceDialogOpen.open && workspaceDialogOpen.selected === "true", "Workspace picker did not open with the active option focused");
+    await desktop.click('[data-workspace-id="quiet"]');
+    await wait(80);
+    const workspaceSelected = await desktop.evaluate(() => ({
+      active: document.activeElement.id,
+      name: document.querySelector("#workspaceName").textContent,
+      type: document.querySelector("#workspaceType").textContent,
+      open: document.querySelector("#workspaceDialog").open,
+      expanded: document.querySelector("#workspaceSwitcher").getAttribute("aria-expanded"),
+    }));
+    assert(workspaceSelected.active === "workspaceSwitcher" && workspaceSelected.name === "Quiet Mornings" && workspaceSelected.type === "Shared circle" && !workspaceSelected.open && workspaceSelected.expanded === "false", "Workspace selection did not update context or return focus to the trigger");
+    await desktop.click("#workspaceSwitcher");
+    await desktop.keyboard.press("Escape");
+    const workspaceDialogClosed = await desktop.evaluate(() => ({
+      active: document.activeElement.id,
+      open: document.querySelector("#workspaceDialog").open,
+    }));
+    assert(workspaceDialogClosed.active === "workspaceSwitcher" && !workspaceDialogClosed.open, "Workspace picker Escape did not close and restore focus");
+    results.push({ id: "workspace-switcher-focus-return", verified: true, viewport: "1440x1000" });
+
     await desktop.fill("#searchInput", "people");
     const syncedUrl = await desktop.evaluate(() => window.location.search);
     assert(syncedUrl.includes("source=qa") && syncedUrl.includes("q=people"), "Search state was not reflected in the URL");
@@ -424,7 +453,7 @@ async function runRuntimeChecks() {
       filterPressed: document.querySelector('[data-board-filter="screens"]').getAttribute("aria-pressed"),
       visibleScreens: document.querySelectorAll('article[data-board-type="screens"]:not([hidden])').length,
     }));
-    assert(boardHistoryState.view === "desktop" && boardHistoryState.filterPressed === "true" && boardHistoryState.visibleScreens === 10, "Board did not rehydrate after a history state change");
+    assert(boardHistoryState.view === "desktop" && boardHistoryState.filterPressed === "true" && boardHistoryState.visibleScreens === 11, "Board did not rehydrate after a history state change");
     results.push({ id: "board-history-state", verified: true, viewport: "1440x1000" });
 
     await board.goto(`${DEFAULT_BASE_URL}/board.html?source=qa&view=mobile&filter=all`, { waitUntil: "networkidle" });
@@ -469,6 +498,20 @@ async function runRuntimeChecks() {
       open: document.querySelector("#boardDialog").open,
     }));
     assert(notificationsDialogClosed.activeLabel === "Notifications / Stay close" && !notificationsDialogClosed.open, "Notifications artboard dialog focus did not return after Escape");
+    await board.locator('[data-open-artboard="Workspace / Picker"]').click();
+    const workspaceBoardDialogOpen = await board.evaluate(() => ({
+      active: document.activeElement.id,
+      title: document.querySelector("#dialogTitle")?.textContent,
+      description: document.querySelector("#dialogDescription")?.textContent,
+      open: document.querySelector("#boardDialog").open,
+    }));
+    assert(workspaceBoardDialogOpen.active === "closeBoardDialog" && workspaceBoardDialogOpen.title === "Workspace / Picker" && workspaceBoardDialogOpen.description === "Space choice · focus · context" && workspaceBoardDialogOpen.open, "Workspace artboard handoff did not open with its declared metadata");
+    await board.keyboard.press("Escape");
+    const workspaceBoardDialogClosed = await board.evaluate(() => ({
+      activeLabel: document.activeElement.getAttribute("data-open-artboard"),
+      open: document.querySelector("#boardDialog").open,
+    }));
+    assert(workspaceBoardDialogClosed.activeLabel === "Workspace / Picker" && !workspaceBoardDialogClosed.open, "Workspace artboard dialog focus did not return after Escape");
     results.push({ id: "board-dialog-focus-return", verified: true, viewport: "1440x1000" });
     await board.close();
   } finally {

@@ -38,6 +38,12 @@ async function capture() {
         const outputPath = resolve(EVIDENCE_ROOT, captureSpec.file);
         await page.goto(targetUrl, { waitUntil: "domcontentloaded" });
         await page.evaluate(() => document.fonts?.ready);
+        for (const action of captureSpec.actions ?? []) {
+          if (action.click) {
+            await page.locator(action.click).click();
+            await page.waitForTimeout(action.wait ?? 120);
+          }
+        }
         await page.waitForTimeout(500);
         await page.screenshot({ path: outputPath, fullPage: true, type: "jpeg", quality: 88 });
         await page.close();

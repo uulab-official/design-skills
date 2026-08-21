@@ -56,9 +56,9 @@
             <span>gather</span>
           </a>
 
-          <button class="workspace-switcher" type="button" data-toast="Workspace switcher coming next">
-            <span class="workspace-avatar">S</span>
-            <span class="workspace-copy"><strong>Seoul circles</strong><small>Personal space</small></span>
+          <button class="workspace-switcher" id="workspaceSwitcher" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="workspaceDialog">
+            <span class="workspace-avatar" id="workspaceAvatar">S</span>
+            <span class="workspace-copy"><strong id="workspaceName">Seoul circles</strong><small id="workspaceType">Personal space</small></span>
             <svg class="icon icon-chevron" aria-hidden="true"><use href="#icon-chevron" /></svg>
           </button>
 
@@ -401,6 +401,17 @@
         <textarea class="form-control form-textarea" id="composerBody" maxlength="280" placeholder="The best conversations start with a little specificity…"></textarea>
         <div class="dialog-footer"><span class="draft-note"><span class="draft-dot"></span> Saved as a draft automatically</span><button class="button button-primary" type="submit">Publish conversation <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
       </form>
+    </dialog>
+    <dialog class="workspace-dialog" id="workspaceDialog" aria-labelledby="workspaceDialogTitle" aria-describedby="workspaceDialogDescription">
+      <div class="workspace-dialog-inner">
+        <div class="workspace-dialog-header"><div><p class="section-kicker">Switch your orbit</p><h2 id="workspaceDialogTitle">Where do you want to gather?</h2><p id="workspaceDialogDescription">Each space keeps its people and rituals in one place.</p></div><button class="icon-button small" id="closeWorkspaceDialog" type="button" aria-label="Close workspace picker"><svg class="icon" aria-hidden="true"><use href="#icon-close" /></svg></button></div>
+        <div class="workspace-option-list" id="workspaceOptions" role="listbox" aria-label="Available spaces">
+          <button class="workspace-option is-selected" type="button" role="option" data-workspace-id="seoul" aria-selected="true"><span class="workspace-option-mark workspace-mark-moss">S</span><span class="workspace-option-copy"><strong>Seoul circles</strong><small>Personal space · 4 circles</small></span><svg class="workspace-option-check icon" aria-hidden="true"><use href="#icon-check" /></svg></button>
+          <button class="workspace-option" type="button" role="option" data-workspace-id="quiet" aria-selected="false"><span class="workspace-option-mark workspace-mark-lilac">QM</span><span class="workspace-option-copy"><strong>Quiet Mornings</strong><small>Shared circle · 126 members</small></span><svg class="workspace-option-check icon" aria-hidden="true"><use href="#icon-check" /></svg></button>
+          <button class="workspace-option" type="button" role="option" data-workspace-id="city" aria-selected="false"><span class="workspace-option-mark workspace-mark-coral">CM</span><span class="workspace-option-copy"><strong>City Makers</strong><small>Shared circle · 42 members</small></span><svg class="workspace-option-check icon" aria-hidden="true"><use href="#icon-check" /></svg></button>
+        </div>
+        <p class="workspace-dialog-note"><span>✦</span>Switching spaces keeps your current route and search context intact.</p>
+      </div>
     </dialog>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="./app.js?v=0.3" defer></script>

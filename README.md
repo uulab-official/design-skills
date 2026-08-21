@@ -41,7 +41,7 @@ npm run test:browser
 npm run test:visual
 ```
 
-`npm run test:browser` proves URL restoration, prototype and board history-state rehydration, local font loading, dedicated feed-status announcements, search URL synchronization, Home circles rail → Discover → Circle → Thread route entry, Home → Featured Thread → Profile route entry, global Saved → Profile Saved route entry, Notifications route → unread/read state, Settings route → dirty/saved preference state, instant scroll reset and browser-back recovery, Circle tab and join feedback, local Thread reply creation and status announcements, Profile Conversations/Saved tabs and follow feedback, composer focus return, Like/Save action focus retention, featured Thread route recovery, named navigation landmarks and current destination state, mobile drawer focus return, 44px mobile touch targets, board dialog focus return, and skip-link navigation in Chromium.
+`npm run test:browser` proves URL restoration, prototype and board history-state rehydration, local font loading, dedicated feed-status announcements, search URL synchronization, Home circles rail → Discover → Circle → Thread route entry, Home → Featured Thread → Profile route entry, global Saved → Profile Saved route entry, Notifications route → unread/read state, Settings route → dirty/saved preference state, Workspace picker selection and focus recovery, instant scroll reset and browser-back recovery, Circle tab and join feedback, local Thread reply creation and status announcements, Profile Conversations/Saved tabs and follow feedback, composer focus return, Like/Save action focus retention, featured Thread route recovery, named navigation landmarks and current destination state, mobile drawer focus return, 44px mobile touch targets, board dialog focus return, and skip-link navigation in Chromium.
 
 ## Quality checks
 
@@ -65,4 +65,4 @@ The community reference surface is intentionally `review-ready`, not `release-re
 
 Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening a change. The short version is: preserve the existing product decisions, add evidence for new states or viewports, run `npm run ci:quality`, and describe any remaining finding with severity, evidence, and next action.
 
-The current roadmap is [`docs/superpowers/plans/2026-08-21-design-skills-v0.25-notifications-board-parity.md`](docs/superpowers/plans/2026-08-21-design-skills-v0.25-notifications-board-parity.md).
+The current roadmap is [`docs/superpowers/plans/2026-08-21-design-skills-v0.26-workspace-picker.md`](docs/superpowers/plans/2026-08-21-design-skills-v0.26-workspace-picker.md).

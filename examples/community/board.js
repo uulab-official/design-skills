@@ -23,6 +23,7 @@ const artboardDescriptions = {
   "Profile / Mina Park": "Identity · contribution · trust",
   "Settings / Preferences": "Account · rhythm · recovery",
   "Notifications / Stay close": "Unread · follow-through · recovery",
+  "Workspace / Picker": "Space choice · focus · context",
   "Mobile / Home": "Responsive recomposition · 390",
   "Home / Following": "Circle-scoped state · retained context",
   "Composer / Modal": "Creation · validation · success",
