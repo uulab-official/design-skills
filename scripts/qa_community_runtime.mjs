@@ -312,6 +312,38 @@ async function runRuntimeChecks() {
     }));
     assert(!savedBack.url.includes("view=profile") && savedBack.homeHidden === false && savedBack.profileHidden === true, "Browser back did not restore Home after leaving Global Saved");
     results.push({ id: "global-saved-route", verified: true, viewport: "1440x1000" });
+
+    await desktop.locator('.nav-item[data-nav="Notifications"]').click();
+    const notificationRoute = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      notificationsHidden: document.querySelector("#notificationsView")?.hidden,
+      current: Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav),
+      title: document.querySelector("#notificationsTitle")?.textContent,
+      unread: document.querySelectorAll(".notification-card.is-unread").length,
+    }));
+    assert(notificationRoute.url.includes("view=notifications") && notificationRoute.homeHidden === true && notificationRoute.notificationsHidden === false && notificationRoute.current.length === 1 && notificationRoute.current.every((label) => label === "Notifications") && notificationRoute.title === "Good things found you." && notificationRoute.unread === 3, "Sidebar Notifications did not open the shareable notification route");
+    await desktop.locator("#markNotificationsRead").click();
+    const notificationReadState = await desktop.evaluate(() => ({
+      unread: document.querySelectorAll(".notification-card.is-unread").length,
+      status: document.querySelector("#notificationsStatus")?.textContent,
+      buttonDisabled: document.querySelector("#markNotificationsRead")?.disabled,
+      sidebarDotHidden: document.querySelector('.nav-item[data-nav="Notifications"] .notification-dot')?.hidden,
+      topbarDotHidden: document.querySelector(".topbar-actions .has-notification .notification-dot")?.hidden,
+    }));
+    assert(notificationReadState.unread === 0 && notificationReadState.status === "You’re all caught up." && notificationReadState.buttonDisabled === true && notificationReadState.sidebarDotHidden === true && notificationReadState.topbarDotHidden === true, "Notifications did not expose an accessible mark-all-read state");
+    await desktop.goBack();
+    await wait(80);
+    await desktop.locator(".topbar-actions .has-notification").click();
+    const topbarNotificationRoute = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      notificationsHidden: document.querySelector("#notificationsView")?.hidden,
+    }));
+    assert(topbarNotificationRoute.url.includes("view=notifications") && topbarNotificationRoute.homeHidden === true && topbarNotificationRoute.notificationsHidden === false, "Topbar Notifications did not open the shareable notification route");
+    await desktop.goBack();
+    await wait(80);
+    results.push({ id: "notifications-route", verified: true, viewport: "1440x1000" });
     await desktop.close();
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });

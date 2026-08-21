@@ -67,6 +67,7 @@ const state = {
   profileTab: "conversations",
   profileFollowed: false,
   profileStatus: "",
+  notificationsRead: false,
   liked: new Set(),
   saved: new Set(),
   toastTimer: null,
@@ -83,6 +84,7 @@ const discoverStatus = document.querySelector("#discoverStatus");
 const circleView = document.querySelector("#circleView");
 const threadView = document.querySelector("#threadView");
 const profileView = document.querySelector("#profileView");
+const notificationsView = document.querySelector("#notificationsView");
 const composerDialog = document.querySelector("#composerDialog");
 const composerForm = document.querySelector("#composerForm");
 const composerTitleInput = document.querySelector("#composerTitleInput");
@@ -94,7 +96,7 @@ const sidebarTrigger = document.querySelector("#openSidebar");
 
 const validFilters = new Set(["all", "following", "latest"]);
 const validCircles = new Set(["City Makers", "Quiet Mornings", "Sunday Film Club", "Open Table", "Tiny Libraries", "Field Notes"]);
-const validViews = new Set(["home", "discover", "circle", "thread", "profile"]);
+const validViews = new Set(["home", "discover", "circle", "thread", "profile", "notifications"]);
 const validDiscoverFilters = new Set(["all", "make", "slow", "notice"]);
 const validProfileTabs = new Set(["conversations", "saved"]);
 const circleProfiles = {
@@ -342,7 +344,7 @@ function readUrlState() {
 
 function updateUrlState(historyMethod = "replaceState") {
   const url = new URL(window.location.href);
-  if (state.view === "discover" || state.view === "circle" || state.view === "thread" || state.view === "profile") url.searchParams.set("view", state.view);
+  if (state.view === "discover" || state.view === "circle" || state.view === "thread" || state.view === "profile" || state.view === "notifications") url.searchParams.set("view", state.view);
   else url.searchParams.delete("view");
   if (state.filter !== "all" && !state.circle) url.searchParams.set("filter", state.filter);
   else url.searchParams.delete("filter");
@@ -561,24 +563,40 @@ function renderProfile({ syncUrl = true } = {}) {
   if (syncUrl) syncUrlState();
 }
 
+function renderNotifications({ syncUrl = true } = {}) {
+  const unreadCount = state.notificationsRead ? 0 : document.querySelectorAll(".notification-card").length;
+  document.querySelectorAll(".notification-card").forEach((card) => card.classList.toggle("is-unread", !state.notificationsRead));
+  document.querySelectorAll(".notification-unread-dot").forEach((dot) => dot.toggleAttribute("hidden", state.notificationsRead));
+  document.querySelector("#notificationsCount").textContent = unreadCount;
+  document.querySelector("#notificationsStatus").textContent = unreadCount ? `${unreadCount} unread notifications.` : "You’re all caught up.";
+  document.querySelectorAll('.nav-item[data-nav="Notifications"] .notification-dot, .topbar-actions .has-notification .notification-dot').forEach((dot) => dot.toggleAttribute("hidden", state.notificationsRead));
+  const markReadButton = document.querySelector("#markNotificationsRead");
+  markReadButton.disabled = state.notificationsRead;
+  markReadButton.setAttribute("aria-disabled", String(state.notificationsRead));
+  if (syncUrl) syncUrlState();
+}
+
 function renderRoute({ syncUrl = true, scroll = true } = {}) {
   const isDiscover = state.view === "discover";
   const isCircle = state.view === "circle";
   const isThread = state.view === "thread";
   const isProfile = state.view === "profile";
-  homeView.hidden = isDiscover || isCircle || isThread || isProfile;
+  const isNotifications = state.view === "notifications";
+  homeView.hidden = isDiscover || isCircle || isThread || isProfile || isNotifications;
   discoverView.hidden = !isDiscover;
   circleView.hidden = !isCircle;
   threadView.hidden = !isThread;
   profileView.hidden = !isProfile;
-  document.querySelector("#breadcrumbRoot").textContent = isCircle || isThread ? "Circles" : isProfile ? "Profile" : isDiscover ? "Discover" : "Home";
-  document.querySelector("#breadcrumbCurrent").textContent = isThread ? threadProfiles[state.thread]?.title || "Conversation" : isCircle ? state.circle : isProfile ? profileProfiles[state.profile]?.name || "Mina Park" : isDiscover ? "Circles" : "For you";
-  const activeNavigation = isCircle || isThread ? "Your circles" : isDiscover ? "Discover" : isProfile && state.profileTab === "saved" ? "Saved" : isProfile ? "" : "Home";
+  notificationsView.hidden = !isNotifications;
+  document.querySelector("#breadcrumbRoot").textContent = isCircle || isThread ? "Circles" : isProfile ? "Profile" : isNotifications ? "Stay close" : isDiscover ? "Discover" : "Home";
+  document.querySelector("#breadcrumbCurrent").textContent = isThread ? threadProfiles[state.thread]?.title || "Conversation" : isCircle ? state.circle : isProfile ? profileProfiles[state.profile]?.name || "Mina Park" : isNotifications ? "Notifications" : isDiscover ? "Circles" : "For you";
+  const activeNavigation = isCircle || isThread ? "Your circles" : isDiscover ? "Discover" : isProfile && state.profileTab === "saved" ? "Saved" : isProfile ? "" : isNotifications ? "Notifications" : "Home";
   setActiveNavigation(activeNavigation);
   if (isDiscover) renderDiscover({ syncUrl });
   else if (isCircle) renderCircle({ syncUrl });
   else if (isThread) renderThread({ syncUrl });
   else if (isProfile) renderProfile({ syncUrl });
+  else if (isNotifications) renderNotifications({ syncUrl });
   else renderFeed({ syncUrl });
   if (scroll) window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 }
@@ -650,6 +668,18 @@ function navigateToSaved() {
   state.profileStatus = "";
   state.circle = "";
   state.thread = "";
+  state.query = "";
+  state.filter = "all";
+  searchInput.value = "";
+  updateUrlState("pushState");
+  renderRoute({ syncUrl: false });
+}
+
+function navigateToNotifications() {
+  state.view = "notifications";
+  state.circle = "";
+  state.thread = "";
+  state.profile = "";
   state.query = "";
   state.filter = "all";
   searchInput.value = "";
@@ -847,6 +877,10 @@ document.querySelectorAll("[data-nav]").forEach((button) => {
       navigateToSaved();
       return;
     }
+    if (label === "Notifications") {
+      navigateToNotifications();
+      return;
+    }
     setActiveNavigation(label);
     if (label !== "Home") showToast(`${label} is mapped for the next route`);
   });
@@ -867,6 +901,9 @@ document.querySelectorAll("[data-thread-route]").forEach((button) => {
 });
 document.querySelectorAll("[data-discover-route]").forEach((button) => {
   button.addEventListener("click", () => navigateToView("discover"));
+});
+document.querySelectorAll("[data-notifications-route]").forEach((button) => {
+  button.addEventListener("click", () => navigateToNotifications());
 });
 
 document.querySelectorAll("[data-circle-tab]").forEach((button) => {
@@ -919,6 +956,10 @@ document.querySelector("#followProfile").addEventListener("click", () => {
   state.profileFollowed = !state.profileFollowed;
   state.profileStatus = state.profileFollowed ? "You are now following Mina Park." : "You unfollowed Mina Park.";
   renderProfile({ syncUrl: false });
+});
+document.querySelector("#markNotificationsRead").addEventListener("click", () => {
+  state.notificationsRead = true;
+  renderNotifications();
 });
 document.querySelector("#profilePanel").addEventListener("click", (event) => {
   const threadRoute = event.target.closest("[data-profile-thread]");

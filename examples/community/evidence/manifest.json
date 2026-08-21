@@ -100,6 +100,20 @@
       "viewport": {"width": 390, "height": 844},
       "file": "prototype-profile-390.jpg",
       "states": ["Profile route", "Mina Park", "profile tabs", "mobile recomposition"]
+    },
+    {
+      "id": "prototype-notifications-wide",
+      "route": "/index.html?evidence=0.2&view=notifications",
+      "viewport": {"width": 1440, "height": 1000},
+      "file": "prototype-notifications-1440.jpg",
+      "states": ["Notifications route", "unread", "desktop"]
+    },
+    {
+      "id": "prototype-notifications-mobile",
+      "route": "/index.html?evidence=0.2&view=notifications",
+      "viewport": {"width": 390, "height": 844},
+      "file": "prototype-notifications-390.jpg",
+      "states": ["Notifications route", "unread", "mobile recomposition"]
     }
   ],
   "runtime_checks": [
@@ -128,6 +142,7 @@
     {"id": "thread-reply-flow", "route": "/index.html?view=thread&circle=City%20Makers&thread=city-map", "viewport": "1440x1000", "verified": true, "assertion": "The deterministic reply composer adds a local reply, clears its draft, updates the count, and announces the new state."},
     {"id": "profile-route-and-tabs", "route": "/index.html?view=profile&profile=mina", "viewport": "1440x1000", "verified": true, "assertion": "The account identity opens a shareable Mina Park Profile with Conversations/Saved tabs, follow feedback, and browser-back restoration to Home."},
     {"id": "global-saved-route", "route": "/index.html?view=profile&profile=mina&tab=saved", "viewport": "1440x1000", "verified": true, "assertion": "Global Saved opens the shareable Profile Saved route with selected navigation state and browser-back restoration to Home."},
+    {"id": "notifications-route", "route": "/index.html?view=notifications", "viewport": "1440x1000", "verified": true, "assertion": "Sidebar and topbar Notifications open the shareable notification route with three unread items, mark-all-read feedback, and browser-back recovery."},
     {"id": "drawer-focus-return", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Mobile drawer focus moves inside on open and returns to the menu trigger on Escape."},
     {"id": "mobile-touch-targets", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Core mobile controls render with at least 44 × 44 px usable geometry."},
     {"id": "board-url-state", "route": "/board.html?source=qa&view=mobile&filter=platforms", "viewport": "1440x1000", "verified": true, "assertion": "The design board restores view and filter state from a shareable URL while preserving unknown parameters."},

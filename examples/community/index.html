@@ -117,7 +117,7 @@
               <input id="searchInput" type="search" placeholder="Search people, circles, ideas" autocomplete="off" />
               <kbd>⌘ K</kbd>
             </label>
-            <button class="icon-button has-notification" type="button" aria-label="Notifications" data-toast="You are all caught up">
+            <button class="icon-button has-notification" type="button" aria-label="Open notifications" data-notifications-route>
               <svg class="icon" aria-hidden="true"><use href="#icon-bell" /></svg><span class="notification-dot"></span>
             </button>
             <button class="avatar avatar-user topbar-avatar" type="button" aria-label="Open Mina Park profile" data-profile-route="mina">MP</button>
@@ -313,6 +313,32 @@
               <div class="profile-side-card"><p class="section-kicker">Mina’s circles</p><h2>Places she returns to.</h2><div class="profile-circle-list" id="profileCircleList"></div></div>
               <div class="profile-side-card profile-note-card"><span class="prompt-icon"><svg class="icon" aria-hidden="true"><use href="#icon-spark" /></svg></span><p>Make room for the question underneath the question.</p><span>— Mina’s practice</span></div>
             </aside>
+          </div>
+        </section>
+
+        <section class="notifications-view" id="notificationsView" aria-labelledby="notificationsTitle" hidden>
+          <div class="notifications-hero">
+            <div class="notifications-hero-copy">
+              <p class="eyebrow"><span class="eyebrow-line"></span>Stay close</p>
+              <h1 id="notificationsTitle">Good things <em>found you.</em></h1>
+              <p class="notifications-description">A quiet record of the people, circles, and questions moving through your orbit.</p>
+              <div class="notifications-hero-meta"><span><strong id="notificationsCount">3</strong> new notes</span><span class="meta-separator">·</span><span>Since your last visit</span></div>
+            </div>
+            <div class="notifications-hero-art" aria-hidden="true"><div class="notifications-orbit notifications-orbit-one"></div><div class="notifications-orbit notifications-orbit-two"></div><div class="notifications-orbit-center"><svg class="icon" aria-hidden="true"><use href="#icon-bell" /></svg><span>close<br />enough</span></div><i class="notifications-orbit-dot notifications-orbit-dot-one">JK</i><i class="notifications-orbit-dot notifications-orbit-dot-two">CM</i><i class="notifications-orbit-dot notifications-orbit-dot-three">✦</i></div>
+          </div>
+
+          <div class="notifications-toolbar"><div><p class="section-kicker">Recent activity</p><h2>Stay with what’s moving.</h2></div><div class="notifications-toolbar-actions"><span id="notificationsStatus" role="status" aria-live="polite" aria-atomic="true">3 unread notifications.</span><button class="text-button" id="markNotificationsRead" type="button">Mark all as read <svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg></button></div></div>
+
+          <div class="notifications-layout">
+            <div class="notifications-main">
+              <p class="section-kicker">Today</p>
+              <div class="notification-list">
+                <article class="notification-card is-unread" data-notification-id="reply"><span class="notification-avatar avatar-jae">JK</span><div class="notification-copy"><div class="notification-meta"><span>New reply</span><span>12 min ago</span></div><h3><strong>Jae Kim</strong> replied to your conversation.</h3><p>“That one-more-question feeling is everything. I’m learning to leave more room for it.”</p><button class="text-button" type="button" data-thread-route="city-daylight">Read conversation <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div><span class="notification-unread-dot" aria-label="Unread"></span></article>
+                <article class="notification-card is-unread" data-notification-id="circle"><span class="notification-avatar circle-symbol symbol-coral">CM</span><div class="notification-copy"><div class="notification-meta"><span>Circle update</span><span>1 hr ago</span></div><h3><strong>City Makers</strong> has a new conversation worth noticing.</h3><p>A neighborhood map made from borrowed stories.</p><button class="text-button" type="button" data-circle-route="City Makers">Visit circle <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div><span class="notification-unread-dot" aria-label="Unread"></span></article>
+                <article class="notification-card is-unread" data-notification-id="prompt"><span class="notification-avatar prompt-icon"><svg class="icon" aria-hidden="true"><use href="#icon-spark" /></svg></span><div class="notification-copy"><div class="notification-meta"><span>Prompt for you</span><span>Yesterday</span></div><h3><strong>Quiet Mornings</strong> opened a new question.</h3><p>What helps your work feel like yours?</p><button class="text-button" type="button" data-discover-route>Explore circles <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div><span class="notification-unread-dot" aria-label="Unread"></span></article>
+              </div>
+            </div>
+            <aside class="notifications-side"><div class="notifications-side-card"><p class="section-kicker">Your orbit</p><h2>Nothing urgent.</h2><p>Notifications are a gentle nudge back to the people and places you chose.</p><div class="notification-side-stat"><span class="circle-symbol symbol-moss">4</span><span><strong>4 circles</strong><small>keeping a little room</small></span></div></div><div class="notifications-side-card notifications-side-note"><span class="prompt-icon"><svg class="icon" aria-hidden="true"><use href="#icon-spark" /></svg></span><p>Good communities don’t shout. They leave the light on.</p><span>— Gather practice</span></div></aside>
           </div>
         </section>
       </main>
