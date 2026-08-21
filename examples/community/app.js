@@ -61,6 +61,7 @@ const state = {
 };
 
 const feedList = document.querySelector("#feedList");
+const feedStatus = document.querySelector("#feedStatus");
 const searchInput = document.querySelector("#searchInput");
 const composerDialog = document.querySelector("#composerDialog");
 const composerForm = document.querySelector("#composerForm");
@@ -161,6 +162,14 @@ function renderFeed({ focusPostId = null, focusAction = "" } = {}) {
   feedList.innerHTML = visiblePosts.length
     ? visiblePosts.map(cardMarkup).join("")
     : `<div class="empty-state"><span class="empty-icon">${icon("spark")}</span><h3>No conversations here yet.</h3><p>Try another search or make the first thoughtful move.</p><button class="text-button" type="button" data-clear-feed>Clear filters ${icon("arrow-up")}</button></div>`;
+
+  if (feedStatus && focusPostId === null) {
+    const scope = state.circle || (state.filter === "all" ? "For you" : `${state.filter[0].toUpperCase()}${state.filter.slice(1)}`);
+    const queryCopy = query ? ` matching “${state.query.trim()}”` : "";
+    feedStatus.textContent = visiblePosts.length
+      ? `${visiblePosts.length} conversation${visiblePosts.length === 1 ? "" : "s"} in ${scope}${queryCopy}.`
+      : `No conversations found in ${scope}${queryCopy}.`;
+  }
 
   document.querySelectorAll("[data-filter]").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.filter === state.filter && !state.circle);

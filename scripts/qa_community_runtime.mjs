@@ -47,6 +47,15 @@ async function runRuntimeChecks() {
     assert(!syncedUrl.includes("filter="), "Search recovery did not clear the old filter state");
     results.push({ id: "url-sync", verified: true, viewport: "1440x1000" });
 
+    await desktop.goto(`${DEFAULT_BASE_URL}/index.html`, { waitUntil: "networkidle" });
+    const feedAnnouncement = await desktop.evaluate(() => ({
+      feedLive: document.querySelector("#feedList").getAttribute("aria-live"),
+      statusLive: document.querySelector("#feedStatus")?.getAttribute("aria-live"),
+      statusText: document.querySelector("#feedStatus")?.textContent,
+    }));
+    assert(feedAnnouncement.feedLive === null && feedAnnouncement.statusLive === "polite" && feedAnnouncement.statusText.includes("3 conversations"), "Feed updates did not use a dedicated status announcement");
+    results.push({ id: "feed-status-announcement", verified: true, viewport: "1440x1000" });
+
     await desktop.evaluate(() => {
       const url = new URL(window.location.href);
       url.searchParams.set("filter", "latest");

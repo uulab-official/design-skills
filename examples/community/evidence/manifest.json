@@ -57,6 +57,7 @@
     {"id": "url-restoration", "route": "/index.html?filter=following&q=work", "viewport": "1440x1000", "verified": true, "assertion": "A shared URL restores the selected feed filter, search query, and matching posts."},
     {"id": "local-fonts", "route": "/index.html?source=qa&filter=following&q=work", "viewport": "1440x1000", "verified": true, "assertion": "The local DM Sans and Fraunces files finish loading without a Google Fonts stylesheet dependency."},
     {"id": "url-sync", "route": "/index.html?source=qa", "viewport": "1440x1000", "verified": true, "assertion": "Changing search updates the URL while preserving unknown query parameters."},
+    {"id": "feed-status-announcement", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "Feed result counts use a dedicated polite status region instead of making the entire card list live."},
     {"id": "composer-focus-return", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "Composer open focuses the title and Escape returns focus to its trigger."},
     {"id": "skip-link", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "The first keyboard target skips the shell and focuses main content."},
     {"id": "prototype-history-state", "route": "/index.html?filter=latest", "viewport": "1440x1000", "verified": true, "assertion": "A browser history change rehydrates the prototype filter and matching feed."},
