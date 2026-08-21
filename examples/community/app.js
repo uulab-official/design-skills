@@ -840,6 +840,9 @@ document.querySelectorAll("[data-circle-route]").forEach((button) => {
 document.querySelectorAll("[data-thread-route]").forEach((button) => {
   button.addEventListener("click", () => navigateToThread(button.dataset.threadRoute));
 });
+document.querySelectorAll("[data-discover-route]").forEach((button) => {
+  button.addEventListener("click", () => navigateToView("discover"));
+});
 
 document.querySelectorAll("[data-circle-tab]").forEach((button) => {
   button.addEventListener("click", () => {

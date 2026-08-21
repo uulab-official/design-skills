@@ -128,6 +128,27 @@ async function runRuntimeChecks() {
     results.push({ id: "featured-thread-route", verified: true, viewport: "1440x1000" });
 
     await desktop.goto(`${DEFAULT_BASE_URL}/index.html`, { waitUntil: "networkidle" });
+    const discoveryCtas = desktop.locator(".circles-card [data-discover-route]");
+    assert(await discoveryCtas.count() === 2, "Home circles rail did not expose both Discover route CTAs");
+    await discoveryCtas.first().click();
+    const railDiscovery = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      discoverHidden: document.querySelector("#discoverView")?.hidden,
+    }));
+    assert(railDiscovery.url.includes("view=discover") && railDiscovery.homeHidden === true && railDiscovery.discoverHidden === false, "Home circles rail CTA did not open Discover");
+    await desktop.goBack();
+    await wait(80);
+    await desktop.locator(".circles-card [data-discover-route]").last().click();
+    const railLinkDiscovery = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      discoverHidden: document.querySelector("#discoverView")?.hidden,
+    }));
+    assert(railLinkDiscovery.url.includes("view=discover") && railLinkDiscovery.homeHidden === true && railLinkDiscovery.discoverHidden === false, "Home circles rail link did not open Discover");
+    results.push({ id: "home-discover-route", verified: true, viewport: "1440x1000" });
+
+    await desktop.goto(`${DEFAULT_BASE_URL}/index.html`, { waitUntil: "networkidle" });
     const initialNavState = await desktop.evaluate(() => ({
       labels: Array.from(document.querySelectorAll("nav")).map((nav) => nav.getAttribute("aria-label")),
       current: Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav),

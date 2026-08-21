@@ -38,6 +38,7 @@ The focused desktop pass inspected the hero baseline, orbit artwork, feed headin
 | DQ-004 | P2 | Route / implementation coverage | Circle conversation CTAs stopped at a toast, leaving the board’s Thread / Conversation reading and reply screen absent from the runnable flow. | Resolved by adding a shareable Thread route with author context, deterministic replies, browser-back recovery, local reply creation, responsive evidence, and a dedicated visual baseline. |
 | DQ-005 | P2 | Route / implementation coverage | The board defined Profile / Mina Park as the identity and contribution screen, but account controls stopped at a profile-menu toast. | Resolved by adding a shareable Profile route with identity cover, contribution stats, Conversations/Saved tabs, follow feedback, circle context, responsive evidence, and a dedicated visual baseline. |
 | DQ-006 | P2 | Route / implementation coverage | Home’s featured story CTA stopped at a route-boundary toast, leaving the board’s featured Thread content unreachable from the main feed. | Resolved by mapping it to the `city-daylight` shareable Thread route, adding browser-back recovery, and aligning Thread evidence with the board’s featured reading content. |
+| DQ-007 | P2 | Route / implementation coverage | Home’s circles rail exposed `View all circles` and `See all circles`, but both stopped at route-boundary toasts even though Discover was already implemented. | Resolved by routing both affordances to the shareable Discover view and covering the shared history boundary in browser QA. |
 
 P0 findings: none.  
 P1 findings: none.  
@@ -65,6 +66,8 @@ The v0.18 Profile-route pass closes the identity screen gap: Mina Park’s cover
 
 The v0.19 Featured Thread-route pass closes the Home CTA gap: the featured “A little more daylight” card now opens the same shareable City Makers Thread surface used by Circle and Profile, restores Home through browser back, and is represented in the Thread evidence captures.
 
+The v0.20 Home Discover-rail pass closes the remaining primary Home discovery dead ends: both `View all circles` and `See all circles` now open the existing shareable Discover route, keep the Discover current-navigation state, and preserve browser-back recovery to Home.
+
 ## Rubric pass
 
 - Typography: local fonts, weight hierarchy, serif display treatment, wrapping, and line-height remain coherent across source and implementation.
@@ -74,7 +77,7 @@ The v0.19 Featured Thread-route pass closes the Home CTA gap: the featured “A 
 - Image quality and assets: the featured story uses the same local editorial asset and preserves its crop; no placeholder image replaces a designed asset.
 - Copy and content: source and implementation use the same product copy and state labels for the reviewed home surface.
 - Icons: board symbols and implementation SVG sprite icons are present, aligned, and stylistically consistent.
-- States and interactions: URL state, history restoration, Home → Featured Thread and Discover → Circle → Thread → Profile route entry/back with instant scroll reset, topic filters, Circle tab/join state, Thread reply creation/status feedback, Profile Conversations/Saved tabs and follow feedback, dedicated feed-status announcement, synchronized navigation current state, composer focus return, drawer focus return, skip-link navigation, board state, and board dialog focus return passed runtime checks.
+- States and interactions: URL state, history restoration, Home circles rail → Discover → Circle → Thread → Profile and Home → Featured Thread route entry/back with instant scroll reset, topic filters, Circle tab/join state, Thread reply creation/status feedback, Profile Conversations/Saved tabs and follow feedback, dedicated feed-status announcement, synchronized navigation current state, composer focus return, drawer focus return, skip-link navigation, board state, and board dialog focus return passed runtime checks.
 - Feed action focus: Like/Save rerendering preserves the focused action and its updated pressed state in browser QA.
 - Accessibility: semantic controls, visible focus treatment, dedicated live status messaging, reduced-motion support, image alt text, and minimum 44 × 44 px mobile control geometry are covered by the example contract and runtime QA.
 - AI shortcut artifacts: no generic placeholder card, fake product image, or mismatched decorative surface was found in the reviewed home surface; the orbit treatment is a deliberate shared motif.
@@ -83,8 +86,8 @@ The v0.19 Featured Thread-route pass closes the Home CTA gap: the featured “A 
 
 - `npm run capture:community` — refreshed 14 evidence captures, including Discover, City Makers Circle, the featured “A little more daylight” Thread, and Mina Park Profile at desktop and mobile.
 - QA comparison capture — refreshed source and implementation panels at 1280 × 720 CSS px / 1× density.
-- `npm run validate:evidence` — 14 captures and 28 documented runtime assertions passed.
-- `npm run test:browser` — 21 / 21 runtime checks passed, including Home → Featured Thread and Discover → Circle → Thread → Profile route entry/back recovery, Circle tab/join state, Thread reply creation, Profile tab/follow feedback, instant scroll reset, navigation current state, dedicated feed-status announcements, and Like action focus retention after feed rerender.
+- `npm run validate:evidence` — 14 captures and 29 documented runtime assertions passed.
+- `npm run test:browser` — 22 / 22 runtime checks passed, including Home circles rail → Discover and Home → Featured Thread plus Discover → Circle → Thread → Profile route entry/back recovery, Circle tab/join state, Thread reply creation, Profile tab/follow feedback, instant scroll reset, navigation current state, dedicated feed-status announcements, and Like action focus retention after feed rerender.
 - `npm run test:visual` — 7 / 7 targets passed with `mismatchRatio: 0`.
 - `python3 -m unittest tests.test_community_example_contract.CommunityExampleContractTests.test_responsive_and_motion_contracts_are_present` — safe-area contract passed after the intentional RED → GREEN cycle.
 - Browser console sweep — 0 console errors, 0 page errors, and 0 invalid links across Home, Featured Thread, Discover, City Makers Circle, City Makers Thread, Mina Park Profile, and board desktop/mobile states.
