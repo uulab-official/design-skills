@@ -400,6 +400,26 @@ async function runRuntimeChecks() {
     await desktop.goBack();
     await wait(80);
     results.push({ id: "settings-route", verified: true, viewport: "1440x1000" });
+    await desktop.goto(`${DEFAULT_BASE_URL}/index.html?source=qa&feed=offline&filter=following&q=work`, { waitUntil: "networkidle" });
+    const offlineState = await desktop.evaluate(() => ({
+      bannerHidden: document.querySelector("#feedRecoveryBanner")?.hidden,
+      bannerState: document.querySelector("#feedRecoveryBanner")?.dataset.state,
+      filterPressed: document.querySelector('[data-filter="following"]')?.getAttribute("aria-pressed"),
+      cards: document.querySelectorAll("#feedList .post-card").length,
+      url: window.location.search,
+    }));
+    assert(!offlineState.bannerHidden && offlineState.bannerState === "offline" && offlineState.filterPressed === "true" && offlineState.cards === 1 && offlineState.url.includes("source=qa"), "Offline feed state did not preserve stale content and filter context");
+    await desktop.locator("#retryFeed").click();
+    await wait(80);
+    const offlineRecovered = await desktop.evaluate(() => ({
+      bannerHidden: document.querySelector("#feedRecoveryBanner")?.hidden,
+      feedState: document.querySelector("#feedList")?.dataset.feedState,
+      active: document.activeElement.id,
+      url: window.location.search,
+      status: document.querySelector("#feedStatus")?.textContent,
+    }));
+    assert(offlineRecovered.bannerHidden && offlineRecovered.active === "feedStatus" && !offlineRecovered.url.includes("feed=offline") && offlineRecovered.status.includes("connection is back"), "Offline feed retry did not restore the ready state with an announcement");
+    results.push({ id: "feed-offline-recovery", verified: true, viewport: "1440x1000" });
     await desktop.close();
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
@@ -424,6 +444,26 @@ async function runRuntimeChecks() {
     }));
     assert(touchTargets.length > 0 && touchTargets.every(({ width, height }) => width >= 44 && height >= 44), "A mobile interaction target is smaller than 44px");
     results.push({ id: "mobile-touch-targets", verified: true, viewport: "390x844" });
+    await mobile.goto(`${DEFAULT_BASE_URL}/index.html?source=qa&feed=error&filter=following`, { waitUntil: "networkidle" });
+    const feedError = await mobile.evaluate(() => ({
+      role: document.querySelector('[data-feed-state="error"]')?.getAttribute("role"),
+      retry: Boolean(document.querySelector('[data-retry-feed]')),
+      bannerHidden: document.querySelector("#feedRecoveryBanner")?.hidden,
+      filterPressed: document.querySelector('[data-filter="following"]')?.getAttribute("aria-pressed"),
+      url: window.location.search,
+    }));
+    assert(feedError.role === "alert" && feedError.retry && feedError.bannerHidden && feedError.filterPressed === "true" && feedError.url.includes("feed=error"), "Feed error state did not expose an alert, retry action, and retained filter");
+    await mobile.locator('[data-retry-feed]').click();
+    await wait(80);
+    const feedErrorRecovered = await mobile.evaluate(() => ({
+      error: Boolean(document.querySelector('[data-feed-state="error"]')),
+      cards: document.querySelectorAll("#feedList .post-card").length,
+      filterPressed: document.querySelector('[data-filter="following"]')?.getAttribute("aria-pressed"),
+      active: document.activeElement.id,
+      url: window.location.search,
+    }));
+    assert(!feedErrorRecovered.error && feedErrorRecovered.cards === 2 && feedErrorRecovered.filterPressed === "true" && feedErrorRecovered.active === "feedStatus" && !feedErrorRecovered.url.includes("feed=error"), "Feed error retry did not restore the retained filtered feed");
+    results.push({ id: "feed-error-recovery", verified: true, viewport: "390x844" });
     await mobile.close();
 
     const board = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
@@ -453,7 +493,7 @@ async function runRuntimeChecks() {
       filterPressed: document.querySelector('[data-board-filter="screens"]').getAttribute("aria-pressed"),
       visibleScreens: document.querySelectorAll('article[data-board-type="screens"]:not([hidden])').length,
     }));
-    assert(boardHistoryState.view === "desktop" && boardHistoryState.filterPressed === "true" && boardHistoryState.visibleScreens === 11, "Board did not rehydrate after a history state change");
+    assert(boardHistoryState.view === "desktop" && boardHistoryState.filterPressed === "true" && boardHistoryState.visibleScreens === 12, "Board did not rehydrate after a history state change");
     results.push({ id: "board-history-state", verified: true, viewport: "1440x1000" });
 
     await board.goto(`${DEFAULT_BASE_URL}/board.html?source=qa&view=mobile&filter=all`, { waitUntil: "networkidle" });
@@ -512,6 +552,20 @@ async function runRuntimeChecks() {
       open: document.querySelector("#boardDialog").open,
     }));
     assert(workspaceBoardDialogClosed.activeLabel === "Workspace / Picker" && !workspaceBoardDialogClosed.open, "Workspace artboard dialog focus did not return after Escape");
+    await board.locator('[data-open-artboard="Feed / Recovery"]').click();
+    const recoveryBoardDialogOpen = await board.evaluate(() => ({
+      active: document.activeElement.id,
+      title: document.querySelector("#dialogTitle")?.textContent,
+      description: document.querySelector("#dialogDescription")?.textContent,
+      open: document.querySelector("#boardDialog").open,
+    }));
+    assert(recoveryBoardDialogOpen.active === "closeBoardDialog" && recoveryBoardDialogOpen.title === "Feed / Recovery" && recoveryBoardDialogOpen.description === "Offline · stale · error · retry" && recoveryBoardDialogOpen.open, "Feed recovery artboard handoff did not open with its declared metadata");
+    await board.keyboard.press("Escape");
+    const recoveryBoardDialogClosed = await board.evaluate(() => ({
+      activeLabel: document.activeElement.getAttribute("data-open-artboard"),
+      open: document.querySelector("#boardDialog").open,
+    }));
+    assert(recoveryBoardDialogClosed.activeLabel === "Feed / Recovery" && !recoveryBoardDialogClosed.open, "Feed recovery artboard dialog focus did not return after Escape");
     results.push({ id: "board-dialog-focus-return", verified: true, viewport: "1440x1000" });
     await board.close();
   } finally {

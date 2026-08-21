@@ -43,9 +43,10 @@ The selected direction is the warm editorial one because Gather’s primary job 
 6. **Settings / Preferences** — account context, preference rhythm, accessible toggles, and saved feedback.
 7. **Notifications / Stay close** — unread activity, follow-through links, and mark-all-read recovery.
 8. **Workspace / Picker** — active space selection, context continuity, and keyboard focus recovery.
-9. **Mobile home** — stacked content with fixed bottom navigation, floating create action, and responsive recomposition.
-10. **Home / Following + circle scoped** — the production surface adds filter and circle-selection states without changing the shell.
-11. **Composer / modal** — the production surface adds circle selection, required title, optional context, validation, and success feedback.
+9. **Feed / Recovery** — offline/stale continuity, connection error, retry, and status/focus recovery.
+10. **Mobile home** — stacked content with fixed bottom navigation, floating create action, and responsive recomposition.
+11. **Home / Following + circle scoped** — the production surface adds filter and circle-selection states without changing the shell.
+12. **Composer / modal** — the production surface adds circle selection, required title, optional context, validation, and success feedback.
 
 The design board also shows the empty, loading, recovery, and success states that are easy to omit from a visual-only case study.
 
@@ -99,6 +100,7 @@ This prevents “community” from defaulting to one feed pattern. The selected 
 | Notifications route | Sidebar and topbar bell open `view=notifications`, render unread activity, mark all as read with a status announcement, and preserve browser-back recovery |
 | Settings route | Sidebar Settings opens `view=settings`, exposes account context and accessible preference toggles, announces dirty/saved state, and preserves browser-back recovery |
 | Workspace picker | Sidebar workspace switcher opens an accessible picker, focuses the active space, updates context on selection, preserves the current route/search context, and returns focus on close |
+| Feed recovery | `feed=offline` keeps the last saved feed visible with a reconnect banner; `feed=error` renders an alert with retry, preserves filter/search state, and returns focus to the feed status on recovery |
 | Notifications handoff | Notifications / Stay close is represented on the board with unread activity, follow-through, and recovery metadata aligned to `view=notifications` |
 | Navigation current state | Sidebar and mobile navigation share named landmarks and expose the selected destination with `aria-current="page"` |
 | Discover route | Discover opens as a shareable `view=discover` route, resets scroll instantly, filters circle cards, and restores Home through browser back |
@@ -126,6 +128,7 @@ board.html
   ├─ Settings / Preferences ├─ open live prototype → index.html?view=settings
   ├─ Notifications / Stay close ├─ open live prototype → index.html?view=notifications
   ├─ Workspace / Picker ───┤ open live prototype → sidebar workspace switcher
+  ├─ Feed / Recovery ──────┤ open live prototype → index.html?feed=offline or ?feed=error
   └─ Mobile / Home ─────────┘
        ├─ Empty
        ├─ Loading
@@ -136,7 +139,7 @@ board.html
 ## Quality review checklist
 
 - [x] Responsive shell changes from sidebar to drawer and bottom navigation.
-- [x] Core states are visible without relying on hover: default, filtered, empty, composer, validation, success, and saved/liked.
+- [x] Core states are visible without relying on hover: default, filtered, empty, loading, offline/stale, error/retry, composer, validation, success, and saved/liked.
 - [x] Content hierarchy is readable at a glance: welcome → featured story → feed → community context.
 - [x] Focus rings, labels, live regions, button names, and reduced-motion behavior are included.
 - [x] Composer validation exposes a required-field error with `aria-invalid`, `aria-describedby`, and an alert message; filter and navigation selections expose `aria-pressed` state.
@@ -151,7 +154,7 @@ board.html
 | Target | Evidence | Coverage |
 | --- | --- | --- |
 | Desktop 1440 × 1000 | [`board-1440.jpg`](evidence/board-1440.jpg), [`prototype-1440.jpg`](evidence/prototype-1440.jpg) | Primary wide review of the design board and runnable surface |
-| Desktop 1280 × 900 | [`board-1280.jpg`](evidence/board-1280.jpg) | Directions, archetypes, platform translations, home, discover, circle, thread, profile, settings, notifications, workspace picker |
+| Desktop 1280 × 900 | [`board-1280.jpg`](evidence/board-1280.jpg) | Directions, archetypes, platform translations, home, discover, circle, thread, profile, settings, notifications, workspace picker, feed recovery |
 | Desktop 1024 × 900 | [`board-1024.jpg`](evidence/board-1024.jpg) | Sidebar-to-drawer boundary and content reflow |
 | Mobile 390 × 844 | [`board-390.jpg`](evidence/board-390.jpg), [`prototype-390.jpg`](evidence/prototype-390.jpg), [`prototype-discover-390.jpg`](evidence/prototype-discover-390.jpg) | One-column cards, horizontal filters, bottom navigation, Discover directory, composer, empty/loading/recovery/success states |
 | Discover desktop 1440 × 1000 | [`prototype-discover-1440.jpg`](evidence/prototype-discover-1440.jpg) | Dark editorial hero, circle directory cards, topic filters, route-boundary state |
@@ -166,11 +169,13 @@ board.html
 | Notifications desktop/mobile | [`prototype-notifications-1440.jpg`](evidence/prototype-notifications-1440.jpg), [`prototype-notifications-390.jpg`](evidence/prototype-notifications-390.jpg), [`board-1440.jpg`](evidence/board-1440.jpg), [`board-390.jpg`](evidence/board-390.jpg) | Stay close hero, unread activity, follow-through, mark-all-read recovery, and responsive board handoff |
 | Workspace picker desktop | [`prototype-workspace-1440.jpg`](evidence/prototype-workspace-1440.jpg), [`board-1440.jpg`](evidence/board-1440.jpg) | Active-space picker, context continuity, backdrop hierarchy, and board handoff |
 | Workspace picker mobile | [`prototype-workspace-390.jpg`](evidence/prototype-workspace-390.jpg), [`board-390.jpg`](evidence/board-390.jpg) | Drawer + bottom-sheet composition, touch-safe options, and mobile focus surface |
+| Feed recovery desktop | [`prototype-recovery-offline-1440.jpg`](evidence/prototype-recovery-offline-1440.jpg), [`prototype-recovery-error-1440.jpg`](evidence/prototype-recovery-error-1440.jpg), [`board-1440.jpg`](evidence/board-1440.jpg) | Offline/stale continuity, connection error, retry affordance, retained filter state, and board handoff parity |
+| Feed recovery mobile | [`prototype-recovery-offline-390.jpg`](evidence/prototype-recovery-offline-390.jpg), [`prototype-recovery-error-390.jpg`](evidence/prototype-recovery-error-390.jpg), [`board-390.jpg`](evidence/board-390.jpg) | Wrapped recovery banner, stacked error panel, full-width retry, touch-safe focus surface, and responsive board handoff |
 | Native intent: iOS 390 pt / Android 360 dp | Platform translation artboards | Large-title/tab-bar and app-bar/FAB behavior are specified; native runtime remains a target, not a shipped surface |
 
-The live surface was checked after the direction, platform, and archetype boards were added. Runtime QA also exercised composer validation → recovery → publish success, feed filter state, mobile drawer open → Escape recovery, URL restoration, prototype and board history-state rehydration, local font loading, search URL synchronization, composer focus return, drawer focus return, 44 px mobile touch-target geometry, Home, Settings, Notifications, and Workspace board dialog metadata/focus recovery, workspace selection context continuity, and skip-link navigation. The [evidence manifest](evidence/manifest.json) binds each capture and runtime assertion to its route, viewport, represented state, and capture actions; run `npm run test:browser` and `npm run validate:evidence` to verify the interaction contract and JPEG dimensions. Evidence captures are committed under `examples/community/evidence/`; they are full-page JPEG screenshots produced from the local server at the viewport sizes named above. Reproduce the surface with the command in [Run locally](#run-locally), then open `/board.html` and `/index.html` at the declared sizes. The static example has no backend or network dependency; loading, empty, recovery, validation, and success are represented as deterministic prototype states. Contributors can regenerate the capture matrix with `npm install`, `npx playwright install chromium`, and `npm run capture:community`; the command reads the manifest instead of maintaining a second list of viewports.
+The live surface was checked after the direction, platform, and archetype boards were added. Runtime QA also exercised composer validation → recovery → publish success, feed filter/search state, offline/stale continuity, connection error → retry → focus recovery, mobile drawer open → Escape recovery, URL restoration, prototype and board history-state rehydration, local font loading, search URL synchronization, composer focus return, drawer focus return, 44 px mobile touch-target geometry, Home, Settings, Notifications, and Workspace board dialog metadata/focus recovery, workspace selection context continuity, and skip-link navigation. The [evidence manifest](evidence/manifest.json) binds each capture and runtime assertion to its route, viewport, represented state, and capture actions; run `npm run test:browser` and `npm run validate:evidence` to verify the interaction contract and JPEG dimensions. Evidence captures are committed under `examples/community/evidence/`; they are full-page JPEG screenshots produced from the local server at the viewport sizes named above. Reproduce the surface with the command in [Run locally](#run-locally), then open `/board.html` and `/index.html` at the declared sizes. The static example has no backend or network dependency; loading, empty, offline/stale, error/retry, validation, and success are represented as deterministic prototype states. Contributors can regenerate the capture matrix with `npm install`, `npx playwright install chromium`, and `npm run capture:community`; the command reads the manifest instead of maintaining a second list of viewports.
 
-The live route flow now covers Home circles rail → Discover → Circle / City Makers → Thread → Profile, global Saved → Profile Saved, Notifications → Thread/Circle/Discover follow-through, Settings → account/preferences, Workspace picker context selection, and Home → Featured Thread with shareable URLs, selected Conversations/About and Conversations/Saved tabs, join/follow feedback, author/reply context, local reply creation, contribution history, unread/read feedback, dirty/saved preference feedback, workspace focus recovery, and browser-back restoration. Circle, featured Thread, Profile, Notifications, Settings, and Workspace picker desktop/mobile captures are included in the evidence matrix alongside the Discover route.
+The live route flow now covers Home circles rail → Discover → Circle / City Makers → Thread → Profile, global Saved → Profile Saved, Notifications → Thread/Circle/Discover follow-through, Settings → account/preferences, Workspace picker context selection, Feed / Recovery offline/error/retry states, and Home → Featured Thread with shareable URLs, selected Conversations/About and Conversations/Saved tabs, join/follow feedback, author/reply context, local reply creation, contribution history, unread/read feedback, dirty/saved preference feedback, retained filter/search state, feed status/focus recovery, workspace focus recovery, and browser-back restoration. Circle, featured Thread, Profile, Notifications, Settings, Workspace picker, and Feed recovery desktop/mobile captures are included in the evidence matrix alongside the Discover route.
 
 ### Review scores
 

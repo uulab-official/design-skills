@@ -24,6 +24,7 @@ const artboardDescriptions = {
   "Settings / Preferences": "Account · rhythm · recovery",
   "Notifications / Stay close": "Unread · follow-through · recovery",
   "Workspace / Picker": "Space choice · focus · context",
+  "Feed / Recovery": "Offline · stale · error · retry",
   "Mobile / Home": "Responsive recomposition · 390",
   "Home / Following": "Circle-scoped state · retained context",
   "Composer / Modal": "Creation · validation · success",

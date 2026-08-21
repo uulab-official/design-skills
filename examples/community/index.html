@@ -45,6 +45,7 @@
       <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4.2 4.2L19 6.5" /></symbol>
       <symbol id="icon-spark" viewBox="0 0 24 24"><path d="m12 3 1.4 6.1L19 12l-5.6 2.9L12 21l-1.4-6.1L5 12l5.6-2.9L12 3Z" /></symbol>
       <symbol id="icon-sliders" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16M8 4v6M16 14v6" /></symbol>
+      <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.7-3.9L4 9.5M4 5v4.5h4.5M4 13a8 8 0 0 0 14.7 3.9L20 14.5M20 19v-4.5h-4.5" /></symbol>
     </svg>
 
     <div class="app-shell">
@@ -153,7 +154,12 @@
                   <button class="filter-chip" type="button" data-filter="latest">Latest</button>
                 </div>
               </div>
-              <p class="sr-only" id="feedStatus" role="status" aria-live="polite" aria-atomic="true"></p>
+              <p class="sr-only" id="feedStatus" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
+              <div class="feed-recovery-banner" id="feedRecoveryBanner" data-state="offline" role="status" aria-live="polite" aria-atomic="true" hidden>
+                <span class="feed-recovery-icon"><svg class="icon" aria-hidden="true"><use href="#icon-refresh" /></svg></span>
+                <span class="feed-recovery-copy"><strong id="feedRecoveryTitle">You’re offline.</strong><span id="feedRecoveryCopy">Showing your last saved conversations until you reconnect.</span></span>
+                <button class="text-button" id="retryFeed" type="button">Retry connection <svg class="icon" aria-hidden="true"><use href="#icon-refresh" /></svg></button>
+              </div>
 
               <article class="feature-card">
                 <div class="feature-image-wrap"><img class="feature-image" src="./assets/editorial/group-overlook.jpg" alt="Friends sharing a conversation outdoors" /><span class="image-label">Featured in City Makers</span></div>

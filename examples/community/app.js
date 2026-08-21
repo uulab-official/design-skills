@@ -55,6 +55,7 @@ const posts = [
 const state = {
   view: "home",
   filter: "all",
+  feedState: "ready",
   circle: "",
   query: "",
   discoverFilter: "all",
@@ -82,6 +83,10 @@ const state = {
 
 const feedList = document.querySelector("#feedList");
 const feedStatus = document.querySelector("#feedStatus");
+const feedRecoveryBanner = document.querySelector("#feedRecoveryBanner");
+const feedRecoveryTitle = document.querySelector("#feedRecoveryTitle");
+const feedRecoveryCopy = document.querySelector("#feedRecoveryCopy");
+const retryFeed = document.querySelector("#retryFeed");
 const searchInput = document.querySelector("#searchInput");
 const homeView = document.querySelector("#homeView");
 const discoverView = document.querySelector("#discoverView");
@@ -108,6 +113,7 @@ const sidebarScrim = document.querySelector("#sidebarScrim");
 const sidebarTrigger = document.querySelector("#openSidebar");
 
 const validFilters = new Set(["all", "following", "latest"]);
+const validFeedStates = new Set(["ready", "offline", "error"]);
 const validCircles = new Set(["City Makers", "Quiet Mornings", "Sunday Film Club", "Open Table", "Tiny Libraries", "Field Notes"]);
 const validViews = new Set(["home", "discover", "circle", "thread", "profile", "notifications", "settings"]);
 const validDiscoverFilters = new Set(["all", "make", "slow", "notice"]);
@@ -339,6 +345,7 @@ function readUrlState() {
   const params = new URLSearchParams(window.location.search);
   const view = params.get("view");
   const filter = params.get("filter");
+  const feedState = params.get("feed");
   const circle = params.get("circle");
   const thread = params.get("thread");
   const profile = params.get("profile");
@@ -346,6 +353,7 @@ function readUrlState() {
   const discoverFilter = params.get("topic");
   state.view = validViews.has(view) ? view : "home";
   state.filter = validFilters.has(filter) ? filter : "all";
+  state.feedState = validFeedStates.has(feedState) ? feedState : "ready";
   state.circle = validCircles.has(circle) ? circle : "";
   state.thread = validThreads.has(thread) ? thread : "";
   state.profile = validProfiles.has(profile) ? profile : "";
@@ -378,6 +386,8 @@ function updateUrlState(historyMethod = "replaceState") {
   else url.searchParams.delete("q");
   if (state.view === "discover" && state.discoverFilter !== "all") url.searchParams.set("topic", state.discoverFilter);
   else url.searchParams.delete("topic");
+  if (state.feedState !== "ready") url.searchParams.set("feed", state.feedState);
+  else url.searchParams.delete("feed");
   const nextUrl = url.pathname + url.search + url.hash;
   if (historyMethod === "pushState") window.history.pushState({}, "", nextUrl);
   else window.history.replaceState({}, "", nextUrl);
@@ -440,6 +450,14 @@ function setComposerError(hasError) {
   }
 }
 
+function recoverFeed() {
+  state.feedState = "ready";
+  renderFeed({ syncUrl: true });
+  feedStatus.textContent = "Your connection is back. The latest conversations are ready.";
+  feedStatus.focus({ preventScroll: true });
+  showToast("Your feed is up to date");
+}
+
 function renderFeed({ focusPostId = null, focusAction = "", syncUrl = true } = {}) {
   const query = state.query.trim().toLowerCase();
   const visiblePosts = posts.filter((post) => {
@@ -449,9 +467,19 @@ function renderFeed({ focusPostId = null, focusAction = "", syncUrl = true } = {
     return matchesFilter && matchesCircle && (!query || haystack.includes(query));
   });
 
-  feedList.innerHTML = visiblePosts.length
-    ? visiblePosts.map(cardMarkup).join("")
-    : `<div class="empty-state"><span class="empty-icon">${icon("spark")}</span><h3>No conversations here yet.</h3><p>Try another search or make the first thoughtful move.</p><button class="text-button" type="button" data-clear-feed>Clear filters ${icon("arrow-up")}</button></div>`;
+  const isOffline = state.feedState === "offline";
+  const isError = state.feedState === "error";
+  feedRecoveryBanner.hidden = !isOffline;
+  feedRecoveryBanner.dataset.state = state.feedState;
+  feedRecoveryTitle.textContent = isOffline ? "You’re offline." : "Connection restored.";
+  feedRecoveryCopy.textContent = isOffline
+    ? "Showing your last saved conversations until you reconnect."
+    : "Your conversations are ready to explore again.";
+  feedList.innerHTML = isError
+    ? `<div class="feed-error-state" data-feed-state="error" role="alert"><span class="feed-error-mark">!</span><div><p class="section-kicker">A brief interruption</p><h3>We lost the thread.</h3><p>Your filters and search are safe. Try the connection again and we’ll bring the feed back.</p><button class="button button-primary" type="button" data-retry-feed>Try again ${icon("refresh")}</button></div></div>`
+    : visiblePosts.length
+      ? visiblePosts.map(cardMarkup).join("")
+      : `<div class="empty-state"><span class="empty-icon">${icon("spark")}</span><h3>No conversations here yet.</h3><p>Try another search or make the first thoughtful move.</p><button class="text-button" type="button" data-clear-feed>Clear filters ${icon("arrow-up")}</button></div>`;
 
   if (feedStatus && focusPostId === null) {
     const scope = state.circle || (state.filter === "all" ? "For you" : `${state.filter[0].toUpperCase()}${state.filter.slice(1)}`);
@@ -827,6 +855,11 @@ document.querySelectorAll("[data-filter-circle]").forEach((button) => {
 });
 
 feedList.addEventListener("click", (event) => {
+  const retry = event.target.closest("[data-retry-feed]");
+  if (retry) {
+    recoverFeed();
+    return;
+  }
   const action = event.target.closest("[data-post-action]");
   if (action) {
     const postId = Number(action.closest("[data-post-id]").dataset.postId);
@@ -880,6 +913,7 @@ document.querySelector("#openComposer").addEventListener("click", openComposer);
 document.querySelector("#mobileCompose").addEventListener("click", openComposer);
 document.querySelector("#promptButton").addEventListener("click", openComposer);
 document.querySelector("#closeComposer").addEventListener("click", closeComposer);
+retryFeed.addEventListener("click", recoverFeed);
 workspaceSwitcher.addEventListener("click", openWorkspacePicker);
 closeWorkspaceDialog.addEventListener("click", closeWorkspacePicker);
 workspaceOptions.addEventListener("click", (event) => {

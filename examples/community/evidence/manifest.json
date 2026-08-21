@@ -144,6 +144,34 @@
       "file": "prototype-workspace-390.jpg",
       "actions": [{"click": "#openSidebar"}, {"click": "#workspaceSwitcher"}],
       "states": ["Workspace picker", "mobile drawer", "mobile recomposition"]
+    },
+    {
+      "id": "prototype-feed-offline-wide",
+      "route": "/index.html?evidence=0.2&feed=offline",
+      "viewport": {"width": 1440, "height": 1000},
+      "file": "prototype-recovery-offline-1440.jpg",
+      "states": ["Feed recovery", "offline", "stale content", "desktop"]
+    },
+    {
+      "id": "prototype-feed-offline-mobile",
+      "route": "/index.html?evidence=0.2&feed=offline",
+      "viewport": {"width": 390, "height": 844},
+      "file": "prototype-recovery-offline-390.jpg",
+      "states": ["Feed recovery", "offline", "stale content", "mobile recomposition"]
+    },
+    {
+      "id": "prototype-feed-error-wide",
+      "route": "/index.html?evidence=0.2&feed=error&filter=following",
+      "viewport": {"width": 1440, "height": 1000},
+      "file": "prototype-recovery-error-1440.jpg",
+      "states": ["Feed recovery", "error", "retry", "retained filter", "desktop"]
+    },
+    {
+      "id": "prototype-feed-error-mobile",
+      "route": "/index.html?evidence=0.2&feed=error&filter=following",
+      "viewport": {"width": 390, "height": 844},
+      "file": "prototype-recovery-error-390.jpg",
+      "states": ["Feed recovery", "error", "retry", "retained filter", "mobile recomposition"]
     }
   ],
   "runtime_checks": [
@@ -178,7 +206,9 @@
     {"id": "mobile-touch-targets", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Core mobile controls render with at least 44 × 44 px usable geometry."},
     {"id": "board-url-state", "route": "/board.html?source=qa&view=mobile&filter=platforms", "viewport": "1440x1000", "verified": true, "assertion": "The design board restores view and filter state from a shareable URL while preserving unknown parameters."},
     {"id": "board-history-state", "route": "/board.html?view=desktop&filter=screens", "viewport": "1440x1000", "verified": true, "assertion": "A browser history change rehydrates the board view, filter, and visible screens."},
-    {"id": "board-dialog-focus-return", "route": "/board.html?source=qa&view=mobile&filter=platforms", "viewport": "1440x1000", "verified": true, "assertion": "Opening Home, Settings, Notifications, and Workspace screen handoff dialogs focuses the close control, exposes declared metadata, and Escape returns focus to the invoking artboard."},
-    {"id": "workspace-switcher-focus-return", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "Workspace picker opens with the active space focused, selecting a space updates the sidebar context, and Escape restores focus to the trigger."}
+    {"id": "board-dialog-focus-return", "route": "/board.html?source=qa&view=mobile&filter=platforms", "viewport": "1440x1000", "verified": true, "assertion": "Opening Home, Settings, Notifications, Workspace, and Feed Recovery screen handoff dialogs focuses the close control, exposes declared metadata, and Escape returns focus to the invoking artboard."},
+    {"id": "workspace-switcher-focus-return", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "Workspace picker opens with the active space focused, selecting a space updates the sidebar context, and Escape restores focus to the trigger."},
+    {"id": "feed-offline-recovery", "route": "/index.html?feed=offline", "viewport": "1440x1000", "verified": true, "assertion": "Offline mode preserves the last saved feed, exposes a status banner, and retry returns to the ready state without losing filters or search context."},
+    {"id": "feed-error-recovery", "route": "/index.html?feed=error&filter=following", "viewport": "390x844", "verified": true, "assertion": "Feed error mode preserves the selected filter, exposes an alert and retry action, and recovery restores the filtered conversations."}
   ]
 }
