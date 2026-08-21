@@ -28,7 +28,7 @@
     <header class="board-header">
       <a class="board-brand" href="./index.html" aria-label="Back to Gather home"><span class="board-brand-mark">g</span><span>Gather</span></a>
       <div class="board-crumb"><span>Community system</span><i></i><strong>Design board</strong></div>
-      <div class="board-header-actions"><span class="version-chip">v0.4 · review</span><a class="open-prototype" href="./index.html">Open prototype <svg class="board-icon" aria-hidden="true"><use href="#board-arrow" /></svg></a></div>
+      <div class="board-header-actions"><span class="version-chip">v0.5 · review</span><a class="open-prototype" href="./index.html">Open prototype <svg class="board-icon" aria-hidden="true"><use href="#board-arrow" /></svg></a></div>
     </header>
 
     <main class="board-main" id="boardMain" data-view="desktop">
@@ -43,10 +43,30 @@
       </section>
 
       <section class="board-toolbar" aria-label="Design board controls">
-        <div class="board-toolbar-label"><strong>Design board</strong><span>08 screens · 14 components · 05 states</span></div>
+        <div class="board-toolbar-label"><strong>Design board</strong><span>03 directions · 08 screens · 14 components · 05 states</span></div>
         <div class="board-controls">
           <div class="board-segmented" role="group" aria-label="Preview size"><button class="is-active" type="button" data-view-toggle="desktop">Desktop</button><button type="button" data-view-toggle="mobile">Mobile</button></div>
-          <div class="board-filters" role="group" aria-label="Filter board"><button class="is-active" type="button" data-board-filter="all">All</button><button type="button" data-board-filter="screens">Screens</button><button type="button" data-board-filter="states">States</button><button type="button" data-board-filter="system">System</button></div>
+          <div class="board-filters" role="group" aria-label="Filter board"><button class="is-active" type="button" data-board-filter="all">All</button><button type="button" data-board-filter="directions">Directions</button><button type="button" data-board-filter="screens">Screens</button><button type="button" data-board-filter="states">States</button><button type="button" data-board-filter="system">System</button></div>
+        </div>
+      </section>
+
+      <section class="board-section directions-section" data-board-type="directions" aria-labelledby="directions-title">
+        <div class="section-marker"><span>00</span><div><p class="board-eyebrow">Visual exploration</p><h2 id="directions-title">Three ways to make the same community feel alive.</h2></div><p class="section-note">The product job stays constant. Type, density, contrast, and material language change the invitation.</p></div>
+        <div class="direction-grid">
+          <article class="direction-card direction-editorial" data-board-type="directions">
+            <div class="direction-preview editorial-preview"><div class="editorial-rail"><b>g</b><span>01</span><span>02</span><span>03</span><i></i></div><div class="editorial-body"><small>QUIET MORNINGS · 124 MEMBERS</small><h3>Find the<br /><em>good question.</em></h3><p>A slower, more literary corner for people who prefer context over noise.</p><div class="editorial-rule"></div><div class="editorial-post"><span>MP</span><strong>The best workday<br />starts before the inbox.</strong><b>↗</b></div></div><span class="editorial-sun"></span></div>
+            <div class="direction-info"><div class="direction-meta"><span>D / 01</span><span>Selected direction</span></div><h3>Quiet editorial</h3><p>Warm paper, serif moments, generous breathing room. A community that feels collected rather than optimized.</p><div class="direction-bottom"><div class="direction-tags"><span>Reflective</span><span>Airy</span><span>Warm</span></div><small>Best for rituals, reading, and thoughtful prompts.</small></div></div>
+          </article>
+
+          <article class="direction-card direction-studio" data-board-type="directions">
+            <div class="direction-preview studio-preview"><div class="studio-top"><b>GATHER<span>/STUDIO</span></b><span>⌘ K</span><i>MP</i></div><div class="studio-body"><small>LIVE CIRCLES · 08:42</small><h3>Make room<br /><em>for signal.</em></h3><div class="studio-command"><span>⌕</span><b>Find a circle</b><i>↗</i></div><div class="studio-stats"><span><b>2.4k</b><small>open questions</small></span><span><b>84</b><small>active circles</small></span><span><b>19</b><small>new today</small></span></div></div><div class="studio-grid-lines"></div></div>
+            <div class="direction-info"><div class="direction-meta"><span>D / 02</span><span>Alternate direction</span></div><h3>Night studio</h3><p>Dark canvas, sharp grid, electric mint and violet. A more focused community for makers, teams, and live conversation.</p><div class="direction-bottom"><div class="direction-tags"><span>Focused</span><span>Dense</span><span>Expressive</span></div><small>Best for live rooms, events, and creator workflows.</small></div></div>
+          </article>
+
+          <article class="direction-card direction-bulletin" data-board-type="directions">
+            <div class="direction-preview bulletin-preview"><div class="bulletin-top"><b>GATHER DAILY</b><span>VOL. 04 / 18 JUNE</span><i>→</i></div><div class="bulletin-body"><div class="bulletin-lead"><small>THE CITY MAKERS</small><h3>What makes<br /><em>a place yours?</em></h3><p>A field guide to the small details that turn a route into a ritual.</p><b>Read story ↗</b></div><div class="bulletin-block block-orange">CM</div><div class="bulletin-block block-blue">QM</div><div class="bulletin-note"><span>“</span><p>Good places are made of repeated gestures.</p><small>— Mina Park</small></div></div></div>
+            <div class="direction-info"><div class="direction-meta"><span>D / 03</span><span>Alternate direction</span></div><h3>City bulletin</h3><p>Modular blocks, punchy headlines, and a public-square energy. Community as a living publication.</p><div class="direction-bottom"><div class="direction-tags"><span>Public</span><span>Graphic</span><span>Modular</span></div><small>Best for discovery, city guides, and open networks.</small></div></div>
+          </article>
         </div>
       </section>
 

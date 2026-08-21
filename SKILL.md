@@ -78,7 +78,9 @@ Use the existing design system when one exists. Add a token only when it express
 
 ### 5. Lock visual direction and fidelity plan
 
-Read [visual-fidelity.md](references/visual-fidelity.md) when the user asks for polished, premium, beautiful, pixel-conscious, production-ready, or high-fidelity work. For app work, also read [production-app-design.md](references/production-app-design.md). Before screen polish, write a visual direction contract covering visual thesis, personality, hierarchy, typography voice, color behavior, spatial rhythm, material behavior, imagery/icon treatment, motion, and deliberate exclusions.
+Read [visual-fidelity.md](references/visual-fidelity.md) when the user asks for polished, premium, beautiful, pixel-conscious, production-ready, or high-fidelity work. For open-ended visual exploration or a request to make the result feel like a public Figma design, also read [visual-directions.md](references/visual-directions.md). For app work, also read [production-app-design.md](references/production-app-design.md). Before screen polish, write a visual direction contract covering visual thesis, personality, hierarchy, typography voice, color behavior, spatial rhythm, material behavior, imagery/icon treatment, motion, and deliberate exclusions.
+
+For an open-ended brief, produce three meaningfully different visual directions before locking the production surface. Change structure, typography, density, material, contrast, imagery, or motion—not only color and radius. Show the directions on the design board, select one with a product/platform rationale, and keep the alternatives as explicit exploration rather than silently discarding them.
 
 Also declare the fidelity evidence plan:
 
@@ -117,7 +119,7 @@ Specify deep links, URL state, system back, sheets/modals, keyboard movement, sa
 
 For app work, produce these deliverables before calling the implementation complete:
 
-1. **Design board:** intent/art direction, foundations, component anatomy and variants, patterns, screen set, prototype transitions, and handoff notes.
+1. **Design board:** intent/art direction, visual directions considered and selected, foundations, component anatomy and variants, patterns, screen set, prototype transitions, and handoff notes.
 2. **Production surface:** token/theme mapping, semantic primitives, app shell, navigation and native behavior, complete primary flow, state matrix, and runtime evidence.
 3. **Figma-to-code parity:** map visual decisions to tokens/components and map prototype transitions to real routes, sheets, gestures, back behavior, loading, and recovery. If a Figma file exists, inspect it when the Figma capability is available; if not, produce the equivalent structured handoff.
 
@@ -152,6 +154,7 @@ Production app surface:
 Prototype / route flow:
 State coverage:
 Visual direction:
+Directions considered / selected / rationale:
 Rendered evidence / target sizes:
 Readiness level:
 Implementation files:
@@ -174,6 +177,7 @@ Stop and correct course when any of these appear:
 - a default screen is called release-ready without rendered target-size evidence;
 - a single showcase screen is presented as a complete app design;
 - a Figma component has no implementation variant, state contract, or platform behavior;
+- “Variants” differ only by color, radius, or shadow and do not change visual structure or product fit;
 - prototype transitions are not mapped to real routes, sheets, gestures, or recovery;
 - typography wrapping, image crop, or spacing rhythm is only checked at one viewport;
 - a permission, network, keyboard, back, focus, or text-scaling path is left to framework defaults;

@@ -1,6 +1,6 @@
 # Gather — Community design review surface
 
-Gather is a production-minded responsive web concept for reviewing how `design-skills` handles a community product across desktop and mobile. It is intentionally a complete surface rather than a single hero shot: navigation, feed, discovery cues, social actions, composer, empty state, notification feedback, and a mobile drawer are all represented. The companion `board.html` is the Figma-equivalent design board: it exposes the screen set, state library, foundations, component variants, and handoff metadata in one reviewable surface.
+Gather is a production-minded responsive web concept for reviewing how `design-skills` handles a community product across desktop and mobile. It is intentionally a complete surface rather than a single hero shot: navigation, feed, discovery cues, social actions, composer, empty state, notification feedback, and a mobile drawer are all represented. The companion `board.html` is the Figma-equivalent design board: it exposes three visual directions, the screen set, state library, foundations, component variants, and handoff metadata in one reviewable surface.
 
 ## Brief
 
@@ -13,6 +13,16 @@ Gather is a production-minded responsive web concept for reviewing how `design-s
 ## Visual thesis
 
 “A warm editorial town square.” The experience should feel human and collected, not optimized for endless scrolling. A paper-like background creates calm, forest ink gives the interface confidence, coral is reserved for invitation and action, and lilac/moss/blue identify different circles. Fraunces supplies a literary voice for moments of meaning; DM Sans keeps controls and metadata legible.
+
+## Directions considered
+
+| Direction | Structural difference | Best use | Decision |
+| --- | --- | --- | --- |
+| Quiet editorial | Paper canvas, serif-led hierarchy, generous whitespace, orbit motif | Rituals, reading, thoughtful prompts | Selected for the live prototype |
+| Night studio | Dark command surface, sharper grid, denser live-room composition, mint/violet contrast | Events, makers, creator workflows | Preserved as an alternate |
+| City bulletin | Modular publication blocks, graphic orange/blue contrast, public-square rhythm | Discovery, city guides, open networks | Preserved as an alternate |
+
+The selected direction is the warm editorial one because Gather’s primary job is helping people return to a good conversation, not maximizing live activity. The other two remain visible in the board so future screens do not collapse into a single generic aesthetic.
 
 | Layer | Decision |
 | --- | --- |
