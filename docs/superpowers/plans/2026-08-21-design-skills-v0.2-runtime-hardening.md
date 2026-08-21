@@ -23,15 +23,15 @@ Raise the example from a polished visual handoff to a reviewable product surface
 
 ### 2. Evidence-driven browser QA
 
-- [ ] Keep a repeatable capture matrix for desktop, boundary, and mobile viewports.
-- [ ] Exercise the default, filtered, empty, composer validation, composer success, mobile drawer, and recovery states in browser QA.
+- [x] Keep a repeatable capture matrix for desktop, boundary, and mobile viewports in `examples/community/evidence/manifest.json`.
+- [x] Exercise the default, filtered, empty, composer validation, composer success, mobile drawer, and recovery states in browser QA and record them in the manifest.
 - [ ] Add a contributor-friendly capture command when the repository can depend on a supported browser runner.
 
 ### 3. Archetype benchmark surface
 
-- [ ] Add one compact benchmark brief and handoff fixture each for camera, game, SaaS dashboard, and messaging.
-- [ ] Verify that each benchmark selects a task-led navigation model and does not inherit community chrome by default.
-- [ ] Link benchmark findings back to `references/archetypes.yaml` and `references/review-rubric.md`.
+- [x] Add one compact benchmark brief and handoff fixture each for camera, game, SaaS dashboard, and messaging in `references/archetype-benchmarks.json`.
+- [x] Verify that each benchmark selects a task-led navigation model and does not inherit community chrome by default.
+- [x] Link benchmark findings back to `references/archetypes.yaml`, `references/platforms.md`, `references/review-rubric.md`, and `references/production-app-design.md`.
 
 ### 4. Cross-platform production parity
 

@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "surface": "Gather community reference surface",
+  "capture_policy": "full-page JPEG; viewport dimensions describe the browser input size",
+  "captures": [
+    {
+      "id": "board-wide",
+      "route": "/board.html",
+      "viewport": {"width": 1440, "height": 1000},
+      "file": "board-1440.jpg",
+      "states": ["directions", "archetypes", "platforms", "screens", "states", "system"]
+    },
+    {
+      "id": "board-content",
+      "route": "/board.html",
+      "viewport": {"width": 1280, "height": 900},
+      "file": "board-1280.jpg",
+      "states": ["directions", "archetypes", "platforms", "screens"]
+    },
+    {
+      "id": "board-boundary",
+      "route": "/board.html",
+      "viewport": {"width": 1024, "height": 900},
+      "file": "board-1024.jpg",
+      "states": ["responsive boundary", "sidebar-to-drawer reflow"]
+    },
+    {
+      "id": "board-mobile",
+      "route": "/board.html",
+      "viewport": {"width": 390, "height": 844},
+      "file": "board-390.jpg",
+      "states": ["mobile composition", "horizontal filters", "one-column cards"]
+    },
+    {
+      "id": "prototype-wide",
+      "route": "/index.html?evidence=0.2",
+      "viewport": {"width": 1440, "height": 1000},
+      "file": "prototype-1440.jpg",
+      "states": ["default", "content hierarchy", "responsive web"]
+    },
+    {
+      "id": "prototype-mobile",
+      "route": "/index.html?evidence=0.2",
+      "viewport": {"width": 390, "height": 844},
+      "file": "prototype-390.jpg",
+      "states": ["mobile navigation", "bottom action", "stacked feed"]
+    }
+  ],
+  "runtime_checks": [
+    {"id": "default", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "Primary task and content hierarchy are visible without explanation."},
+    {"id": "filtered", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Following filter reduces the feed and exposes aria-pressed state."},
+    {"id": "empty", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Search/filter recovery exposes a clear empty state and clear-filters action."},
+    {"id": "composer-validation", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Blank publish keeps the dialog open and exposes aria-invalid plus alert copy."},
+    {"id": "composer-success", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Valid publish inserts a post, closes the dialog, and announces success."},
+    {"id": "mobile-drawer", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Drawer opens with aria-expanded and closes from Escape."},
+    {"id": "recovery", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Input recovery clears the validation error before publish."}
+  ]
+}

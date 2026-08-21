@@ -52,7 +52,7 @@ For a new project, record the chosen stack and why it matches the target. Do not
 
 ### 3. Select the platform profile and archetype
 
-Read [platforms.md](references/platforms.md) for the selected target. Read the matching entry in [archetypes.yaml](references/archetypes.yaml) and use its `primary_job`, `navigation`, `primary_action`, `interaction_mode`, `density`, required states, and review questions.
+Read [platforms.md](references/platforms.md) for the selected target. Read the matching entry in [archetypes.yaml](references/archetypes.yaml) and use its `primary_job`, `navigation`, `primary_action`, `interaction_mode`, `density`, required states, and review questions. When pressure-testing product diversity or designing a benchmark fixture, also read [archetype-benchmarks.json](references/archetype-benchmarks.json) and preserve the benchmark's task-led primary surface, states, and anti-generic constraints.
 
 Reject a generic pattern when it conflicts with the primary interaction:
 
