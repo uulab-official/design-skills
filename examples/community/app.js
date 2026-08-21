@@ -178,6 +178,22 @@ const circleProfiles = {
 };
 
 const threadProfiles = {
+  "city-daylight": {
+    circle: "City Makers",
+    kicker: "Conversation · 8 min read",
+    readTime: "8 min read",
+    author: "Mina Park",
+    initials: "MP",
+    avatar: "avatar-mina",
+    time: "Today, 9:42 AM",
+    title: "A little more daylight, a lot more making.",
+    body: "The best projects I’ve worked on started with a small table, an unfinished idea, and someone willing to stay for one more question.",
+    replies: [
+      { author: "Jae Kim", initials: "JK", avatar: "avatar-jae", time: "14 min ago", body: "That one-more-question feeling is everything. I’m learning to leave more room for it." },
+      { author: "Hana Lee", initials: "HL", avatar: "avatar-hana", time: "8 min ago", body: "Would love to hear what the unfinished idea was. The first version is often the most generous one." },
+      { author: "Sol Park", initials: "SP", avatar: "avatar-sol", time: "Just now", body: "A small table is a good start. It gives the idea somewhere to become shared." },
+    ],
+  },
   "city-map": {
     circle: "City Makers",
     kicker: "Conversation · 8 min read",
@@ -820,6 +836,9 @@ document.querySelectorAll("[data-discover-filter]").forEach((button) => {
 
 document.querySelectorAll("[data-circle-route]").forEach((button) => {
   button.addEventListener("click", () => navigateToCircle(button.dataset.circleRoute));
+});
+document.querySelectorAll("[data-thread-route]").forEach((button) => {
+  button.addEventListener("click", () => navigateToThread(button.dataset.threadRoute));
 });
 
 document.querySelectorAll("[data-circle-tab]").forEach((button) => {

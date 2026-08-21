@@ -18,7 +18,7 @@ const targets = [
   { id: "prototype-mobile", route: "/index.html?evidence=visual", viewport: { width: 390, height: 844 } },
   { id: "prototype-discover-wide", route: "/index.html?evidence=visual&view=discover", viewport: { width: 1440, height: 1000 } },
   { id: "prototype-circle-wide", route: "/index.html?evidence=visual&view=circle&circle=City%20Makers", viewport: { width: 1440, height: 1000 } },
-  { id: "prototype-thread-wide", route: "/index.html?evidence=visual&view=thread&circle=City%20Makers&thread=city-map", viewport: { width: 1440, height: 1000 } },
+  { id: "prototype-thread-wide", route: "/index.html?evidence=visual&view=thread&circle=City%20Makers&thread=city-daylight", viewport: { width: 1440, height: 1000 } },
   { id: "prototype-profile-wide", route: "/index.html?evidence=visual&view=profile&profile=mina", viewport: { width: 1440, height: 1000 } },
   { id: "board-wide", route: "/board.html?evidence=visual", viewport: { width: 1440, height: 1000 } },
 ];

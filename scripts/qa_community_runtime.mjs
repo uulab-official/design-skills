@@ -101,11 +101,31 @@ async function runRuntimeChecks() {
     await desktop.goto(`${DEFAULT_BASE_URL}/index.html`, { waitUntil: "networkidle" });
     await desktop.locator(".round-arrow").click();
     const featuredFeedback = await desktop.evaluate(() => ({
-      message: document.querySelector("#toast").textContent,
-      visible: document.querySelector("#toast").classList.contains("is-visible"),
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      threadHidden: document.querySelector("#threadView")?.hidden,
     }));
-    assert(featuredFeedback.visible && featuredFeedback.message === "Featured story route coming next", "Featured story CTA did not provide route feedback");
+    assert(featuredFeedback.url.includes("view=thread") && featuredFeedback.url.includes("thread=city-daylight") && featuredFeedback.homeHidden === true && featuredFeedback.threadHidden === false, "Featured story CTA did not open its Thread route");
     results.push({ id: "featured-story-feedback", verified: true, viewport: "1440x1000" });
+
+    await desktop.goto(`${DEFAULT_BASE_URL}/index.html`, { waitUntil: "networkidle" });
+    await desktop.locator(".round-arrow").click();
+    const featuredThread = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      threadHidden: document.querySelector("#threadView")?.hidden,
+      title: document.querySelector("#threadTitle")?.textContent,
+    }));
+    assert(featuredThread.url.includes("view=thread") && featuredThread.url.includes("thread=city-daylight") && featuredThread.homeHidden === true && featuredThread.threadHidden === false && featuredThread.title === "A little more daylight, a lot more making.", "Featured story CTA did not open the featured Thread route");
+    await desktop.goBack();
+    await wait(80);
+    const featuredBack = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      threadHidden: document.querySelector("#threadView")?.hidden,
+    }));
+    assert(!featuredBack.url.includes("view=thread") && featuredBack.homeHidden === false && featuredBack.threadHidden === true, "Browser back did not restore Home after leaving the featured Thread");
+    results.push({ id: "featured-thread-route", verified: true, viewport: "1440x1000" });
 
     await desktop.goto(`${DEFAULT_BASE_URL}/index.html`, { waitUntil: "networkidle" });
     const initialNavState = await desktop.evaluate(() => ({
