@@ -97,6 +97,15 @@ async function runRuntimeChecks() {
     });
     assert(feedActionFocus.active && feedActionFocus.pressed === "true", "Feed action focus was lost after updating like state");
     results.push({ id: "feed-action-focus", verified: true, viewport: "1440x1000" });
+
+    await desktop.goto(`${DEFAULT_BASE_URL}/index.html`, { waitUntil: "networkidle" });
+    await desktop.locator(".round-arrow").click();
+    const featuredFeedback = await desktop.evaluate(() => ({
+      message: document.querySelector("#toast").textContent,
+      visible: document.querySelector("#toast").classList.contains("is-visible"),
+    }));
+    assert(featuredFeedback.visible && featuredFeedback.message === "Featured story route coming next", "Featured story CTA did not provide route feedback");
+    results.push({ id: "featured-story-feedback", verified: true, viewport: "1440x1000" });
     await desktop.close();
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
