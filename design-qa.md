@@ -34,6 +34,10 @@ P0 findings: none.
 P1 findings: none.  
 Remaining P2 findings: none.
 
+## Follow-up polish after the previous pass
+
+The v0.9 mobile safe-area pass preserves the same 390 × 844 composition while extending both the page's reserved bottom space and the fixed navigation surface with `env(safe-area-inset-bottom)`. Standard Chromium reports a zero safe-area inset, so the visual evidence remains pixel-stable; the CSS contract test covers the device-inset path that cannot be synthesized by the default desktop browser runner.
+
 ## Rubric pass
 
 - Typography: local fonts, weight hierarchy, serif display treatment, wrapping, and line-height remain coherent across source and implementation.
@@ -52,5 +56,7 @@ Remaining P2 findings: none.
 - `npm run capture:community` — refreshed 6 evidence captures.
 - `npm run test:browser` — 11 / 11 runtime checks passed.
 - `npm run test:visual` — 3 / 3 targets passed with `mismatchRatio: 0`.
+- `python3 -m unittest tests.test_community_example_contract.CommunityExampleContractTests.test_responsive_and_motion_contracts_are_present` — safe-area contract passed after the intentional RED → GREEN cycle.
+- Browser console sweep — 0 console errors and 0 page errors across prototype desktop/mobile and board desktop.
 
 final result: passed

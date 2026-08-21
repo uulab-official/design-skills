@@ -35,6 +35,8 @@ class CommunityExampleContractTests(unittest.TestCase):
 
     def test_responsive_and_motion_contracts_are_present(self):
         self.assertIn('env(safe-area-inset-bottom)', self.css)
+        self.assertIn('padding-bottom: calc(74px + env(safe-area-inset-bottom))', self.css)
+        self.assertIn('height: calc(72px + env(safe-area-inset-bottom))', self.css)
         self.assertIn('@media (prefers-reduced-motion: reduce)', self.css)
         self.assertIn('@media (max-width: 760px)', self.css)
         self.assertIn('.filter-chip { min-height: 44px;', self.css)
