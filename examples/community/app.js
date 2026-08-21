@@ -149,7 +149,7 @@ function setComposerError(hasError) {
   }
 }
 
-function renderFeed() {
+function renderFeed({ focusPostId = null, focusAction = "" } = {}) {
   const query = state.query.trim().toLowerCase();
   const visiblePosts = posts.filter((post) => {
     const matchesFilter = state.filter === "all" || post.filter === state.filter;
@@ -170,6 +170,9 @@ function renderFeed() {
     button.setAttribute("aria-pressed", String(button.dataset.filterCircle === state.circle));
   });
   syncUrlState();
+  if (focusPostId !== null && focusAction) {
+    feedList.querySelector(`[data-post-id="${focusPostId}"] [data-post-action="${focusAction}"]`)?.focus();
+  }
 }
 
 function openComposer() {
@@ -233,17 +236,18 @@ feedList.addEventListener("click", (event) => {
   if (action) {
     const postId = Number(action.closest("[data-post-id]").dataset.postId);
     const post = posts.find((item) => item.id === postId);
-    if (action.dataset.postAction === "like") {
+    const actionType = action.dataset.postAction;
+    if (actionType === "like") {
       state.liked.has(postId) ? state.liked.delete(postId) : state.liked.add(postId);
       showToast(state.liked.has(postId) ? "Added a little appreciation" : "Like removed");
-      renderFeed();
+      renderFeed({ focusPostId: postId, focusAction: actionType });
     }
-    if (action.dataset.postAction === "save") {
+    if (actionType === "save") {
       state.saved.has(postId) ? state.saved.delete(postId) : state.saved.add(postId);
       showToast(state.saved.has(postId) ? "Saved to your quiet corner" : "Removed from saved");
-      renderFeed();
+      renderFeed({ focusPostId: postId, focusAction: actionType });
     }
-    if (action.dataset.postAction === "comment") showToast(`Opening the conversation by ${post.author}`);
+    if (actionType === "comment") showToast(`Opening the conversation by ${post.author}`);
     return;
   }
   if (event.target.closest(".post-card")) showToast("Post detail is ready for the next route");

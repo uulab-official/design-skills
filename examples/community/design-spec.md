@@ -88,6 +88,7 @@ This prevents “community” from defaulting to one feed pattern. The selected 
 | Mobile interaction targets | Core mobile controls render with a minimum 44 × 44 px usable box at the 390 px target |
 | Mobile safe area | Fixed bottom navigation and page reserve `env(safe-area-inset-bottom)` so the last content and controls remain visible above a home indicator |
 | Composer or mobile drawer dismissal | Focus returns to the trigger after close, publish, or Escape recovery |
+| Like / save action focus | Dynamic feed rerender preserves focus on the pressed action and exposes its updated `aria-pressed` state |
 
 ## Prototype map
 

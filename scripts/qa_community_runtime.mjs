@@ -79,6 +79,15 @@ async function runRuntimeChecks() {
     const skipMoved = await desktop.evaluate(() => document.activeElement.id);
     assert(skipMoved === "mainContent", "Skip link did not move focus to main content");
     results.push({ id: "skip-link", verified: true, viewport: "1440x1000" });
+
+    await desktop.goto(`${DEFAULT_BASE_URL}/index.html`, { waitUntil: "networkidle" });
+    await desktop.locator('[data-post-id="1"] [data-post-action="like"]').click();
+    const feedActionFocus = await desktop.evaluate(() => {
+      const action = document.querySelector('[data-post-id="1"] [data-post-action="like"]');
+      return { active: document.activeElement === action, pressed: action?.getAttribute("aria-pressed") };
+    });
+    assert(feedActionFocus.active && feedActionFocus.pressed === "true", "Feed action focus was lost after updating like state");
+    results.push({ id: "feed-action-focus", verified: true, viewport: "1440x1000" });
     await desktop.close();
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });

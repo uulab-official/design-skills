@@ -48,13 +48,14 @@ The v0.9 mobile safe-area pass preserves the same 390 × 844 composition while e
 - Copy and content: source and implementation use the same product copy and state labels for the reviewed home surface.
 - Icons: board symbols and implementation SVG sprite icons are present, aligned, and stylistically consistent.
 - States and interactions: URL state, history restoration, composer focus return, drawer focus return, skip-link navigation, board state, and board dialog focus return passed runtime checks.
+- Feed action focus: Like/Save rerendering preserves the focused action and its updated pressed state in browser QA.
 - Accessibility: semantic controls, visible focus treatment, reduced-motion support, image alt text, and minimum 44 × 44 px mobile control geometry are covered by the example contract and runtime QA.
 - AI shortcut artifacts: no generic placeholder card, fake product image, or mismatched decorative surface was found in the reviewed home surface; the orbit treatment is a deliberate shared motif.
 
 ## Verification
 
 - `npm run capture:community` — refreshed 6 evidence captures.
-- `npm run test:browser` — 11 / 11 runtime checks passed.
+- `npm run test:browser` — 12 / 12 runtime checks passed, including Like action focus retention after feed rerender.
 - `npm run test:visual` — 3 / 3 targets passed with `mismatchRatio: 0`.
 - `python3 -m unittest tests.test_community_example_contract.CommunityExampleContractTests.test_responsive_and_motion_contracts_are_present` — safe-area contract passed after the intentional RED → GREEN cycle.
 - Browser console sweep — 0 console errors and 0 page errors across prototype desktop/mobile and board desktop.
