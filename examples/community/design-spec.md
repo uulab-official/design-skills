@@ -1,6 +1,6 @@
 # Gather — Community design review surface
 
-Gather is a production-minded responsive web concept for reviewing how `design-skills` handles a community product across desktop and mobile. It is intentionally a complete surface rather than a single hero shot: navigation, feed, discovery cues, social actions, composer, empty state, notification feedback, and a mobile drawer are all represented.
+Gather is a production-minded responsive web concept for reviewing how `design-skills` handles a community product across desktop and mobile. It is intentionally a complete surface rather than a single hero shot: navigation, feed, discovery cues, social actions, composer, empty state, notification feedback, and a mobile drawer are all represented. The companion `board.html` is the Figma-equivalent design board: it exposes the screen set, state library, foundations, component variants, and handoff metadata in one reviewable surface.
 
 ## Brief
 
@@ -25,11 +25,15 @@ Gather is a production-minded responsive web concept for reviewing how `design-s
 ## Screen set
 
 1. **Home / For you** — desktop dashboard with shell navigation, welcome moment, featured story, feed, circles rail, prompt, and activity.
-2. **Home / Following** — same information architecture with a feed filter state.
-3. **Home / Circle scoped** — selecting a circle makes the rail choice shape the feed and confirms the state with a toast.
-4. **Search results** — live query filters feed content; no-result state gives a recovery action.
-5. **Start a conversation** — modal composer with circle selection, required title, optional context, validation, and success feedback.
-6. **Mobile home** — stacked content with fixed bottom navigation, floating create action, hidden desktop search, and slide-in navigation drawer.
+2. **Discover / Circles** — an editorial directory for finding a new orbit by theme and intent.
+3. **Circle / City Makers** — circle identity, membership, tabs, and conversation list.
+4. **Thread / Conversation** — reading hierarchy, replies, author context, and inline response composer.
+5. **Profile / Mina Park** — identity, contribution history, trust signals, and saved context.
+6. **Mobile home** — stacked content with fixed bottom navigation, floating create action, and responsive recomposition.
+7. **Home / Following + circle scoped** — the production surface adds filter and circle-selection states without changing the shell.
+8. **Composer / modal** — the production surface adds circle selection, required title, optional context, validation, and success feedback.
+
+The design board also shows the empty, loading, recovery, and success states that are easy to omit from a visual-only case study.
 
 ## Interaction contract
 
@@ -45,6 +49,22 @@ Gather is a production-minded responsive web concept for reviewing how `design-s
 | Mobile menu | Drawer and scrim open; Escape and scrim close them |
 | Cmd/Ctrl + K | Search receives focus |
 
+## Prototype map
+
+```text
+board.html
+  ├─ Home / For you ───────┐
+  ├─ Discover / Circles     ├─ open live prototype → index.html
+  ├─ Circle / City Makers  │
+  ├─ Thread / Conversation  │
+  ├─ Profile / Mina Park    │
+  └─ Mobile / Home ─────────┘
+       ├─ Empty
+       ├─ Loading
+       ├─ Recovery
+       └─ Success
+```
+
 ## Quality review checklist
 
 - [x] Responsive shell changes from sidebar to drawer and bottom navigation.
@@ -52,6 +72,7 @@ Gather is a production-minded responsive web concept for reviewing how `design-s
 - [x] Content hierarchy is readable at a glance: welcome → featured story → feed → community context.
 - [x] Focus rings, labels, live regions, button names, and reduced-motion behavior are included.
 - [x] External imagery is treated as replaceable demo content; the layout does not depend on it for meaning.
+- [x] A design-board surface exposes multiple compositions, reusable foundations, and screen handoff metadata.
 - [ ] Visual review at the target viewport set (run the included screenshot check before calling this release-ready).
 
 ## Run locally

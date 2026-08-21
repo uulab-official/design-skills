@@ -131,11 +131,16 @@ function openComposer() {
     window.setTimeout(() => document.querySelector("#composerTitleInput")?.focus(), 30);
   } else {
     composerDialog.setAttribute("open", "");
+    composerDialog.setAttribute("class", `${composerDialog.getAttribute("class")} is-open`);
   }
 }
 
 function closeComposer() {
-  composerDialog.close();
+  if (typeof composerDialog.close === "function") composerDialog.close();
+  else {
+    composerDialog.removeAttribute("open");
+    composerDialog.setAttribute("class", composerDialog.getAttribute("class").replace(/\bis-open\b/g, "").replace(/\s+/g, " ").trim());
+  }
 }
 
 function toggleSidebar(open) {

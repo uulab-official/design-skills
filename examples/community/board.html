@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f2ec" />
+    <meta name="description" content="Gather community design system and responsive screen board." />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./board.css" />
+    <title>Gather — Design board</title>
+  </head>
+  <body>
+    <svg class="board-icon-defs" aria-hidden="true" focusable="false">
+      <symbol id="board-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" /></symbol>
+      <symbol id="board-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M6.5 10.5 12 5l5.5 5.5" /></symbol>
+      <symbol id="board-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" /></symbol>
+      <symbol id="board-heart" viewBox="0 0 24 24"><path d="M20.8 8.8c0 5.1-8.8 10-8.8 10s-8.8-4.9-8.8-10A4.7 4.7 0 0 1 12 6a4.7 4.7 0 0 1 8.8 2.8Z" /></symbol>
+      <symbol id="board-message" viewBox="0 0 24 24"><path d="M20 11.2a7.2 7.2 0 0 1-7.5 7.2 8.8 8.8 0 0 1-3.2-.6L5 19l1.1-3.2a7 7 0 0 1-1.1-3.8A7.2 7.2 0 0 1 12.5 5 7.2 7.2 0 0 1 20 11.2Z" /></symbol>
+      <symbol id="board-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m16 16 4.5 4.5" /></symbol>
+      <symbol id="board-spark" viewBox="0 0 24 24"><path d="m12 3 1.4 6.1L19 12l-5.6 2.9L12 21l-1.4-6.1L5 12l5.6-2.9L12 3Z" /></symbol>
+      <symbol id="board-users" viewBox="0 0 24 24"><path d="M16 19v-1.2c0-1.8-1.6-3.3-3.5-3.3h-5C5.6 14.5 4 16 4 17.8V19M10 11.5a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4ZM15.5 6.3a3 3 0 0 1 0 5.8M16 14.7c2.2 0 4 1.4 4 3.1V19" /></symbol>
+      <symbol id="board-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" /></symbol>
+    </svg>
+
+    <header class="board-header">
+      <a class="board-brand" href="./index.html" aria-label="Back to Gather home"><span class="board-brand-mark">g</span><span>Gather</span></a>
+      <div class="board-crumb"><span>Community system</span><i></i><strong>Design board</strong></div>
+      <div class="board-header-actions"><span class="version-chip">v0.4 · review</span><a class="open-prototype" href="./index.html">Open prototype <svg class="board-icon" aria-hidden="true"><use href="#board-arrow" /></svg></a></div>
+    </header>
+
+    <main class="board-main" id="boardMain" data-view="desktop">
+      <section class="board-intro">
+        <div class="intro-copy">
+          <p class="board-eyebrow"><span></span>Gather · community system</p>
+          <h1>A small world<br /><em>worth returning to.</em></h1>
+          <p class="intro-description">The screen set behind the prototype: a warm, editorial community product built around circles, context, and the quiet confidence of a good question.</p>
+          <div class="intro-actions"><a class="board-primary" href="./index.html">Try the live flow <svg class="board-icon" aria-hidden="true"><use href="#board-arrow" /></svg></a><button class="board-text-link" type="button" data-scroll-to="foundations">See the system <svg class="board-icon" aria-hidden="true"><use href="#board-arrow-up" /></svg></button></div>
+        </div>
+        <div class="intro-art" aria-label="Abstract orbit illustration"><div class="intro-ring ring-a"></div><div class="intro-ring ring-b"></div><span class="intro-orb orb-a">J</span><span class="intro-orb orb-b">S</span><span class="intro-orb orb-c">H</span><div class="intro-art-center"><svg class="board-icon" aria-hidden="true"><use href="#board-spark" /></svg><small>one good<br />question</small></div></div>
+      </section>
+
+      <section class="board-toolbar" aria-label="Design board controls">
+        <div class="board-toolbar-label"><strong>Design board</strong><span>08 screens · 14 components · 05 states</span></div>
+        <div class="board-controls">
+          <div class="board-segmented" role="group" aria-label="Preview size"><button class="is-active" type="button" data-view-toggle="desktop">Desktop</button><button type="button" data-view-toggle="mobile">Mobile</button></div>
+          <div class="board-filters" role="group" aria-label="Filter board"><button class="is-active" type="button" data-board-filter="all">All</button><button type="button" data-board-filter="screens">Screens</button><button type="button" data-board-filter="states">States</button><button type="button" data-board-filter="system">System</button></div>
+        </div>
+      </section>
+
+      <section class="board-section" data-board-type="screens" aria-labelledby="screens-title">
+        <div class="section-marker"><span>01</span><div><p class="board-eyebrow">Screen set</p><h2 id="screens-title">The product changes shape with the conversation.</h2></div><p class="section-note">Each surface keeps the same tokens, but earns its own composition.</p></div>
+        <div class="screen-grid">
+          <article class="artboard artboard-wide" data-board-type="screens" data-artboard-title="Home / For you">
+            <div class="artboard-meta"><span class="artboard-number">A / 01</span><span class="artboard-label">Home · For you</span><button type="button" class="zoom-button" aria-label="Open Home screen details" data-open-artboard="Home / For you">↗</button></div>
+            <div class="artboard-canvas canvas-home">
+              <div class="mini-sidebar"><span class="mini-brand"><b>g</b> gather</span><span class="mini-workspace">S <small>Seoul circles</small></span><div class="mini-nav active"><i></i>Home</div><div class="mini-nav"><i></i>Discover</div><div class="mini-nav"><i></i>Your circles <b>4</b></div><div class="mini-nav"><i></i>Saved</div><span class="mini-nav-rule"></span><div class="mini-nav muted"><i></i>Notifications</div><div class="mini-nav muted"><i></i>Preferences</div><div class="mini-profile"><b>MP</b><span>Mina Park<small>@minapark</small></span></div></div>
+              <div class="mini-home"><div class="mini-topbar"><span>Home <b>/ For you</b></span><span class="mini-search"><svg class="board-icon" aria-hidden="true"><use href="#board-search" /></svg> Search</span><b class="mini-avatar">MP</b></div><div class="mini-home-body"><div class="mini-hello"><small>TUESDAY, 18 JUNE 2024</small><h3>Find your people,<br /><em>not just a feed.</em></h3><p>A quieter corner of the internet for good questions, useful rituals, and the people who make them better.</p><button>Start a conversation <span>+</span></button></div><div class="mini-orbit"><i></i><i></i><i></i><span>12<small>new voices<br />this week</small></span></div><div class="mini-section-head"><span><small>THE TOWN SQUARE</small><b>Worth your attention</b></span><em>For you&nbsp;&nbsp; Following&nbsp;&nbsp; Latest</em></div><div class="mini-feature"><div class="mini-feature-image"></div><div><small>● CITY MAKERS · 8 MIN READ</small><h4>A little more daylight,<br />a lot more making.</h4><p>The best projects started with a small table, an unfinished idea, and one more question.</p><span>MP &nbsp; Mina Park <b>↗</b></span></div></div></div></div>
+            </div>
+            <div class="artboard-caption"><div><strong>Home feed</strong><span>Entry point · editorial priority</span></div><span class="caption-chip">Desktop / 1440</span></div>
+          </article>
+
+          <article class="artboard artboard-discover" data-board-type="screens" data-artboard-title="Discover / Circles">
+            <div class="artboard-meta"><span class="artboard-number">A / 02</span><span class="artboard-label">Discover · Circles</span><button type="button" class="zoom-button" aria-label="Open Discover screen details" data-open-artboard="Discover / Circles">↗</button></div>
+            <div class="artboard-canvas canvas-discover"><div class="mini-topbar dark"><span class="mini-brand"><b>g</b> gather</span><span class="mini-search light"><svg class="board-icon" aria-hidden="true"><use href="#board-search" /></svg> Search circles</span><b class="mini-avatar light-avatar">MP</b></div><div class="discover-copy"><small>FIND YOUR NEXT ORBIT</small><h3>Good people<br /><em>are out there.</em></h3><p>Circles for the questions you keep coming back to.</p></div><div class="discover-tags"><span class="selected">All circles</span><span>Creative work</span><span>Slow living</span><span>City life</span></div><div class="discover-cards"><div class="circle-tile coral-tile"><span>CM</span><small>42 members</small><strong>City Makers</strong><p>Ideas for making the places around us feel more alive.</p><b>Join circle&nbsp; ↗</b></div><div class="circle-tile lilac-tile"><span>QM</span><small>126 members</small><strong>Quiet Mornings</strong><p>Soft starts, thoughtful rituals, better workdays.</p><b>Join circle&nbsp; ↗</b></div><div class="circle-tile moss-tile"><span>SF</span><small>84 members</small><strong>Sunday Film Club</strong><p>Films that leave the door open after the credits.</p><b>Join circle&nbsp; ↗</b></div></div></div>
+            <div class="artboard-caption"><div><strong>Discover circles</strong><span>Explore · recommendation system</span></div><span class="caption-chip">Desktop / 1280</span></div>
+          </article>
+
+          <article class="artboard artboard-circle" data-board-type="screens" data-artboard-title="Circle / City Makers">
+            <div class="artboard-meta"><span class="artboard-number">A / 03</span><span class="artboard-label">Circle · City Makers</span><button type="button" class="zoom-button" aria-label="Open Circle screen details" data-open-artboard="Circle / City Makers">↗</button></div>
+            <div class="artboard-canvas canvas-circle"><div class="circle-cover"><div class="circle-cover-art"><i></i><i></i><i></i><span>CM</span></div><small>18 NEW POSTS THIS WEEK</small><h3>City Makers</h3><p>Ideas for making the places around us feel more alive.</p><div class="member-stack"><b>MP</b><b>HL</b><b>JK</b><b>+39</b></div><button>Join the circle</button></div><div class="circle-content"><div class="circle-tabs"><b>Conversations</b><span>About</span><span>Members</span><em>+ Start a post</em></div><div class="circle-thread"><span class="thread-avatar coral-avatar">HL</span><div><small>Hana Lee · 12 min ago</small><strong>A neighborhood map made from borrowed stories.</strong><p>What happens when a city is drawn by the people who notice its edges?</p><span>♡ 61 &nbsp; ◌ 12 replies</span></div></div><div class="circle-thread"><span class="thread-avatar lilac-avatar">MP</span><div><small>Mina Park · Yesterday</small><strong>What makes a place feel like yours?</strong><p>Collecting the small details that turn a route into a ritual.</p><span>♡ 48 &nbsp; ◌ 8 replies</span></div></div></div></div>
+            <div class="artboard-caption"><div><strong>Circle detail</strong><span>Context · membership · belonging</span></div><span class="caption-chip">Desktop / 1024</span></div>
+          </article>
+
+          <article class="artboard artboard-thread" data-board-type="screens" data-artboard-title="Thread / Conversation">
+            <div class="artboard-meta"><span class="artboard-number">A / 04</span><span class="artboard-label">Thread · Conversation</span><button type="button" class="zoom-button" aria-label="Open Thread screen details" data-open-artboard="Thread / Conversation">↗</button></div>
+            <div class="artboard-canvas canvas-thread"><div class="thread-top"><span>‹ &nbsp; City Makers</span><b>⋯</b></div><div class="thread-title"><small>CONVERSATION · 8 MIN READ</small><h3>A little more daylight,<br /><em>a lot more making.</em></h3><p>“The best projects I’ve worked on started with a small table, an unfinished idea, and someone willing to stay for one more question.”</p><div class="thread-author"><b>MP</b><span><strong>Mina Park</strong><small>Today, 9:42 AM · 84 appreciations</small></span></div></div><div class="reply-line"><span>18 thoughtful replies</span><i></i></div><div class="reply-row"><b class="coral-avatar">JK</b><span><strong>Jae Kim</strong><small>14 min ago</small><p>That “one more question” feeling is everything. I’m learning to leave more room for it.</p><em>♡ 12 &nbsp; Reply</em></span></div><div class="reply-row"><b class="moss-avatar">HL</b><span><strong>Hana Lee</strong><small>8 min ago</small><p>Would love to hear what the unfinished idea was.</p><em>♡ 8 &nbsp; Reply</em></span></div><div class="reply-composer"><span>MP</span><span>Add to the conversation…</span><b>↗</b></div></div>
+            <div class="artboard-caption"><div><strong>Thread detail</strong><span>Reading · response · recovery</span></div><span class="caption-chip">Desktop / 768</span></div>
+          </article>
+
+          <article class="artboard artboard-profile" data-board-type="screens" data-artboard-title="Profile / Mina Park">
+            <div class="artboard-meta"><span class="artboard-number">A / 05</span><span class="artboard-label">Profile · Mina Park</span><button type="button" class="zoom-button" aria-label="Open Profile screen details" data-open-artboard="Profile / Mina Park">↗</button></div>
+            <div class="artboard-canvas canvas-profile"><div class="profile-cover"><span>MP</span><button>⋯</button></div><div class="profile-content"><div class="profile-head"><div><h3>Mina Park</h3><p>@minapark · Seoul, KR</p></div><button>Follow</button></div><p class="profile-bio">Designing gentle systems for good questions, useful rituals, and the people who make them better.</p><div class="profile-stats"><span><b>4</b> circles</span><span><b>28</b> conversations</span><span><b>1.2k</b> appreciations</span></div><div class="profile-tabs"><b>Conversations</b><span>Saved</span></div><div class="profile-post"><small>QUIET MORNINGS · 2 DAYS AGO</small><strong>The best workday starts before the inbox.</strong><p>A small, honest ritual for protecting the first hour of the day.</p><span>♡ 84 &nbsp; ◌ 18</span></div></div></div>
+            <div class="artboard-caption"><div><strong>Profile</strong><span>Identity · contribution · trust</span></div><span class="caption-chip">Desktop / 768</span></div>
+          </article>
+
+          <article class="artboard artboard-mobile" data-board-type="screens" data-artboard-title="Mobile / Home">
+            <div class="artboard-meta"><span class="artboard-number">A / 06</span><span class="artboard-label">Mobile · Home</span><button type="button" class="zoom-button" aria-label="Open Mobile screen details" data-open-artboard="Mobile / Home">↗</button></div>
+            <div class="artboard-canvas canvas-mobile"><div class="phone-frame"><div class="phone-notch"></div><div class="phone-status"><span>9:41</span><span>● ◔ ▮</span></div><div class="phone-top"><b>gather</b><span>⌕ &nbsp; ◌ &nbsp; <i>MP</i></span></div><div class="phone-body"><small class="phone-kicker">TUESDAY, 18 JUNE</small><h3>Find your people,<br /><em>not just a feed.</em></h3><p>A quieter corner of the internet for good questions.</p><button>Start a conversation&nbsp; +</button><div class="phone-orbit"><i></i><i></i><span>12<small>new voices this week</small></span></div><div class="phone-section"><small>THE TOWN SQUARE</small><b>Worth your attention</b></div><div class="phone-story"><div></div><span>● CITY MAKERS · 8 MIN READ</span><strong>A little more daylight,<br />a lot more making.</strong><small>♡ 84 &nbsp; ◌ 18</small></div></div><div class="phone-nav"><span>⌂<small>Home</small></span><span>⌕<small>Discover</small></span><b>+</b><span>♧<small>Circles</small></span><span>▱<small>Saved</small></span></div></div></div>
+            <div class="artboard-caption"><div><strong>Mobile home</strong><span>Responsive recomposition · 390</span></div><span class="caption-chip">iPhone / 390</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="board-section states-section" data-board-type="states" aria-labelledby="states-title">
+        <div class="section-marker"><span>02</span><div><p class="board-eyebrow">State library</p><h2 id="states-title">The quiet moments are designed too.</h2></div><p class="section-note">Feedback keeps the product feeling present, even when the feed is not.</p></div>
+        <div class="state-grid">
+          <article class="state-card empty-state-card"><span class="state-index">S / 01 · EMPTY</span><div class="state-orbit"><svg class="board-icon" aria-hidden="true"><use href="#board-spark" /></svg></div><h3>A little too quiet here.</h3><p>No saved conversations yet. The good ones tend to find you after the first question.</p><button>Explore circles <svg class="board-icon" aria-hidden="true"><use href="#board-arrow" /></svg></button></article>
+          <article class="state-card loading-state-card"><span class="state-index">S / 02 · LOADING</span><div class="loading-bars"><i></i><i></i><i></i><i></i></div><div class="loading-copy"><b>Finding your people</b><span>Curating a few thoughtful places to start…</span></div><div class="loading-dot"><i></i><i></i><i></i></div></article>
+          <article class="state-card error-state-card"><span class="state-index">S / 03 · RECOVERY</span><div class="error-mark">!</div><h3>That didn’t make it through.</h3><p>Your draft is safe. Check your connection and try publishing again.</p><button>Try again <svg class="board-icon" aria-hidden="true"><use href="#board-arrow" /></svg></button></article>
+          <article class="state-card success-state-card"><span class="state-index">S / 04 · SUCCESS</span><div class="success-check">✓</div><h3>Conversation published.</h3><p>Your thought is now in City Makers. Good things grow when they have somewhere to land.</p><div class="success-toast"><span>CM</span><b>Posted to City Makers</b><i>×</i></div></article>
+        </div>
+      </section>
+
+      <section class="board-section system-section" id="foundations" data-board-type="system" aria-labelledby="system-title">
+        <div class="section-marker"><span>03</span><div><p class="board-eyebrow">Foundations & components</p><h2 id="system-title">One visual language, many ways to belong.</h2></div><p class="section-note">Semantic tokens and reusable parts keep the screen set coherent.</p></div>
+        <div class="system-grid">
+          <article class="system-card color-card"><span class="state-index">FOUNDATION / COLOR</span><div class="swatch-row"><i class="swatch forest"></i><i class="swatch coral"></i><i class="swatch lilac"></i><i class="swatch moss"></i><i class="swatch blue"></i><i class="swatch paper"></i></div><div class="system-labels"><span>FOREST<br /><b>#1D2C27</b></span><span>CORAL<br /><b>#EF765E</b></span><span>LILAC<br /><b>#D8D2F2</b></span><span>MOSS<br /><b>#CAD7B1</b></span></div></article>
+          <article class="system-card type-card"><span class="state-index">FOUNDATION / TYPE</span><div class="type-display"><span class="type-serif">Good questions<br /><em>make room.</em></span><span class="type-sans">DM Sans · 12 / 18 · UI, labels, metadata, and body copy.</span></div><div class="type-scale"><b>Display</b><span>Fraunces / 64</span><b>Body</b><span>DM Sans / 14</span><b>Label</b><span>DM Sans / 10 / caps</span></div></article>
+          <article class="system-card component-card"><span class="state-index">COMPONENT / ACTIONS</span><div class="component-row"><button class="demo-button coral-button">Start a conversation <svg class="board-icon" aria-hidden="true"><use href="#board-arrow" /></svg></button><button class="demo-button dark-button">Join circle <svg class="board-icon" aria-hidden="true"><use href="#board-arrow" /></svg></button></div><div class="component-row compact"><span class="demo-chip active-chip">For you</span><span class="demo-chip">Following</span><span class="demo-chip">Latest</span></div><div class="component-row"><span class="demo-avatar coral-avatar">MP</span><span class="demo-avatar lilac-avatar">JK</span><span class="demo-avatar moss-avatar">HL</span><span class="demo-avatar blue-avatar">+39</span><span class="component-note">avatars · selected · neutral · count</span></div></article>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="board-dialog" id="boardDialog" aria-labelledby="dialogTitle"><div class="dialog-inner"><button class="dialog-close" type="button" id="closeBoardDialog" aria-label="Close screen details"><svg class="board-icon" aria-hidden="true"><use href="#board-close" /></svg></button><p class="board-eyebrow">Prototype handoff</p><h2 id="dialogTitle">Home / For you</h2><p id="dialogDescription">Entry point · editorial priority</p><div class="dialog-detail-grid"><span><b>Route</b><strong>/home</strong></span><span><b>Viewport</b><strong>1440 × 1000</strong></span><span><b>Primary action</b><strong>Start a conversation</strong></span><span><b>States</b><strong>Default · filtered · empty</strong></span></div><a class="board-primary" href="./index.html">Open live surface <svg class="board-icon" aria-hidden="true"><use href="#board-arrow" /></svg></a></div></dialog>
+    <div class="board-toast" id="boardToast" role="status" aria-live="polite"></div>
+    <script src="./board.js"></script>
+  </body>
+</html>
