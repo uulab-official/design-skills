@@ -63,6 +63,8 @@ Reject a generic pattern when it conflicts with the primary interaction:
 - Landing/portfolio: optimize narrative, proof, and one clear conversion/contact action.
 - Utility: minimize navigation and get to the focused task quickly.
 
+When the brief is broad enough to support multiple valid product jobs—especially community, marketplace, or content products—show the archetype choices before committing to a screen pattern. Compare the information priority, density, navigation, and primary action; do not call a feed, calendar, or ranked list a “variant” unless the product job justifies it.
+
 ### 4. Define the design system before screens
 
 Read [design-quality.md](references/design-quality.md). Write or map a small semantic system before implementing screens:

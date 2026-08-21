@@ -58,6 +58,18 @@ The selected visual direction is translated instead of copied across platforms:
 
 The board is a visual handoff, not a claim that these native screens are already shipped. The web surface is the runnable implementation; iOS and Android frames specify the platform-aware translation target.
 
+## Community archetypes
+
+The board keeps three structurally different community jobs visible:
+
+| Archetype | Information priority | Product shape |
+| --- | --- | --- |
+| Conversation lounge | Prompt → context → replies | Airy, editorial, return-oriented |
+| Event house | Time → place → attendance | Structured, scannable, RSVP-oriented |
+| Knowledge commons | Question → search → answer quality | Compact, inspectable, durable |
+
+This prevents “community” from defaulting to one feed pattern. The selected Gather implementation is the conversation lounge; the other two are reusable starting points for future product briefs.
+
 ## Interaction contract
 
 | Interaction | Expected result |
@@ -77,6 +89,8 @@ The board is a visual handoff, not a claim that these native screens are already
 ```text
 board.html
   ├─ Home / For you ───────┐
+  ├─ Conversation / Events  ├─ archetype exploration board
+  ├─ Knowledge commons ────┘
   ├─ Web / iOS / Android    ├─ platform translation board
   ├─ Discover / Circles     ├─ open live prototype → index.html
   ├─ Circle / City Makers  │
