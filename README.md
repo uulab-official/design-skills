@@ -50,7 +50,7 @@ Run the same checks used by the repository workflow:
 npm run ci:quality
 ```
 
-This runs the Python contract suite, evidence manifest validator, and dependency-light skill validator. Pull requests also run the browser interaction assertions, render the evidence matrix in GitHub Actions, and upload the generated images as an artifact for visual review. The workflow intentionally does not use a hard pixel-diff gate yet because font and remote demo-image rendering can vary across environments.
+This runs the Python contract suite, evidence manifest validator, and dependency-light skill validator. Pull requests also run the browser interaction assertions, render the evidence matrix in GitHub Actions, and upload the generated images as an artifact for visual review. Demo imagery is checked into `examples/community/assets/editorial/` so captures do not depend on an image CDN; the workflow intentionally does not use a hard pixel-diff gate yet because font rendering can still vary across environments.
 
 ## Design standard
 

@@ -25,7 +25,8 @@ Make the polished web prototype behave like a production handoff at the moments 
 
 - [x] Add contract coverage for URL state and focus handoff.
 - [x] Add browser assertions for URL restoration, focus return, and skip-link navigation to the runtime evidence manifest.
-- [ ] Add deterministic local font/image assets before enforcing pixel-diff thresholds in CI.
+- [x] Replace external demo imagery with local editorial assets so evidence crops are deterministic.
+- [ ] Add deterministic local font assets before enforcing pixel-diff thresholds in CI.
 
 ### 4. Scope boundaries
 

@@ -35,6 +35,23 @@ class CaptureAndPlatformContractTests(unittest.TestCase):
         self.assertIn("platform-parity.md", skill)
         self.assertRegex(parity, re.compile(r"review-ready", re.IGNORECASE))
 
+    def test_community_demo_imagery_is_local_and_tracked(self):
+        community = ROOT / "examples" / "community"
+        source_files = (community / "app.js", community / "index.html", community / "board.css")
+        combined = "\n".join(path.read_text(encoding="utf-8") for path in source_files)
+        self.assertNotIn("images.unsplash.com", combined)
+
+        for relative_path in (
+            "assets/editorial/group-overlook.jpg",
+            "assets/editorial/desk-ritual.jpg",
+            "assets/editorial/collaborative-table.jpg",
+            "assets/editorial/cinema-afterglow.jpg",
+        ):
+            asset = community / relative_path
+            self.assertTrue(asset.is_file(), relative_path)
+            self.assertGreater(asset.stat().st_size, 1024, relative_path)
+            self.assertIn(relative_path, combined)
+
 
 if __name__ == "__main__":
     unittest.main()

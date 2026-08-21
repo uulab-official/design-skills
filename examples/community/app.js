@@ -12,7 +12,7 @@ const posts = [
     time: "14 min ago",
     likes: 84,
     comments: 18,
-    image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=700&q=85",
+    image: "./assets/editorial/desk-ritual.jpg",
     alt: "Notebook, coffee, and a laptop on a desk"
   },
   {
@@ -28,7 +28,7 @@ const posts = [
     time: "38 min ago",
     likes: 61,
     comments: 12,
-    image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=700&q=85",
+    image: "./assets/editorial/collaborative-table.jpg",
     alt: "Small group collaborating around a table"
   },
   {
@@ -44,7 +44,7 @@ const posts = [
     time: "1 hr ago",
     likes: 42,
     comments: 9,
-    image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=700&q=85",
+    image: "./assets/editorial/cinema-afterglow.jpg",
     alt: "Cinema seats facing a movie screen"
   }
 ];
@@ -305,7 +305,7 @@ composerForm.addEventListener("submit", (event) => {
     time: "Just now",
     likes: 0,
     comments: 0,
-    image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=700&q=85",
+    image: "./assets/editorial/desk-ritual.jpg",
     alt: "Notebook and coffee on a desk"
   });
   state.filter = "all";
