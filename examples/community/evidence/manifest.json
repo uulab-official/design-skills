@@ -162,6 +162,6 @@
     {"id": "mobile-touch-targets", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Core mobile controls render with at least 44 × 44 px usable geometry."},
     {"id": "board-url-state", "route": "/board.html?source=qa&view=mobile&filter=platforms", "viewport": "1440x1000", "verified": true, "assertion": "The design board restores view and filter state from a shareable URL while preserving unknown parameters."},
     {"id": "board-history-state", "route": "/board.html?view=desktop&filter=screens", "viewport": "1440x1000", "verified": true, "assertion": "A browser history change rehydrates the board view, filter, and visible screens."},
-    {"id": "board-dialog-focus-return", "route": "/board.html?source=qa&view=mobile&filter=platforms", "viewport": "1440x1000", "verified": true, "assertion": "Opening Home and Settings screen handoff dialogs focuses the close control, exposes declared metadata, and Escape returns focus to the invoking artboard."}
+    {"id": "board-dialog-focus-return", "route": "/board.html?source=qa&view=mobile&filter=platforms", "viewport": "1440x1000", "verified": true, "assertion": "Opening Home, Settings, and Notifications screen handoff dialogs focuses the close control, exposes declared metadata, and Escape returns focus to the invoking artboard."}
   ]
 }
