@@ -1,0 +1,221 @@
+# Product archetypes used to choose information architecture and interaction patterns.
+# Keep entries task-led: navigation is a consequence of the primary job, not a default.
+# Index: community, social, messaging, content, utility, camera, commerce, booking,
+# productivity, health, game, dashboard, saas, admin, marketplace, landing,
+# portfolio, documentation.
+
+community:
+  category: social
+  primary_job: "Browse conversations and contribute safely"
+  navigation: "Peer destinations with feed, discovery, creation, notifications, and profile"
+  content_model: "Posts, replies, communities, members, moderation actions"
+  primary_action: create
+  interaction_mode: social
+  density: medium
+  required_states: [loading, empty, error, offline, moderation, success]
+  avoid: ["generic feed without community context", "creation flow with no audience or safety controls"]
+  review_questions: ["Can a user understand why a post is in the feed?", "Can users report, block, and recover from mistakes?"]
+
+social:
+  category: social
+  primary_job: "Maintain lightweight relationships through updates and reactions"
+  navigation: "Feed-first shell with discovery and identity destinations"
+  content_model: "Profiles, posts, media, reactions, comments, follows"
+  primary_action: publish
+  interaction_mode: social
+  density: medium
+  required_states: [loading, empty, error, offline, success]
+  avoid: ["engagement controls with equal visual weight", "unexplained ranking"]
+  review_questions: ["Is the next social action obvious?", "Are privacy and audience choices visible before publishing?"]
+
+messaging:
+  category: social
+  primary_job: "Exchange messages and understand conversation state"
+  navigation: "Conversation list to thread, with contextual actions inside the thread"
+  content_model: "Threads, messages, participants, attachments, read/delivery states"
+  primary_action: send
+  interaction_mode: realtime
+  density: medium
+  required_states: [loading, empty, error, offline, sending, sent, failed]
+  avoid: ["feed-style navigation inside a conversation", "silent send failures"]
+  review_questions: ["Can a user recover a failed send?", "Are unread and delivery states perceivable without color alone?"]
+
+content:
+  category: content
+  primary_job: "Consume, discover, and resume a body of content"
+  navigation: "Content hierarchy with browse, search, saved/resume, and identity or settings"
+  content_model: "Articles, videos, audio, chapters, collections, progress"
+  primary_action: consume
+  interaction_mode: sequential
+  density: low
+  required_states: [loading, empty, error, offline, progress, completed]
+  avoid: ["thumbnail grid without hierarchy", "autoplay without user control"]
+  review_questions: ["Can users resume where they left off?", "Does the reading or viewing surface stay visually dominant?"]
+
+utility:
+  category: utility
+  primary_job: "Complete one focused task with minimal setup"
+  navigation: "Contextual navigation only where it supports the task"
+  content_model: "Input, result, history, settings, help"
+  primary_action: complete
+  interaction_mode: task
+  density: low
+  required_states: [empty, invalid, loading, error, success]
+  avoid: ["unrelated bottom tabs", "decoration competing with the input or result"]
+  review_questions: ["Can the task start immediately?", "Is the result explainable and easy to reuse?"]
+
+camera:
+  category: utility
+  primary_job: "Frame and capture a meaningful image or video"
+  navigation: "Immersive capture surface with contextual controls and a lightweight result flow"
+  content_model: "Live preview, capture, media review, settings, permissions"
+  primary_action: capture
+  interaction_mode: realtime
+  density: low
+  required_states: [permission, unavailable, ready, capturing, reviewing, error, saved]
+  avoid: ["persistent generic app chrome over the preview", "capture action hidden in a tab or card"]
+  review_questions: ["Does the preview own the screen?", "Can a user understand permission denial and recover?"]
+
+commerce:
+  category: commerce
+  primary_job: "Find, compare, purchase, and track a product"
+  navigation: "Browse, search, saved/cart, orders, and account with checkout kept task-focused"
+  content_model: "Products, variants, inventory, cart, checkout, orders, promotions"
+  primary_action: add_to_cart
+  interaction_mode: transactional
+  density: medium
+  required_states: [loading, empty, out_of_stock, invalid, payment_error, success]
+  avoid: ["hidden price or fulfillment information", "checkout mixed with discovery chrome"]
+  review_questions: ["Can users compare essential attributes?", "Are price, availability, fulfillment, and error recovery explicit?"]
+
+booking:
+  category: commerce
+  primary_job: "Find an available option and commit to a reservation"
+  navigation: "Search/filter to results to detail to checkout, with trip/order history"
+  content_model: "Inventory, availability, filters, details, customer data, confirmation"
+  primary_action: reserve
+  interaction_mode: transactional
+  density: medium
+  required_states: [loading, empty, unavailable, invalid, payment_error, success, cancellation]
+  avoid: ["calendar or filter state that cannot be shared", "confirmation without next steps"]
+  review_questions: ["Can users see what changed before committing?", "Is cancellation or modification discoverable?"]
+
+productivity:
+  category: productivity
+  primary_job: "Capture, organize, and complete work"
+  navigation: "Task or document hierarchy with quick creation and context-aware detail views"
+  content_model: "Items, projects, due dates, owners, status, activity"
+  primary_action: create_item
+  interaction_mode: task
+  density: high
+  required_states: [loading, empty, error, offline, conflict, completed]
+  avoid: ["dense table with no prioritization", "modal-heavy editing for frequent actions"]
+  review_questions: ["Can users see priority and next action at a glance?", "What happens when edits conflict or connectivity is lost?"]
+
+health:
+  category: health-and-lifestyle
+  primary_job: "Build a safe, repeatable habit or understand personal progress"
+  navigation: "Today/progress/history with guidance and settings kept accessible"
+  content_model: "Goals, activities, measurements, streaks, guidance, privacy settings"
+  primary_action: log_activity
+  interaction_mode: guided
+  density: low
+  required_states: [empty, loading, error, offline, consent, success]
+  avoid: ["shame-driven progress language", "unclear medical or privacy boundaries"]
+  review_questions: ["Is the guidance safe and appropriately qualified?", "Can users control sensitive data and notifications?"]
+
+game:
+  category: entertainment
+  primary_job: "Play, understand feedback, and return to meaningful progress"
+  navigation: "Immersive game surface with HUD, pause, results, and progression outside play"
+  content_model: "Game state, canvas, HUD, controls, score, rewards, progression"
+  primary_action: play
+  interaction_mode: realtime
+  density: variable
+  required_states: [loading, tutorial, playing, paused, interrupted, game_over, reward]
+  avoid: ["generic dashboard chrome during play", "controls that depend on tiny targets"]
+  review_questions: ["Is the game state legible during motion?", "Can play recover from interruption, pause, and orientation changes?"]
+
+dashboard:
+  category: professional
+  primary_job: "Monitor a system and decide what needs attention"
+  navigation: "Workspace/sidebar or adaptive navigation with overview, detail, alerts, and settings"
+  content_model: "Metrics, dimensions, tables, alerts, filters, permissions, activity"
+  primary_action: investigate
+  interaction_mode: analytical
+  density: high
+  required_states: [loading, empty, no_data, error, stale, filtered, exported]
+  avoid: ["KPI wall without decisions", "charts with unclear units or denominators"]
+  review_questions: ["What decision does each widget support?", "Can users inspect source, time range, filters, and stale data?"]
+
+saas:
+  category: professional
+  primary_job: "Configure a workspace and complete recurring operational work"
+  navigation: "Persistent workspace navigation with contextual detail and settings boundaries"
+  content_model: "Workspaces, projects, records, members, roles, integrations, billing"
+  primary_action: create_record
+  interaction_mode: task-and-analytical
+  density: medium
+  required_states: [loading, empty, error, permission_denied, conflict, success]
+  avoid: ["sidebar with ungrouped destinations", "settings mixed into primary task flow"]
+  review_questions: ["Can users locate the current workspace and scope?", "Are permissions and destructive actions explicit?"]
+
+admin:
+  category: professional
+  primary_job: "Manage people, rules, data, and operational exceptions"
+  navigation: "Information-dense sidebar or rail with clear scope and role boundaries"
+  content_model: "Records, filters, bulk actions, audit events, permissions, configuration"
+  primary_action: manage_record
+  interaction_mode: operational
+  density: high
+  required_states: [loading, empty, error, permission_denied, bulk_progress, success]
+  avoid: ["destructive bulk action without preview", "unscoped data tables"]
+  review_questions: ["Can an operator understand scope and impact before acting?", "Is there an audit trail or recovery path?"]
+
+marketplace:
+  category: commerce
+  primary_job: "Match supply and demand with trust and transaction context"
+  navigation: "Search/discovery plus listing detail, messages, saved items, and account"
+  content_model: "Listings, sellers, buyers, search, offers, messages, transactions, trust signals"
+  primary_action: contact_or_offer
+  interaction_mode: transactional
+  density: medium
+  required_states: [loading, empty, unavailable, error, verification, success]
+  avoid: ["trust signals buried below decoration", "ambiguous transaction status"]
+  review_questions: ["Can users evaluate trust and fit quickly?", "Are safety, payment, and dispute paths visible?"]
+
+landing:
+  category: marketing
+  primary_job: "Understand value and take one intentional next step"
+  navigation: "Anchored page navigation with a focused CTA and optional utility links"
+  content_model: "Promise, proof, features, demo, pricing, objections, CTA"
+  primary_action: convert
+  interaction_mode: narrative
+  density: low
+  required_states: [loading, form_invalid, success, error]
+  avoid: ["hero without proof or specific audience", "multiple competing primary CTAs"]
+  review_questions: ["Can a visitor state the product value after one scan?", "Does every section support the decision?"]
+
+portfolio:
+  category: marketing
+  primary_job: "Show credible work and make contact easy"
+  navigation: "Project-led browse with about, capabilities, and contact"
+  content_model: "Projects, case studies, capabilities, biography, contact"
+  primary_action: view_case_study
+  interaction_mode: narrative
+  density: low
+  required_states: [loading, empty, error, success]
+  avoid: ["gallery with no outcomes or role", "contact action hidden behind animation"]
+  review_questions: ["Can visitors understand the author's role and impact?", "Is the contact path accessible without waiting for motion?"]
+
+documentation:
+  category: developer-tool
+  primary_job: "Find, understand, and apply technical information"
+  navigation: "Searchable hierarchy with persistent local navigation and stable anchors"
+  content_model: "Guides, API references, examples, versions, feedback"
+  primary_action: search_or_copy
+  interaction_mode: reference
+  density: medium
+  required_states: [loading, no_results, error, version_mismatch, copied]
+  avoid: ["deep hierarchy without search", "code examples that cannot be copied or verified"]
+  review_questions: ["Can users find the right version and task?", "Are headings, anchors, code, and search keyboard-accessible?"]
