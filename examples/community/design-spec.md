@@ -111,7 +111,56 @@ board.html
 - [x] Focus rings, labels, live regions, button names, and reduced-motion behavior are included.
 - [x] External imagery is treated as replaceable demo content; the layout does not depend on it for meaning.
 - [x] A design-board surface exposes multiple compositions, reusable foundations, and screen handoff metadata.
-- [ ] Visual review at the target viewport set (run the included screenshot check before calling this release-ready).
+- [x] Visual review at the target viewport set is recorded below; this example is review-ready, not release-ready.
+
+## Handoff evidence
+
+### Rendered evidence
+
+| Target | Evidence | Coverage |
+| --- | --- | --- |
+| Desktop 1440 × 1000 | [`board-1440.jpg`](evidence/board-1440.jpg), [`prototype-1440.jpg`](evidence/prototype-1440.jpg) | Primary wide review of the design board and runnable surface |
+| Desktop 1280 × 900 | [`board-1280.jpg`](evidence/board-1280.jpg) | Directions, archetypes, platform translations, home, discover, circle, thread, profile |
+| Desktop 1024 × 900 | [`board-1024.jpg`](evidence/board-1024.jpg) | Sidebar-to-drawer boundary and content reflow |
+| Mobile 390 × 844 | [`board-390.jpg`](evidence/board-390.jpg), [`prototype-390.jpg`](evidence/prototype-390.jpg) | One-column cards, horizontal filters, bottom navigation, composer, empty/loading/recovery/success states |
+| Native intent: iOS 390 pt / Android 360 dp | Platform translation artboards | Large-title/tab-bar and app-bar/FAB behavior are specified; native runtime remains a target, not a shipped surface |
+
+The live surface was checked after the direction, platform, and archetype boards were added. Evidence captures are committed under `examples/community/evidence/`; they are full-page JPEG screenshots produced from the local server at the viewport sizes named above. Reproduce the surface with the command in [Run locally](#run-locally), then open `/board.html` and `/index.html` at the declared sizes. The static example has no backend or network dependency; loading, empty, recovery, validation, and success are represented as deterministic prototype states.
+
+### Review scores
+
+Scores use the 0–4 rubric in `references/review-rubric.md` and only claim what this repository demonstrates.
+
+| Dimension | Score | Evidence note |
+| --- | ---: | --- |
+| Structure and primary task | 4 | Conversation lounge hierarchy is visible from welcome → featured story → feed → circle context. |
+| Visual hierarchy | 4 | Editorial type roles, paper/forest contrast, and intentional whitespace persist across the screen set. |
+| Consistency | 4 | Shared tokens, cards, controls, states, and board foundations are reused. |
+| Platform fit | 3 | Web behavior is implemented; iOS/Android differences are specified on the translation board. |
+| Accessibility | 3 | Labels, focus rings, live regions, reduced motion, and target sizing are represented in the prototype. |
+| Responsiveness | 4 | 1440, 1280, 1024, and 390 viewport targets are covered with structural recomposition. |
+| Interaction states | 3 | Default, filtered, empty, loading, recovery, composer, validation, success, liked, and saved states are represented. |
+| Implementation fidelity | 3 | The runnable web surface maps the board to maintainable static HTML/CSS/JS; native code is not included. |
+| Visual fidelity | 4 | Rendered board and prototype reviews were completed at desktop and mobile target sizes. |
+| Production readiness | 3 | The web concept is review-ready; backend, native runtime, and production deployment evidence remain open. |
+
+### Readiness record
+
+| Field | Record |
+| --- | --- |
+| Readiness level | `review-ready` for the static responsive web surface; not `release-ready` for native or backend claims |
+| Production app surface | `index.html`, `styles.css`, `app.js` with reusable shell, feed, composer, responsive navigation, and state feedback |
+| Figma-equivalent design board | `board.html`, `board.css`, `board.js` with directions, archetypes, platform translations, screens, states, foundations, and components |
+| Prototype / route flow | Board → Home → Discover → Circle → Thread → Profile; composer and state paths are documented in the prototype map |
+| Review status | No critical/high finding in the reviewed static surface; open findings are listed below |
+
+### Open findings
+
+- **medium — native runtime:** iOS/SwiftUI and Android/Jetpack Compose are platform-aware design targets, but no compiled native implementation or simulator evidence is included in this example.
+- **medium — data/runtime integration:** authentication, backend persistence, network retry, offline caching, analytics, and deployment checks still require product integration.
+- **low — visual regression automation:** the review evidence is recorded manually; screenshot automation remains outside this first skill release.
+
+These findings intentionally prevent a `release-ready` claim. The next implementation slice should close the native/runtime evidence only when those targets are in scope.
 
 ## Run locally
 

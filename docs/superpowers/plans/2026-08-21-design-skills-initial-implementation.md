@@ -1,6 +1,8 @@
 # Design Skills Initial Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+>
+> **Status:** Implemented and verified on 2026-08-21. Task 5 records the open-source handoff gate, including the PyYAML environment limitation and the dependency-free replacement validator.
 
 **Goal:** Build and validate the first open-source `design-skills` Codex skill for platform-aware app and web product design.
 
@@ -33,17 +35,17 @@
 **Interfaces:**
 - Produces the contract for `scripts/inspect_project.py --path <directory> --json`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
   Use `unittest` and a subprocess-free import of the future module. Assert that `inspect_project(path)` returns a dictionary with `path`, `project_type`, `platform_hints`, `package_managers`, `directories`, `screens_or_routes`, `components`, and `assets`. Assert that the sample Expo fixture is classified as `react-native-or-expo`, includes `expo` in `platform_hints`, detects `src/components`, and reports the tabs route.
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
   Run `python3 -m unittest tests.test_inspect_project -v`.
 
   Expected: collection fails because `scripts/inspect_project.py` does not exist yet. This verifies the test is exercising the intended missing behavior rather than an existing implementation.
 
-- [ ] **Step 3: Commit the failing test**
+- [x] **Step 3: Commit the failing test**
 
   Run `git add tests && git commit -m "test: define project inspection contract"`.
 
@@ -57,21 +59,21 @@
 - Consumes: a filesystem path.
 - Produces: `inspect_project(path: pathlib.Path) -> dict` and a CLI with `--path` and `--json`.
 
-- [ ] **Step 1: Implement the minimal scanner**
+- [x] **Step 1: Implement the minimal scanner**
 
   Detect `package.json`, `app.json`, `app.config.*`, `next.config.*`, `vite.config.*`, `pubspec.yaml`, `Package.swift`, `*.xcodeproj`, `build.gradle*`, and common source directories. Read only bounded text metadata; never modify files. Use sorted, relative POSIX paths and skip `.git`, `node_modules`, build outputs, caches, and hidden directories.
 
-- [ ] **Step 2: Run the focused test**
+- [x] **Step 2: Run the focused test**
 
   Run `python3 -m unittest tests.test_inspect_project -v`.
 
   Expected: PASS with deterministic output for the sample fixture.
 
-- [ ] **Step 3: Add CLI smoke coverage**
+- [x] **Step 3: Add CLI smoke coverage**
 
   Run `python3 scripts/inspect_project.py --path tests/fixtures/sample-expo --json` and confirm it emits valid JSON with no writes to the fixture.
 
-- [ ] **Step 4: Commit the implementation**
+- [x] **Step 4: Commit the implementation**
 
   Run `git add scripts tests && git commit -m "feat: add read-only project inspector"`.
 
@@ -89,23 +91,23 @@
 - Consumes: the selected platform, device class, and archetype from `SKILL.md`.
 - Produces: concise references loaded conditionally by the orchestrator.
 
-- [ ] **Step 1: Write platform guidance**
+- [x] **Step 1: Write platform guidance**
 
   Cover iOS/SwiftUI, Android/Jetpack Compose, React Native/Expo, responsive Web, tablet, and cross-platform selection. For each, document layout conventions, input/focus behavior, navigation, accessibility, and validation checks.
 
-- [ ] **Step 2: Write archetype YAML**
+- [x] **Step 2: Write archetype YAML**
 
   Add fields `category`, `primary_job`, `navigation`, `content_model`, `primary_action`, `interaction_mode`, `density`, `required_states`, `avoid`, and `review_questions` for the initial archetypes named in the spec.
 
-- [ ] **Step 3: Write quality and review references**
+- [x] **Step 3: Write quality and review references**
 
   Define token roles and baseline scales without forcing a visual brand. Add the anti-pattern list, an actionable rubric with score bands and severity definitions, and a visual-fidelity loop covering visual direction, realistic content/assets, rendered target sizes, neighboring breakpoint/device checks, and readiness levels.
 
-- [ ] **Step 4: Write the production app standard**
+- [x] **Step 4: Write the production app standard**
 
   Define the Figma-equivalent board contract and the production app surface: foundations, component variants, screen set, prototype transitions, app shell, primary flow, state matrix, native behavior, performance, accessibility, localization, and runtime evidence. Make a single polished screen insufficient for a production-ready claim.
 
-- [ ] **Step 5: Commit references**
+- [x] **Step 5: Commit references**
 
   Run `git add references && git commit -m "docs: add platform archetype and quality references"`.
 
@@ -119,23 +121,23 @@
 - Consumes: user brief, repository inspection output, `references/platforms.md`, `references/archetypes.yaml`, `references/design-quality.md`, `references/visual-fidelity.md`, `references/production-app-design.md`, and `references/review-rubric.md`.
 - Produces: a reusable `design-skills` skill that triggers on app/web product design, UI implementation, redesign, and UX review requests.
 
-- [ ] **Step 1: Write frontmatter and trigger description**
+- [x] **Step 1: Write frontmatter and trigger description**
 
   Start the description with `Use when...`, include app/web/platform/archetype/UI review symptoms and keywords, and keep it trigger-focused rather than summarizing the workflow.
 
-- [ ] **Step 2: Write the orchestration workflow**
+- [x] **Step 2: Write the orchestration workflow**
 
   Require platform selection, repository inspection, archetype selection, design brief, IA/navigation, tokens, component states, implementation, and review. Link each detailed reference directly from the relevant decision point.
 
-- [ ] **Step 3: Write the output contract and red flags**
+- [x] **Step 3: Write the output contract and red flags**
 
   Require explicit assumptions and a review report. Add direct counters for generic bottom navigation, decorative gradients/glass, unbounded card nesting, missing states, and skipping visual/accessibility QA.
 
-- [ ] **Step 4: Add metadata**
+- [x] **Step 4: Add metadata**
 
   Set `display_name`, a 25–64 character `short_description`, and a default prompt explicitly naming `$design-skills`. Do not add unrequested icons or tool dependencies.
 
-- [ ] **Step 5: Commit the skill**
+- [x] **Step 5: Commit the skill**
 
   Run `git add SKILL.md agents && git commit -m "feat: add platform-aware design skill"`.
 
@@ -146,28 +148,28 @@
 - Create: `tests/test_design_quality_contract.py` when adding or changing the high-fidelity release gate
 - Create: `tests/test_production_app_contract.py` when adding or changing the app production-readiness gate
 
-- [ ] **Step 1: Run tests and validator**
+- [x] **Step 1: Run tests and validator**
 
   Run `python3 -m unittest discover -s tests -v`.
 
-  Run `python3 /Users/uulab/.codex/skills/.system/skill-creator/scripts/quick_validate.py .` using a Python environment that has PyYAML available; if unavailable, run an equivalent frontmatter check with a standard-library parser and record the environment limitation.
+  Run the installed `skill-creator` package's `quick_validate.py` using a Python environment that has PyYAML available; if unavailable, run `scripts/validate_skill.py` and an available YAML parser, and record the environment limitation.
 
-- [ ] **Step 2: Run static checks**
+- [x] **Step 2: Run static checks**
 
   Check `wc -l SKILL.md`, ensure all linked reference paths exist, ensure no `TODO` or `TBD` placeholders remain, and validate `references/archetypes.yaml` with an available YAML parser.
 
-- [ ] **Step 3: Run the skill pressure scenarios**
+- [x] **Step 3: Run the skill pressure scenarios**
 
   Apply the skill to the community mobile, SaaS web dashboard, and camera game prompts under time pressure. Confirm each output declares a platform, chooses an archetype, defines visual direction and realistic content/assets, names rendered target sizes and representative states, avoids generic navigation defaults, defines state coverage, includes the `Visual fidelity` score, and refuses a `release-ready` claim without evidence.
 
-- [ ] **Step 4: Verify app-specific handoff shape**
+- [x] **Step 4: Verify app-specific handoff shape**
 
   For an app prompt, confirm the output includes the Figma-equivalent design board, production app surface, prototype/route flow, reusable component variants, at least three meaningful screens for a multi-screen product, and an explicit production-readiness score.
 
-- [ ] **Step 5: Review the final diff**
+- [x] **Step 5: Review the final diff**
 
   Run `git diff --check` and `git status --short`. Confirm no generated caches, credentials, temporary files, or user-specific absolute paths are tracked.
 
-- [ ] **Step 6: Commit and push the release**
+- [x] **Step 6: Commit and push the release**
 
   Run `git add . && git commit -m "feat: launch platform-aware design skills"`, verify `git log -1 --oneline`, then run `git push origin main`.

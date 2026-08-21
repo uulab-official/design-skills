@@ -17,7 +17,7 @@ Design and implement the product, not just a pretty screen. Select the platform 
 - For new or structurally changed work, state the design brief, platform assumption, archetype, navigation decision, tokens, and state coverage before implementation.
 - Use the repository's actual stack. If a matching platform/framework skill is available, load it for implementation details after this skill's product decisions are clear.
 - Treat accessibility, responsive behavior, loading, empty, error, offline/permission, disabled, success, and recovery states as part of the feature, not polish.
-- Treat visual fidelity as an acceptance requirement: real content, coherent rhythm, rendered target-size evidence, and state-by-state inspection are required for a release-ready claim.
+- Treat visual fidelity as an acceptance requirement: real content, coherent rhythm, rendered target-size evidence at named rendered target sizes, and state-by-state inspection are required for a release-ready claim.
 - For app work, treat [production-app-design.md](references/production-app-design.md) as required: produce a Figma-equivalent design board and a complete production-grade app surface, not a single showcase screen.
 - Do not claim readiness from a static happy-path screenshot. Run the review rubric and record evidence for remaining findings.
 
