@@ -47,6 +47,18 @@ class CommunityExampleContractTests(unittest.TestCase):
         self.assertIn("restoreFocus", self.js)
         self.assertIn(".skip-link:focus", self.css)
 
+    def test_design_board_exposes_shareable_state_and_dialog_focus(self):
+        board_html = (EXAMPLE / "board.html").read_text(encoding="utf-8")
+        board_js = (EXAMPLE / "board.js").read_text(encoding="utf-8")
+        self.assertIn('aria-label="Preview size"', board_html)
+        self.assertIn('data-view-toggle="desktop" aria-pressed="true"', board_html)
+        self.assertIn('data-board-filter="all" aria-pressed="true"', board_html)
+        self.assertIn("readUrlState", board_js)
+        self.assertIn("syncUrlState", board_js)
+        self.assertIn("history.replaceState", board_js)
+        self.assertIn("state.dialogTrigger", board_js)
+        self.assertIn('boardDialog.addEventListener("cancel"', board_js)
+
 
 if __name__ == "__main__":
     unittest.main()

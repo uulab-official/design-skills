@@ -64,4 +64,4 @@ The community reference surface is intentionally `review-ready`, not `release-re
 
 Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening a change. The short version is: preserve the existing product decisions, add evidence for new states or viewports, run `npm run ci:quality`, and describe any remaining finding with severity, evidence, and next action.
 
-The current roadmap is [`docs/superpowers/plans/2026-08-21-design-skills-v0.4-interaction-hardening.md`](docs/superpowers/plans/2026-08-21-design-skills-v0.4-interaction-hardening.md).
+The current roadmap is [`docs/superpowers/plans/2026-08-21-design-skills-v0.5-board-handoff-hardening.md`](docs/superpowers/plans/2026-08-21-design-skills-v0.5-board-handoff-hardening.md).

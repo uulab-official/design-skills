@@ -84,6 +84,38 @@ async function runRuntimeChecks() {
     assert(drawerClosed.active === "openSidebar" && drawerClosed.expanded === "false", "Drawer focus did not return after Escape");
     results.push({ id: "drawer-focus-return", verified: true, viewport: "390x844" });
     await mobile.close();
+
+    const board = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+    await board.goto(`${DEFAULT_BASE_URL}/board.html?source=qa&view=mobile&filter=platforms`, { waitUntil: "networkidle" });
+    const boardState = await board.evaluate(() => ({
+      view: document.querySelector("#boardMain").dataset.view,
+      filterPressed: document.querySelector('[data-board-filter="platforms"]').getAttribute("aria-pressed"),
+      visiblePlatforms: document.querySelectorAll('article[data-board-type="platforms"]:not([hidden])').length,
+      hiddenDirections: document.querySelector('[data-board-type="directions"]').hidden,
+      url: window.location.search,
+    }));
+    assert(boardState.view === "mobile", "Board view was not restored from the URL");
+    assert(boardState.filterPressed === "true", "Board filter was not restored from the URL");
+    assert(boardState.visiblePlatforms === 3 && boardState.hiddenDirections, "Board filter rendered the wrong sections");
+    assert(boardState.url.includes("source=qa"), "Board state did not preserve unknown URL parameters");
+    results.push({ id: "board-url-state", verified: true, viewport: "1440x1000" });
+
+    await board.goto(`${DEFAULT_BASE_URL}/board.html?source=qa&view=mobile&filter=all`, { waitUntil: "networkidle" });
+    await board.locator('[data-open-artboard="Home / For you"]').click();
+    await wait(80);
+    const boardDialogOpen = await board.evaluate(() => ({
+      active: document.activeElement.id,
+      open: document.querySelector("#boardDialog").open,
+    }));
+    assert(boardDialogOpen.active === "closeBoardDialog" && boardDialogOpen.open, "Board dialog did not receive focus on open");
+    await board.keyboard.press("Escape");
+    const boardDialogClosed = await board.evaluate(() => ({
+      activeLabel: document.activeElement.getAttribute("data-open-artboard"),
+      open: document.querySelector("#boardDialog").open,
+    }));
+    assert(boardDialogClosed.activeLabel === "Home / For you" && !boardDialogClosed.open, "Board dialog focus did not return after Escape");
+    results.push({ id: "board-dialog-focus-return", verified: true, viewport: "1440x1000" });
+    await board.close();
   } finally {
     await browser.close();
   }
