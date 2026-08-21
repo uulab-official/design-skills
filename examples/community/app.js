@@ -55,6 +55,8 @@ const state = {
   circle: "",
   query: "",
   discoverFilter: "all",
+  circleTab: "conversations",
+  circleJoined: false,
   liked: new Set(),
   saved: new Set(),
   toastTimer: null,
@@ -68,6 +70,7 @@ const searchInput = document.querySelector("#searchInput");
 const homeView = document.querySelector("#homeView");
 const discoverView = document.querySelector("#discoverView");
 const discoverStatus = document.querySelector("#discoverStatus");
+const circleView = document.querySelector("#circleView");
 const composerDialog = document.querySelector("#composerDialog");
 const composerForm = document.querySelector("#composerForm");
 const composerTitleInput = document.querySelector("#composerTitleInput");
@@ -78,9 +81,89 @@ const sidebarScrim = document.querySelector("#sidebarScrim");
 const sidebarTrigger = document.querySelector("#openSidebar");
 
 const validFilters = new Set(["all", "following", "latest"]);
-const validCircles = new Set(["City Makers", "Quiet Mornings", "Sunday Film Club", "Open Table"]);
-const validViews = new Set(["home", "discover"]);
+const validCircles = new Set(["City Makers", "Quiet Mornings", "Sunday Film Club", "Open Table", "Tiny Libraries", "Field Notes"]);
+const validViews = new Set(["home", "discover", "circle"]);
 const validDiscoverFilters = new Set(["all", "make", "slow", "notice"]);
+const circleProfiles = {
+  "City Makers": {
+    eyebrow: "City / making",
+    initials: "CM",
+    accent: "coral",
+    description: "For people turning small observations into useful things for the places they live.",
+    memberCount: 18,
+    memberCopy: "18 people making useful things together.",
+    fitTitle: "Notice the edges of a place.",
+    fitCopy: "You like half-formed ideas, local details, and making something useful before it is perfect.",
+    topics: ["Local rituals", "Making in public", "Small city"],
+    members: ["MP", "HL", "JK", "+15"],
+    conversations: [{ author: "Hana Lee", initials: "HL", time: "38 min ago", title: "A neighborhood map made from borrowed stories.", excerpt: "What happens when a city is drawn by the people who notice its edges?" }, { author: "Mina Park", initials: "MP", time: "Today", title: "What would make your block easier to linger in?", excerpt: "A prompt for the overlooked corners we pass every day." }],
+  },
+  "Quiet Mornings": {
+    eyebrow: "Ritual / focus",
+    initials: "QM",
+    accent: "lilac",
+    description: "A soft place for protecting the first hour, and sharing what helps you begin.",
+    memberCount: 6,
+    memberCopy: "6 people protecting a slower start.",
+    fitTitle: "Protect the first hour.",
+    fitCopy: "You are interested in gentle systems, honest routines, and better ways to begin.",
+    topics: ["Morning rituals", "Deep work", "Small resets"],
+    members: ["JK", "SO", "+4"],
+    conversations: [{ author: "Jae Kim", initials: "JK", time: "14 min ago", title: "The best workday starts before the inbox.", excerpt: "A small, honest ritual for protecting the first hour of the day." }],
+  },
+  "Sunday Film Club": {
+    eyebrow: "Film / afterglow",
+    initials: "SF",
+    accent: "moss",
+    description: "Three films, one generous question, and the thoughts that stay after the credits.",
+    memberCount: 2,
+    memberCopy: "2 people watching closely this week.",
+    fitTitle: "Stay for the last frame.",
+    fitCopy: "You like quiet endings, unfinished interpretations, and stories that leave the door open.",
+    topics: ["Quiet endings", "One good question", "Sunday ritual"],
+    members: ["SP", "HN"],
+    conversations: [{ author: "Sol Park", initials: "SP", time: "1 hr ago", title: "Films that leave the door open.", excerpt: "Three quiet endings we kept thinking about long after the credits." }],
+  },
+  "Open Table": {
+    eyebrow: "Questions / practice",
+    initials: "OT",
+    accent: "blue",
+    description: "Bring the half-formed idea. Leave with a better question and a little more courage.",
+    memberCount: 12,
+    memberCopy: "12 people thinking out loud together.",
+    fitTitle: "Keep the question open.",
+    fitCopy: "You would rather make room for a useful question than rush toward a polished answer.",
+    topics: ["Work in progress", "Good questions", "Shared practice"],
+    members: ["AV", "MP", "HL", "+9"],
+    conversations: [{ author: "Ava Choi", initials: "AV", time: "2 hr ago", title: "What are you making room for?", excerpt: "A table for the ideas that need a little more time before they become plans." }],
+  },
+  "Tiny Libraries": {
+    eyebrow: "Books / neighborhood",
+    initials: "TL",
+    accent: "sand",
+    description: "Notes from the shelves, street corners, and little exchanges that make a city feel shared.",
+    memberCount: 9,
+    memberCopy: "9 people trading good finds.",
+    fitTitle: "Follow a well-worn page.",
+    fitCopy: "You notice what people leave behind, pass along, and quietly recommend.",
+    topics: ["Books to pass on", "Street corners", "Small exchanges"],
+    members: ["JM", "SO", "+7"],
+    conversations: [{ author: "Joon Min", initials: "JM", time: "Yesterday", title: "A shelf for books that changed your route.", excerpt: "Which book made you take the long way home?" }],
+  },
+  "Field Notes": {
+    eyebrow: "Walk / attention",
+    initials: "FN",
+    accent: "ink",
+    description: "A weekly pause to look closely, walk without a destination, and bring one detail back.",
+    memberCount: 14,
+    memberCopy: "14 people looking a little closer.",
+    fitTitle: "Look twice at the ordinary.",
+    fitCopy: "You collect details, take the long way home, and believe attention is a practice.",
+    topics: ["Slow walks", "Daily details", "Outside time"],
+    members: ["HL", "JK", "MP", "+11"],
+    conversations: [{ author: "Hana Lee", initials: "HL", time: "Yesterday", title: "The detail I nearly walked past.", excerpt: "A small field note from a familiar route." }],
+  },
+};
 
 function readUrlState() {
   const params = new URLSearchParams(window.location.search);
@@ -91,6 +174,7 @@ function readUrlState() {
   state.view = validViews.has(view) ? view : "home";
   state.filter = validFilters.has(filter) ? filter : "all";
   state.circle = validCircles.has(circle) ? circle : "";
+  if (state.view === "circle" && !state.circle) state.view = "home";
   state.query = params.get("q")?.slice(0, 120) ?? "";
   state.discoverFilter = validDiscoverFilters.has(discoverFilter) ? discoverFilter : "all";
   if (state.circle) state.filter = "all";
@@ -99,7 +183,7 @@ function readUrlState() {
 
 function updateUrlState(historyMethod = "replaceState") {
   const url = new URL(window.location.href);
-  if (state.view === "discover") url.searchParams.set("view", "discover");
+  if (state.view === "discover" || state.view === "circle") url.searchParams.set("view", state.view);
   else url.searchParams.delete("view");
   if (state.filter !== "all" && !state.circle) url.searchParams.set("filter", state.filter);
   else url.searchParams.delete("filter");
@@ -228,20 +312,76 @@ function renderDiscover({ syncUrl = true } = {}) {
   if (syncUrl) syncUrlState();
 }
 
+function renderCircle({ syncUrl = true } = {}) {
+  const profile = circleProfiles[state.circle] || circleProfiles["City Makers"];
+  const circleTitle = document.querySelector("#circleTitle");
+  const circleDescription = document.querySelector("#circleDescription");
+  const circleHero = document.querySelector("#circleHero");
+  const circleMemberStack = document.querySelector("#circleMemberStack");
+  const circleMemberCopy = document.querySelector("#circleMemberCopy");
+  const circleCoverInitials = document.querySelector("#circleCoverInitials");
+  const circleFitTitle = document.querySelector("#circleFitTitle");
+  const circleFitCopy = document.querySelector("#circleFitCopy");
+  const circleTopicList = document.querySelector("#circleTopicList");
+  const joinButton = document.querySelector("#joinCircle");
+  const circlePanel = document.querySelector("#circlePanel");
+  const circleStatus = document.querySelector("#circleStatus");
+  circleHero.dataset.accent = profile.accent;
+  document.querySelector("#circleEyebrow").textContent = profile.eyebrow;
+  circleTitle.textContent = state.circle;
+  circleDescription.textContent = profile.description;
+  circleMemberStack.setAttribute("aria-label", profile.memberCount + " members");
+  circleMemberStack.innerHTML = profile.members.map((member) => "<b>" + escapeHtml(member) + "</b>").join("");
+  circleMemberCopy.textContent = profile.memberCopy;
+  circleCoverInitials.textContent = profile.initials;
+  circleFitTitle.textContent = profile.fitTitle;
+  circleFitCopy.textContent = profile.fitCopy;
+  circleTopicList.innerHTML = profile.topics.map((topic) => "<span>" + escapeHtml(topic) + "</span>").join("");
+  joinButton.setAttribute("aria-pressed", String(state.circleJoined));
+  joinButton.innerHTML = state.circleJoined ? "Joined circle " + icon("check") : "Join circle " + icon("arrow-up");
+  document.querySelectorAll("[data-circle-tab]").forEach((button) => {
+    button.setAttribute("aria-selected", String(button.dataset.circleTab === state.circleTab));
+  });
+  if (state.circleTab === "about") {
+    circlePanel.innerHTML = "<div class=\"circle-about-panel\"><p class=\"section-kicker\">About this circle</p><h2>" + escapeHtml(profile.description) + "</h2><p>There is no correct pace here. Share a reference, a question, or a detail that made you look twice. The best threads leave room for someone else to add their own edge.</p><div class=\"circle-about-rule\"></div><p class=\"circle-about-meta\">" + profile.memberCount + " members · " + profile.topics.join(" · ") + "</p></div>";
+    circleStatus.textContent = "About " + state.circle + ".";
+  } else {
+    circlePanel.innerHTML = "<div class=\"circle-conversation-list\">" + profile.conversations.map((conversation) => "<article class=\"circle-conversation\"><div class=\"circle-conversation-avatar\">" + escapeHtml(conversation.initials) + "</div><div class=\"circle-conversation-copy\"><div class=\"post-meta\"><strong>" + escapeHtml(conversation.author) + "</strong><span>·</span><span>" + escapeHtml(conversation.time) + "</span></div><h2>" + escapeHtml(conversation.title) + "</h2><p>" + escapeHtml(conversation.excerpt) + "</p><div class=\"circle-conversation-footer\"><span>" + (conversation.replies || 8) + " replies</span><button class=\"text-button\" type=\"button\" data-circle-conversation>Read conversation " + icon("arrow-up") + "</button></div></div></article>").join("") + "</div>";
+    circleStatus.textContent = profile.conversations.length + " conversation" + (profile.conversations.length === 1 ? "" : "s") + " in " + state.circle + ".";
+  }
+  if (syncUrl) syncUrlState();
+}
+
 function renderRoute({ syncUrl = true, scroll = true } = {}) {
   const isDiscover = state.view === "discover";
-  homeView.hidden = isDiscover;
+  const isCircle = state.view === "circle";
+  homeView.hidden = isDiscover || isCircle;
   discoverView.hidden = !isDiscover;
-  document.querySelector("#breadcrumbRoot").textContent = isDiscover ? "Discover" : "Home";
-  document.querySelector("#breadcrumbCurrent").textContent = isDiscover ? "Circles" : "For you";
-  setActiveNavigation(isDiscover ? "Discover" : "Home");
+  circleView.hidden = !isCircle;
+  document.querySelector("#breadcrumbRoot").textContent = isCircle ? "Circles" : isDiscover ? "Discover" : "Home";
+  document.querySelector("#breadcrumbCurrent").textContent = isCircle ? state.circle : isDiscover ? "Circles" : "For you";
+  setActiveNavigation(isCircle ? "Your circles" : isDiscover ? "Discover" : "Home");
   if (isDiscover) renderDiscover({ syncUrl });
+  else if (isCircle) renderCircle({ syncUrl });
   else renderFeed({ syncUrl });
   if (scroll) window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 }
 
 function navigateToView(view) {
   state.view = validViews.has(view) ? view : "home";
+  updateUrlState("pushState");
+  renderRoute({ syncUrl: false });
+}
+
+function navigateToCircle(circleName) {
+  if (!validCircles.has(circleName)) return;
+  state.view = "circle";
+  state.circle = circleName;
+  state.filter = "all";
+  state.query = "";
+  state.circleTab = "conversations";
+  state.circleJoined = false;
+  searchInput.value = "";
   updateUrlState("pushState");
   renderRoute({ syncUrl: false });
 }
@@ -338,6 +478,11 @@ searchInput.addEventListener("input", (event) => {
     renderDiscover();
     return;
   }
+  if (state.view === "circle") {
+    state.circle = "";
+    navigateToView("discover");
+    return;
+  }
   state.circle = "";
   state.filter = "all";
   renderFeed();
@@ -415,7 +560,11 @@ document.querySelectorAll("[data-nav]").forEach((button) => {
   button.addEventListener("click", () => {
     const label = button.dataset.nav;
     toggleSidebar(false);
-    if (label === "Home" || label === "Discover") {
+    if (label === "Home" || label === "Discover" || label === "Your circles") {
+      if (label === "Your circles") {
+        navigateToCircle("City Makers");
+        return;
+      }
       navigateToView(label === "Discover" ? "discover" : "home");
       return;
     }
@@ -431,6 +580,27 @@ document.querySelectorAll("[data-discover-filter]").forEach((button) => {
   });
 });
 
+document.querySelectorAll("[data-circle-route]").forEach((button) => {
+  button.addEventListener("click", () => navigateToCircle(button.dataset.circleRoute));
+});
+
+document.querySelectorAll("[data-circle-tab]").forEach((button) => {
+  button.addEventListener("click", () => {
+    state.circleTab = button.dataset.circleTab;
+    renderCircle();
+  });
+});
+
+document.querySelector("#circleBack").addEventListener("click", () => navigateToView("discover"));
+document.querySelector("#circleStartConversation").addEventListener("click", openComposer);
+document.querySelector("#circlePanel").addEventListener("click", (event) => {
+  if (event.target.closest("[data-circle-conversation]")) showToast("Conversation route coming next");
+});
+document.querySelector("#joinCircle").addEventListener("click", () => {
+  state.circleJoined = !state.circleJoined;
+  renderCircle();
+  showToast(state.circleJoined ? "You joined " + state.circle : "You left " + state.circle);
+});
 document.querySelector("#discoverStartConversation").addEventListener("click", openComposer);
 document.querySelectorAll("[data-toast]").forEach((button) => button.addEventListener("click", () => showToast(button.dataset.toast)));
 

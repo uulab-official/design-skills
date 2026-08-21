@@ -14,6 +14,7 @@ The source and implementation were captured and reviewed together before judging
 | Mobile responsive set | [`board-390.jpg`](examples/community/evidence/board-390.jpg) | [`prototype-390.jpg`](examples/community/evidence/prototype-390.jpg) | 390 × 844 CSS px / full-page evidence | 1× |
 | Mobile comparison | [`mobile-source-vs-implementation.png`](examples/community/evidence/qa/mobile-source-vs-implementation.png) | Same comparison input | 390 × 844 CSS px viewport, full-page composite | 1× |
 | Discover route review | [prototype-discover-1440.jpg](examples/community/evidence/prototype-discover-1440.jpg), [prototype-discover-390.jpg](examples/community/evidence/prototype-discover-390.jpg) | Same implementation route at desktop and mobile | 1440 × 1000 and 390 × 844 CSS px / full-page evidence | 1× |
+| Circle route review | [prototype-circle-1440.jpg](examples/community/evidence/prototype-circle-1440.jpg), [prototype-circle-390.jpg](examples/community/evidence/prototype-circle-390.jpg) | Same implementation route at desktop and mobile | 1440 × 1000 and 390 × 844 CSS px / full-page evidence | 1× |
 
 The desktop source is the refreshed `A / 01 · Home / For you` artboard with its screen content aligned to the viewport. The mobile source is the responsive design board containing `A / 06 · Mobile / Home`; the implementation is the runnable prototype at the same mobile viewport.
 
@@ -23,7 +24,7 @@ The source and implementation share the same editorial hierarchy: forest navigat
 
 ## Focused comparison
 
-The focused desktop pass inspected the hero baseline, orbit artwork, feed heading/filter group, featured card split, image crop, and right rail. The focused mobile pass inspected the top bar, hero wrap, primary action, orbit, featured card, bottom navigation, and touch-target geometry. The Discover pass inspected the dark directory hero, orbit art, topic filter row, six-card grid, route CTA, and mobile bottom navigation at both target sizes. No overlap, clipping, broken wrapping, or hierarchy collapse was found in the reviewed states.
+The focused desktop pass inspected the hero baseline, orbit artwork, feed heading/filter group, featured card split, image crop, and right rail. The focused mobile pass inspected the top bar, hero wrap, primary action, orbit, featured card, bottom navigation, and touch-target geometry. The Discover pass inspected the dark directory hero, orbit art, topic filter row, six-card grid, route CTA, and mobile bottom navigation at both target sizes. The Circle pass inspected the identity hero, orbit artwork, tab bar, conversation cards, context rail, join CTA, and mobile recomposition. No overlap, clipping, broken wrapping, or hierarchy collapse was found in the reviewed states.
 
 ## Findings and comparison history
 
@@ -31,6 +32,7 @@ The focused desktop pass inspected the hero baseline, orbit artwork, feed headin
 | --- | --- | --- | --- | --- |
 | DQ-001 | P2 | Layout / handoff fidelity | The `Home / For you` board preview omitted the desktop circles rail and rendered the featured story full width, while the implementation used a main column plus `Circles you’re in` rail. This could cause contributors to reproduce a different desktop composition from the design board. | Resolved by adding the miniature rail to `examples/community/board.html` and matching the board grid in `examples/community/board.css`. Re-captured and re-reviewed after the change. |
 | DQ-002 | P2 | Route / implementation coverage | The board defined Discover / Circles as a screen, but the runnable navigation stopped at a route-boundary toast. This made the board-to-prototype handoff incomplete for the first discovery task. | Resolved by adding a shareable Discover view with topic filters, global search feedback, instant scroll reset, browser-back recovery, responsive evidence, and a dedicated visual baseline. |
+| DQ-003 | P2 | Route / implementation coverage | Discover cards still ended at a route-boundary toast, leaving Circle identity, membership, and conversation context absent from the runnable flow. | Resolved by adding a shareable City Makers Circle route with Conversations/About tabs, join state, conversation feedback, responsive evidence, and a dedicated visual baseline. |
 
 P0 findings: none.  
 P1 findings: none.  
@@ -50,6 +52,8 @@ The v0.14 navigation-state pass is behavior-only: the sidebar and mobile navigat
 
 The v0.15 Discover-route pass closes the first screen-coverage gap: Discover now renders a real responsive directory from the board’s dark editorial direction, preserves its state in the URL, resets scroll on route entry/history restoration, and returns to Home through browser back. The new route is captured at desktop and mobile sizes and included in visual regression.
 
+The v0.16 Circle-route pass continues the route flow into a real City Makers detail screen: its identity hero, member context, Conversations/About tabs, join state, and conversation CTA are rendered at desktop and mobile sizes, with browser-back recovery back to Discover.
+
 ## Rubric pass
 
 - Typography: local fonts, weight hierarchy, serif display treatment, wrapping, and line-height remain coherent across source and implementation.
@@ -59,19 +63,19 @@ The v0.15 Discover-route pass closes the first screen-coverage gap: Discover now
 - Image quality and assets: the featured story uses the same local editorial asset and preserves its crop; no placeholder image replaces a designed asset.
 - Copy and content: source and implementation use the same product copy and state labels for the reviewed home surface.
 - Icons: board symbols and implementation SVG sprite icons are present, aligned, and stylistically consistent.
-- States and interactions: URL state, history restoration, Discover route entry/back and instant scroll reset, topic filters, dedicated feed-status announcement, Featured story route feedback, synchronized navigation current state, composer focus return, drawer focus return, skip-link navigation, board state, and board dialog focus return passed runtime checks.
+- States and interactions: URL state, history restoration, Discover and Circle route entry/back with instant scroll reset, topic filters, Circle tab selection and conversation feedback, dedicated feed-status announcement, Featured story route feedback, synchronized navigation current state, composer focus return, drawer focus return, skip-link navigation, board state, and board dialog focus return passed runtime checks.
 - Feed action focus: Like/Save rerendering preserves the focused action and its updated pressed state in browser QA.
 - Accessibility: semantic controls, visible focus treatment, dedicated live status messaging, reduced-motion support, image alt text, and minimum 44 × 44 px mobile control geometry are covered by the example contract and runtime QA.
 - AI shortcut artifacts: no generic placeholder card, fake product image, or mismatched decorative surface was found in the reviewed home surface; the orbit treatment is a deliberate shared motif.
 
 ## Verification
 
-- `npm run capture:community` — refreshed 8 evidence captures, including Discover at desktop and mobile.
+- `npm run capture:community` — refreshed 10 evidence captures, including Discover and City Makers Circle at desktop and mobile.
 - QA comparison capture — refreshed source and implementation panels at 1280 × 720 CSS px / 1× density.
-- `npm run validate:evidence` — 8 captures and 23 documented runtime assertions passed.
-- `npm run test:browser` — 16 / 16 runtime checks passed, including Discover route entry/back recovery with instant scroll reset, navigation current state, dedicated feed-status announcements, Featured story CTA feedback, and Like action focus retention after feed rerender.
-- `npm run test:visual` — 4 / 4 targets passed with `mismatchRatio: 0`.
+- `npm run validate:evidence` — 10 captures and 24 documented runtime assertions passed.
+- `npm run test:browser` — 17 / 17 runtime checks passed, including Discover and Circle route entry/back recovery, Circle tab selection and conversation feedback, instant scroll reset, navigation current state, dedicated feed-status announcements, Featured story CTA feedback, and Like action focus retention after feed rerender.
+- `npm run test:visual` — 5 / 5 targets passed with `mismatchRatio: 0`.
 - `python3 -m unittest tests.test_community_example_contract.CommunityExampleContractTests.test_responsive_and_motion_contracts_are_present` — safe-area contract passed after the intentional RED → GREEN cycle.
-- Browser console sweep — 0 console errors and 0 page errors across Home desktop/mobile, Discover desktop/mobile, and board desktop.
+- Browser console sweep — 0 console errors and 0 page errors across Home, Discover, City Makers Circle, and board desktop/mobile states.
 
 final result: passed

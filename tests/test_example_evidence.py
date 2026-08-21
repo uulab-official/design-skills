@@ -15,8 +15,8 @@ class ExampleEvidenceTests(unittest.TestCase):
     def test_capture_matrix_and_runtime_checks_are_complete(self):
         result = validate_evidence(ROOT)
         self.assertTrue(result["ok"], result["errors"])
-        self.assertEqual(result["metrics"]["captures"], 8)
-        self.assertEqual(result["metrics"]["runtime_checks"], 23)
+        self.assertEqual(result["metrics"]["captures"], 10)
+        self.assertEqual(result["metrics"]["runtime_checks"], 24)
 
     def test_capture_widths_match_declared_viewports(self):
         result = validate_evidence(ROOT)
@@ -25,7 +25,7 @@ class ExampleEvidenceTests(unittest.TestCase):
 
     def test_visual_baselines_cover_representative_surfaces(self):
         baseline_dir = ROOT / "examples" / "community" / "evidence" / "visual-baseline"
-        for baseline in ("prototype-wide.png", "prototype-mobile.png", "prototype-discover-wide.png", "board-wide.png"):
+        for baseline in ("prototype-wide.png", "prototype-mobile.png", "prototype-discover-wide.png", "prototype-circle-wide.png", "board-wide.png"):
             path = baseline_dir / baseline
             self.assertTrue(path.is_file(), baseline)
             self.assertGreater(path.stat().st_size, 1024, baseline)

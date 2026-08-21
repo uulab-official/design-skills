@@ -41,7 +41,7 @@ npm run test:browser
 npm run test:visual
 ```
 
-`npm run test:browser` proves URL restoration, prototype and board history-state rehydration, local font loading, dedicated feed-status announcements, search URL synchronization, Discover route entry with instant scroll reset and browser-back recovery, composer focus return, Like/Save action focus retention, Featured story CTA feedback, named navigation landmarks and current destination state, mobile drawer focus return, 44px mobile touch targets, board dialog focus return, and skip-link navigation in Chromium.
+`npm run test:browser` proves URL restoration, prototype and board history-state rehydration, local font loading, dedicated feed-status announcements, search URL synchronization, Discover and Circle route entry with instant scroll reset and browser-back recovery, Circle tab and conversation feedback, composer focus return, Like/Save action focus retention, Featured story CTA feedback, named navigation landmarks and current destination state, mobile drawer focus return, 44px mobile touch targets, board dialog focus return, and skip-link navigation in Chromium.
 
 ## Quality checks
 
@@ -51,7 +51,7 @@ Run the same checks used by the repository workflow:
 npm run ci:quality
 ```
 
-This runs the Python contract suite, evidence manifest validator, and dependency-light skill validator. Pull requests also run the browser interaction assertions, compare four representative PNG baselines with a 3% anti-alias-tolerant mismatch threshold, render the evidence matrix in GitHub Actions, and upload the generated images as an artifact for visual review. Demo imagery is checked into `examples/community/assets/editorial/` and prototype fonts are local, so the visual gate does not depend on remote assets. Update baselines only after intentional visual review with `npm run update:visual`.
+This runs the Python contract suite, evidence manifest validator, and dependency-light skill validator. Pull requests also run the browser interaction assertions, compare five representative PNG baselines with a 3% anti-alias-tolerant mismatch threshold, render the evidence matrix in GitHub Actions, and upload the generated images as an artifact for visual review. Demo imagery is checked into `examples/community/assets/editorial/` and prototype fonts are local, so the visual gate does not depend on remote assets. Update baselines only after intentional visual review with `npm run update:visual`.
 
 The community reference surface also ships its DM Sans and Fraunces WOFF2 files in `examples/community/assets/fonts/`, with the applicable OFL text beside them. The pages load `assets/fonts.css` locally so typography remains reviewable offline and capture output is not dependent on Google Fonts availability.
 
@@ -65,4 +65,4 @@ The community reference surface is intentionally `review-ready`, not `release-re
 
 Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening a change. The short version is: preserve the existing product decisions, add evidence for new states or viewports, run `npm run ci:quality`, and describe any remaining finding with severity, evidence, and next action.
 
-The current roadmap is [`docs/superpowers/plans/2026-08-21-design-skills-v0.15-discover-route.md`](docs/superpowers/plans/2026-08-21-design-skills-v0.15-discover-route.md).
+The current roadmap is [`docs/superpowers/plans/2026-08-21-design-skills-v0.16-circle-route.md`](docs/superpowers/plans/2026-08-21-design-skills-v0.16-circle-route.md).

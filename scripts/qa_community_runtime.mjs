@@ -142,6 +142,44 @@ async function runRuntimeChecks() {
     }));
     assert(!homeRoute.url.includes("view=discover") && homeRoute.homeHidden === false && homeRoute.discoverHidden === true && homeRoute.current.length === 2 && homeRoute.current.every((label) => label === "Home") && homeRoute.scrollY === 0, "Browser back did not restore the Home route and top position");
     results.push({ id: "discover-route-and-scroll-reset", verified: true, viewport: "1440x1000" });
+
+    await desktop.goto(DEFAULT_BASE_URL + "/index.html?view=discover", { waitUntil: "networkidle" });
+    await desktop.locator(".discover-card-action").first().click();
+    const circleRoute = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      discoverHidden: document.querySelector("#discoverView")?.hidden,
+      circleHidden: document.querySelector("#circleView")?.hidden,
+      current: Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav),
+      title: document.querySelector("#circleTitle")?.textContent,
+      tab: document.querySelector('[data-circle-tab][aria-selected="true"]')?.dataset.circleTab,
+    }));
+    assert(circleRoute.url.includes("view=circle") && circleRoute.url.includes("circle=City+Makers") && circleRoute.homeHidden === true && circleRoute.discoverHidden === true && circleRoute.circleHidden === false && circleRoute.current.length === 2 && circleRoute.current.every((label) => label === "Your circles") && circleRoute.title === "City Makers" && circleRoute.tab === "conversations", "Circle detail route did not render from the Discover card");
+    await desktop.locator('[data-circle-tab="about"]').click();
+    const circleAbout = await desktop.evaluate(() => ({
+      selected: document.querySelector('[data-circle-tab="about"]').getAttribute("aria-selected"),
+      panel: document.querySelector("#circlePanel > :first-child")?.className,
+      status: document.querySelector("#circleStatus")?.textContent,
+    }));
+    assert(circleAbout.selected === "true" && circleAbout.panel === "circle-about-panel" && circleAbout.status.includes("About City Makers"), "Circle About tab did not render its selected panel");
+    await desktop.locator('[data-circle-tab="conversations"]').click();
+    await desktop.locator("[data-circle-conversation]").first().click();
+    const circleConversationFeedback = await desktop.evaluate(() => ({
+      message: document.querySelector("#toast").textContent,
+      visible: document.querySelector("#toast").classList.contains("is-visible"),
+    }));
+    assert(circleConversationFeedback.visible && circleConversationFeedback.message === "Conversation route coming next", "Circle conversation CTA did not provide route feedback");
+    await desktop.goBack();
+    await wait(80);
+    const discoverBack = await desktop.evaluate(() => ({
+      url: window.location.search,
+      discoverHidden: document.querySelector("#discoverView")?.hidden,
+      circleHidden: document.querySelector("#circleView")?.hidden,
+      current: Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav),
+      scrollY: window.scrollY,
+    }));
+    assert(discoverBack.url.includes("view=discover") && discoverBack.discoverHidden === false && discoverBack.circleHidden === true && discoverBack.current.length === 2 && discoverBack.current.every((label) => label === "Discover") && discoverBack.scrollY === 0, "Browser back did not restore Discover after leaving a Circle");
+    results.push({ id: "circle-route-and-back", verified: true, viewport: "1440x1000" });
     await desktop.close();
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
