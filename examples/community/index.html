@@ -233,6 +233,48 @@
           <div class="discover-invite"><div><p class="section-kicker">Couldn’t find the right room?</p><h2>Start with the question you’re carrying.</h2></div><button class="button button-primary" id="discoverStartConversation" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-plus" /></svg> Start a conversation</button></div>
         </section>
 
+        <section class="circles-view" id="circlesView" aria-labelledby="circlesTitle" hidden>
+          <div class="circles-hero">
+            <div class="circles-hero-copy">
+              <p class="eyebrow"><span class="eyebrow-line"></span>Your space</p>
+              <h1 id="circlesTitle">Places worth <em>returning to.</em></h1>
+              <p class="circles-description">The circles you chose, gathered in one calm view. Pick up a thread, notice what changed, or make room for the next good question.</p>
+              <div class="circles-hero-meta"><span><strong id="circlesCount">4</strong> circles</span><span class="meta-separator">·</span><span>Keeping a little room</span></div>
+            </div>
+            <div class="circles-hero-art" aria-hidden="true"><div class="circles-orbit circles-orbit-one"></div><div class="circles-orbit circles-orbit-two"></div><div class="circles-orbit-center"><svg class="icon" aria-hidden="true"><use href="#icon-users" /></svg><span>your<br />orbit</span></div><i class="circles-orbit-dot circles-orbit-dot-one">CM</i><i class="circles-orbit-dot circles-orbit-dot-two">QM</i><i class="circles-orbit-dot circles-orbit-dot-three">✦</i></div>
+          </div>
+
+          <div class="circles-toolbar"><div><p class="section-kicker">Your circles</p><h2>Keep the thread warm.</h2></div><div class="circles-toolbar-actions"><div class="circles-filters" role="group" aria-label="Filter your circles"><button class="circles-filter is-active" type="button" data-circles-filter="all" aria-pressed="true">All circles</button><button class="circles-filter" type="button" data-circles-filter="recent" aria-pressed="false">Active this week</button><button class="circles-filter" type="button" data-circles-filter="quiet" aria-pressed="false">Quiet corners</button></div><span class="circles-result-note" id="circlesStatus" role="status" aria-live="polite" aria-atomic="true">4 circles in your orbit.</span></div></div>
+
+          <div class="circles-layout">
+            <div class="circles-main">
+              <div class="circles-grid" id="circlesGrid">
+                <article class="your-circle-card your-circle-card-coral" data-your-circle-card data-circle-filter="recent">
+                  <div class="your-circle-card-top"><span class="circle-symbol">CM</span><span class="your-circle-tag">3 new replies</span></div>
+                  <p class="your-circle-kicker">City / making</p><h2>City Makers</h2><p class="your-circle-description">For people turning small observations into useful things for the places they live.</p>
+                  <div class="your-circle-card-footer"><span><strong>18</strong> people · <strong>2</strong> conversations</span><button class="your-circle-action" type="button" data-your-circle-route="City Makers">Open circle <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+                </article>
+                <article class="your-circle-card your-circle-card-lilac" data-your-circle-card data-circle-filter="recent">
+                  <div class="your-circle-card-top"><span class="circle-symbol">QM</span><span class="your-circle-tag">New prompt</span></div>
+                  <p class="your-circle-kicker">Ritual / focus</p><h2>Quiet Mornings</h2><p class="your-circle-description">A soft place for protecting the first hour, and sharing what helps you begin.</p>
+                  <div class="your-circle-card-footer"><span><strong>6</strong> people · <strong>1</strong> conversation</span><button class="your-circle-action" type="button" data-your-circle-route="Quiet Mornings">Open circle <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+                </article>
+                <article class="your-circle-card your-circle-card-blue" data-your-circle-card data-circle-filter="quiet">
+                  <div class="your-circle-card-top"><span class="circle-symbol">OT</span><span class="your-circle-tag">A good question</span></div>
+                  <p class="your-circle-kicker">Questions / practice</p><h2>Open Table</h2><p class="your-circle-description">Bring the half-formed idea. Leave with a better question and a little more courage.</p>
+                  <div class="your-circle-card-footer"><span><strong>12</strong> people · <strong>1</strong> conversation</span><button class="your-circle-action" type="button" data-your-circle-route="Open Table">Open circle <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+                </article>
+                <article class="your-circle-card your-circle-card-moss" data-your-circle-card data-circle-filter="quiet">
+                  <div class="your-circle-card-top"><span class="circle-symbol">SF</span><span class="your-circle-tag">Last visited 1 hr ago</span></div>
+                  <p class="your-circle-kicker">Film / afterglow</p><h2>Sunday Film Club</h2><p class="your-circle-description">Three films, one generous question, and the thoughts that stay after the credits.</p>
+                  <div class="your-circle-card-footer"><span><strong>2</strong> people · <strong>1</strong> conversation</span><button class="your-circle-action" type="button" data-your-circle-route="Sunday Film Club">Open circle <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+                </article>
+              </div>
+            </div>
+            <aside class="circles-side"><div class="circles-side-card"><p class="section-kicker">Make the orbit wider</p><h2>There’s room for one more good question.</h2><p>Explore a new circle when your current rooms have given you something to carry forward.</p><button class="button button-primary" id="circlesDiscover" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-compass" /></svg> Discover circles</button></div><div class="circles-side-card circles-side-note"><span class="prompt-icon"><svg class="icon" aria-hidden="true"><use href="#icon-spark" /></svg></span><p>Good spaces are not full. They are alive.</p><span>— Gather practice</span></div></aside>
+          </div>
+        </section>
+
         <section class="circle-view" id="circleView" aria-labelledby="circleTitle" hidden>
           <button class="text-button circle-back" id="circleBack" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg> Back to Discover</button>
           <div class="circle-hero" id="circleHero" data-accent="coral">

@@ -18,6 +18,7 @@ const validFilters = new Set(["all", "directions", "archetypes", "platforms", "s
 const artboardDescriptions = {
   "Home / For you": "Entry point · editorial priority",
   "Discover / Circles": "Explore · recommendation system",
+  "Your circles / Collection": "Collection · activity · belonging",
   "Circle / City Makers": "Context · membership · belonging",
   "Thread / Conversation": "Reading · response · recovery",
   "Profile / Mina Park": "Identity · contribution · trust",

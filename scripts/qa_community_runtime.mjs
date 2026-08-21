@@ -178,6 +178,34 @@ async function runRuntimeChecks() {
     results.push({ id: "home-discover-route", verified: true, viewport: "1440x1000" });
 
     await desktop.goto(`${DEFAULT_BASE_URL}/index.html`, { waitUntil: "networkidle" });
+    await desktop.locator('.nav-item[data-nav="Your circles"]').first().click();
+    const circlesRoute = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      circlesHidden: document.querySelector("#circlesView")?.hidden,
+      current: Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav),
+      cards: Array.from(document.querySelectorAll("[data-your-circle-card]")).filter((card) => !card.hidden).length,
+      title: document.querySelector("#circlesTitle")?.textContent,
+    }));
+    assert(circlesRoute.url.includes("view=circles") && circlesRoute.homeHidden === true && circlesRoute.circlesHidden === false && circlesRoute.current.length === 2 && circlesRoute.current.every((label) => label === "Your circles") && circlesRoute.cards === 4 && circlesRoute.title === "Places worth returning to.", "Your circles did not open the collection route");
+    await desktop.locator('[data-circles-filter="recent"]').click();
+    const circlesFiltered = await desktop.evaluate(() => ({
+      url: window.location.search,
+      cards: Array.from(document.querySelectorAll("[data-your-circle-card]")).filter((card) => !card.hidden).length,
+      status: document.querySelector("#circlesStatus")?.textContent,
+    }));
+    assert(circlesFiltered.url.includes("circleFilter=recent") && circlesFiltered.cards === 2 && circlesFiltered.status.includes("active this week"), "Your circles filter did not preserve the collection state");
+    await desktop.locator('[data-your-circle-route="City Makers"]').click();
+    const circlesCardRoute = await desktop.evaluate(() => ({
+      url: window.location.search,
+      circlesHidden: document.querySelector("#circlesView")?.hidden,
+      circleHidden: document.querySelector("#circleView")?.hidden,
+      title: document.querySelector("#circleTitle")?.textContent,
+    }));
+    assert(circlesCardRoute.url.includes("view=circle") && circlesCardRoute.url.includes("circle=City+Makers") && circlesCardRoute.circlesHidden === true && circlesCardRoute.circleHidden === false && circlesCardRoute.title === "City Makers", "Your circles card did not open its Circle route");
+    results.push({ id: "circles-route", verified: true, viewport: "1440x1000" });
+
+    await desktop.goto(`${DEFAULT_BASE_URL}/index.html`, { waitUntil: "networkidle" });
     const initialNavState = await desktop.evaluate(() => ({
       labels: Array.from(document.querySelectorAll("nav")).map((nav) => nav.getAttribute("aria-label")),
       current: Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav),
@@ -493,7 +521,7 @@ async function runRuntimeChecks() {
       filterPressed: document.querySelector('[data-board-filter="screens"]').getAttribute("aria-pressed"),
       visibleScreens: document.querySelectorAll('article[data-board-type="screens"]:not([hidden])').length,
     }));
-    assert(boardHistoryState.view === "desktop" && boardHistoryState.filterPressed === "true" && boardHistoryState.visibleScreens === 12, "Board did not rehydrate after a history state change");
+    assert(boardHistoryState.view === "desktop" && boardHistoryState.filterPressed === "true" && boardHistoryState.visibleScreens === 13, "Board did not rehydrate after a history state change");
     results.push({ id: "board-history-state", verified: true, viewport: "1440x1000" });
 
     await board.goto(`${DEFAULT_BASE_URL}/board.html?source=qa&view=mobile&filter=all`, { waitUntil: "networkidle" });
@@ -552,6 +580,20 @@ async function runRuntimeChecks() {
       open: document.querySelector("#boardDialog").open,
     }));
     assert(workspaceBoardDialogClosed.activeLabel === "Workspace / Picker" && !workspaceBoardDialogClosed.open, "Workspace artboard dialog focus did not return after Escape");
+    await board.locator('[data-open-artboard="Your circles / Collection"]').click();
+    const circlesBoardDialogOpen = await board.evaluate(() => ({
+      active: document.activeElement?.id,
+      title: document.querySelector("#dialogTitle")?.textContent,
+      description: document.querySelector("#dialogDescription")?.textContent,
+      open: document.querySelector("#boardDialog")?.open,
+    }));
+    assert(circlesBoardDialogOpen.active === "closeBoardDialog" && circlesBoardDialogOpen.title === "Your circles / Collection" && circlesBoardDialogOpen.description === "Collection · activity · belonging" && circlesBoardDialogOpen.open, "Your circles artboard handoff did not open with its declared metadata");
+    await board.keyboard.press("Escape");
+    const circlesBoardDialogClosed = await board.evaluate(() => ({
+      activeLabel: document.activeElement?.dataset.openArtboard,
+      open: document.querySelector("#boardDialog")?.open,
+    }));
+    assert(circlesBoardDialogClosed.activeLabel === "Your circles / Collection" && !circlesBoardDialogClosed.open, "Your circles artboard dialog focus did not return after Escape");
     await board.locator('[data-open-artboard="Feed / Recovery"]').click();
     const recoveryBoardDialogOpen = await board.evaluate(() => ({
       active: document.activeElement.id,

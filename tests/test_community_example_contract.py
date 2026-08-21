@@ -73,10 +73,19 @@ class CommunityExampleContractTests(unittest.TestCase):
         self.assertIn('.feed-recovery-banner[hidden]', self.css)
         self.assertIn('.feed-error-state', self.css)
 
+    def test_your_circles_route_exposes_a_collection_handoff(self):
+        self.assertIn('id="circlesView"', self.html)
+        self.assertIn('id="circlesTitle"', self.html)
+        self.assertIn('data-your-circle-route', self.html)
+        self.assertIn('circles', self.js)
+        self.assertIn('renderCircles', self.js)
+        self.assertIn('navigateToCircles', self.js)
+        self.assertIn('.circles-view', self.css)
+
     def test_design_board_exposes_shareable_state_and_dialog_focus(self):
         board_html = (EXAMPLE / "board.html").read_text(encoding="utf-8")
         board_js = (EXAMPLE / "board.js").read_text(encoding="utf-8")
-        self.assertIn('class="version-chip">v0.27 · review</span>', board_html)
+        self.assertIn('class="version-chip">v0.28 · review</span>', board_html)
         self.assertIn('aria-label="Preview size"', board_html)
         self.assertIn('data-view-toggle="desktop" aria-pressed="true"', board_html)
         self.assertIn('data-board-filter="all" aria-pressed="true"', board_html)
@@ -87,13 +96,14 @@ class CommunityExampleContractTests(unittest.TestCase):
         self.assertIn('boardDialog.addEventListener("cancel"', board_js)
         self.assertIn('aria-describedby="dialogDescription"', board_html)
         self.assertIn('window.addEventListener("popstate", readUrlState)', board_js)
-        self.assertEqual(len(re.findall(r'data-artboard-title="[^"]+"', board_html)), 12)
+        self.assertEqual(len(re.findall(r'data-artboard-title="[^"]+"', board_html)), 13)
         self.assertIn('data-artboard-title="Home / Following"', board_html)
         self.assertIn('data-artboard-title="Composer / Modal"', board_html)
         self.assertIn('data-artboard-title="Settings / Preferences"', board_html)
         self.assertIn('data-artboard-title="Notifications / Stay close"', board_html)
         self.assertIn('data-artboard-title="Workspace / Picker"', board_html)
         self.assertIn('data-artboard-title="Feed / Recovery"', board_html)
+        self.assertIn('data-artboard-title="Your circles / Collection"', board_html)
 
     def test_prototype_rehydrates_url_state_after_history_changes(self):
         self.assertIn('window.addEventListener("popstate"', self.js)
