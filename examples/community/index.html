@@ -191,18 +191,19 @@
     </nav>
 
     <dialog class="composer-dialog" id="composerDialog" aria-labelledby="composerTitle">
-      <form id="composerForm" method="dialog">
+      <form id="composerForm" method="dialog" novalidate>
         <div class="dialog-header"><div><p class="section-kicker">Make a little room</p><h2 id="composerTitle">Start a conversation</h2></div><button class="icon-button small" id="closeComposer" type="button" aria-label="Close composer"><svg class="icon" aria-hidden="true"><use href="#icon-close" /></svg></button></div>
         <label class="form-label" for="composerCircle">Share with</label>
         <select class="form-control" id="composerCircle"><option>City Makers</option><option>Quiet Mornings</option><option>Sunday Film Club</option><option>Open Table</option></select>
         <label class="form-label" for="composerTitleInput">A clear title</label>
-        <input class="form-control" id="composerTitleInput" required maxlength="80" placeholder="What are you thinking about?" />
+        <input class="form-control" id="composerTitleInput" required maxlength="80" aria-describedby="composerTitleError" placeholder="What are you thinking about?" />
+        <p class="form-error" id="composerTitleError" role="alert" hidden>Give your conversation a clear title first.</p>
         <label class="form-label" for="composerBody">Add a little context <span>optional</span></label>
         <textarea class="form-control form-textarea" id="composerBody" maxlength="280" placeholder="The best conversations start with a little specificity…"></textarea>
         <div class="dialog-footer"><span class="draft-note"><span class="draft-dot"></span> Saved as a draft automatically</span><button class="button button-primary" type="submit">Publish conversation <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
       </form>
     </dialog>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="./app.js" defer></script>
+    <script src="./app.js?v=0.2" defer></script>
   </body>
 </html>

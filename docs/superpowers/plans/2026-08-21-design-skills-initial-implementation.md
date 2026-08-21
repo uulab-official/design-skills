@@ -156,7 +156,7 @@
 
 - [x] **Step 2: Run static checks**
 
-  Check `wc -l SKILL.md`, ensure all linked reference paths exist, ensure no `TODO` or `TBD` placeholders remain, and validate `references/archetypes.yaml` with an available YAML parser.
+  Check `wc -l SKILL.md`, ensure all linked reference paths exist, ensure no placeholder tokens remain, and validate `references/archetypes.yaml` with an available YAML parser.
 
 - [x] **Step 3: Run the skill pressure scenarios**
 

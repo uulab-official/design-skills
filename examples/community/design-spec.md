@@ -109,6 +109,7 @@ board.html
 - [x] Core states are visible without relying on hover: default, filtered, empty, composer, validation, success, and saved/liked.
 - [x] Content hierarchy is readable at a glance: welcome → featured story → feed → community context.
 - [x] Focus rings, labels, live regions, button names, and reduced-motion behavior are included.
+- [x] Composer validation exposes a required-field error with `aria-invalid`, `aria-describedby`, and an alert message; filter and navigation selections expose `aria-pressed` state.
 - [x] External imagery is treated as replaceable demo content; the layout does not depend on it for meaning.
 - [x] A design-board surface exposes multiple compositions, reusable foundations, and screen handoff metadata.
 - [x] Visual review at the target viewport set is recorded below; this example is review-ready, not release-ready.
@@ -125,7 +126,7 @@ board.html
 | Mobile 390 × 844 | [`board-390.jpg`](evidence/board-390.jpg), [`prototype-390.jpg`](evidence/prototype-390.jpg) | One-column cards, horizontal filters, bottom navigation, composer, empty/loading/recovery/success states |
 | Native intent: iOS 390 pt / Android 360 dp | Platform translation artboards | Large-title/tab-bar and app-bar/FAB behavior are specified; native runtime remains a target, not a shipped surface |
 
-The live surface was checked after the direction, platform, and archetype boards were added. Evidence captures are committed under `examples/community/evidence/`; they are full-page JPEG screenshots produced from the local server at the viewport sizes named above. Reproduce the surface with the command in [Run locally](#run-locally), then open `/board.html` and `/index.html` at the declared sizes. The static example has no backend or network dependency; loading, empty, recovery, validation, and success are represented as deterministic prototype states.
+The live surface was checked after the direction, platform, and archetype boards were added. Runtime QA also exercised composer validation → recovery → publish success, feed filter state, and mobile drawer open → Escape recovery. Evidence captures are committed under `examples/community/evidence/`; they are full-page JPEG screenshots produced from the local server at the viewport sizes named above. Reproduce the surface with the command in [Run locally](#run-locally), then open `/board.html` and `/index.html` at the declared sizes. The static example has no backend or network dependency; loading, empty, recovery, validation, and success are represented as deterministic prototype states.
 
 ### Review scores
 

@@ -62,6 +62,8 @@ const feedList = document.querySelector("#feedList");
 const searchInput = document.querySelector("#searchInput");
 const composerDialog = document.querySelector("#composerDialog");
 const composerForm = document.querySelector("#composerForm");
+const composerTitleInput = document.querySelector("#composerTitleInput");
+const composerTitleError = document.querySelector("#composerTitleError");
 const toast = document.querySelector("#toast");
 
 function icon(name) {
@@ -107,6 +109,16 @@ function cardMarkup(post) {
   </article>`;
 }
 
+function setComposerError(hasError) {
+  if (hasError) {
+    composerTitleInput.setAttribute("aria-invalid", "true");
+    composerTitleError.removeAttribute("hidden");
+  } else {
+    composerTitleInput.removeAttribute("aria-invalid");
+    composerTitleError.setAttribute("hidden", "");
+  }
+}
+
 function renderFeed() {
   const query = state.query.trim().toLowerCase();
   const visiblePosts = posts.filter((post) => {
@@ -122,6 +134,10 @@ function renderFeed() {
 
   document.querySelectorAll("[data-filter]").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.filter === state.filter && !state.circle);
+    button.setAttribute("aria-pressed", String(button.dataset.filter === state.filter && !state.circle));
+  });
+  document.querySelectorAll("[data-filter-circle]").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.filterCircle === state.circle));
   });
 }
 
@@ -208,14 +224,22 @@ document.querySelector("#mobileCompose").addEventListener("click", openComposer)
 document.querySelector("#promptButton").addEventListener("click", openComposer);
 document.querySelector("#closeComposer").addEventListener("click", closeComposer);
 
+composerTitleInput.addEventListener("input", () => {
+  if (composerTitleInput.value.trim()) setComposerError(false);
+});
+
+composerForm.addEventListener("invalid", (event) => {
+  if (event.target === composerTitleInput) setComposerError(true);
+}, true);
+
 composerForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const titleInput = document.querySelector("#composerTitleInput");
   const bodyInput = document.querySelector("#composerBody");
   const circle = document.querySelector("#composerCircle").value;
-  const title = titleInput.value.trim();
+  const title = composerTitleInput.value.trim();
   if (!title) {
-    titleInput.focus();
+    setComposerError(true);
+    composerTitleInput.focus();
     showToast("Give your conversation a clear title first");
     return;
   }
@@ -238,6 +262,7 @@ composerForm.addEventListener("submit", (event) => {
   state.filter = "all";
   state.circle = "";
   composerForm.reset();
+  setComposerError(false);
   closeComposer();
   renderFeed();
   showToast("Conversation published to your circles");
@@ -250,7 +275,11 @@ document.querySelector("#scrollToCircles").addEventListener("click", () => docum
 document.querySelectorAll("[data-nav]").forEach((button) => {
   button.addEventListener("click", () => {
     const label = button.dataset.nav;
-    document.querySelectorAll("[data-nav]").forEach((item) => item.classList.toggle("is-active", item.dataset.nav === label));
+    document.querySelectorAll("[data-nav]").forEach((item) => {
+      const isActive = item.dataset.nav === label;
+      item.classList.toggle("is-active", isActive);
+      item.setAttribute("aria-pressed", String(isActive));
+    });
     toggleSidebar(false);
     if (label !== "Home") showToast(`${label} is mapped for the next route`);
   });
