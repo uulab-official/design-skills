@@ -106,6 +106,18 @@ async function runRuntimeChecks() {
     }));
     assert(featuredFeedback.visible && featuredFeedback.message === "Featured story route coming next", "Featured story CTA did not provide route feedback");
     results.push({ id: "featured-story-feedback", verified: true, viewport: "1440x1000" });
+
+    await desktop.goto(`${DEFAULT_BASE_URL}/index.html`, { waitUntil: "networkidle" });
+    const initialNavState = await desktop.evaluate(() => ({
+      labels: Array.from(document.querySelectorAll("nav")).map((nav) => nav.getAttribute("aria-label")),
+      current: Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav),
+      pressed: Array.from(document.querySelectorAll('[data-nav][aria-pressed="true"]')).map((item) => item.dataset.nav),
+    }));
+    assert(initialNavState.labels.includes("Your space") && initialNavState.labels.includes("Stay close") && initialNavState.current.length === 2 && initialNavState.current.every((label) => label === "Home") && initialNavState.pressed.length === 2, "Navigation landmarks or initial current state are not exposed");
+    await desktop.locator('.nav-item[data-nav="Discover"]').first().click();
+    const updatedNavState = await desktop.evaluate(() => Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav));
+    assert(updatedNavState.length === 2 && updatedNavState.every((label) => label === "Discover"), "Navigation current state did not move to the selected destination");
+    results.push({ id: "navigation-current-state", verified: true, viewport: "1440x1000" });
     await desktop.close();
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });

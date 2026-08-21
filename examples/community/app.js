@@ -334,14 +334,20 @@ sidebarTrigger.addEventListener("click", () => toggleSidebar(true));
 sidebarScrim.addEventListener("click", () => toggleSidebar(false));
 document.querySelector("#scrollToCircles").addEventListener("click", () => document.querySelector("#circlesSection")?.scrollIntoView({ behavior: "smooth", block: "center" }));
 
+function setActiveNavigation(label) {
+  document.querySelectorAll("[data-nav]").forEach((item) => {
+    const isActive = item.dataset.nav === label;
+    item.classList.toggle("is-active", isActive);
+    item.setAttribute("aria-pressed", String(isActive));
+    if (isActive) item.setAttribute("aria-current", "page");
+    else item.removeAttribute("aria-current");
+  });
+}
+
 document.querySelectorAll("[data-nav]").forEach((button) => {
   button.addEventListener("click", () => {
     const label = button.dataset.nav;
-    document.querySelectorAll("[data-nav]").forEach((item) => {
-      const isActive = item.dataset.nav === label;
-      item.classList.toggle("is-active", isActive);
-      item.setAttribute("aria-pressed", String(isActive));
-    });
+    setActiveNavigation(label);
     toggleSidebar(false);
     if (label !== "Home") showToast(`${label} is mapped for the next route`);
   });
@@ -365,5 +371,6 @@ window.addEventListener("popstate", () => {
   renderFeed();
 });
 
+setActiveNavigation("Home");
 readUrlState();
 renderFeed();

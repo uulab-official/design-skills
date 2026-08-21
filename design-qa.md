@@ -44,6 +44,8 @@ The v0.12 feed-announcement pass is behavior-only: the visible feed composition 
 
 The v0.13 route-feedback pass is also behavior-only: the featured story's visible arrow CTA now confirms the next-route boundary through the existing toast pattern, without changing layout, typography, imagery, or responsive composition.
 
+The v0.14 navigation-state pass is behavior-only: the sidebar and mobile navigation now expose named landmarks and a synchronized `aria-current="page"` destination while preserving the same visual active treatment.
+
 ## Rubric pass
 
 - Typography: local fonts, weight hierarchy, serif display treatment, wrapping, and line-height remain coherent across source and implementation.
@@ -53,7 +55,7 @@ The v0.13 route-feedback pass is also behavior-only: the featured story's visibl
 - Image quality and assets: the featured story uses the same local editorial asset and preserves its crop; no placeholder image replaces a designed asset.
 - Copy and content: source and implementation use the same product copy and state labels for the reviewed home surface.
 - Icons: board symbols and implementation SVG sprite icons are present, aligned, and stylistically consistent.
-- States and interactions: URL state, history restoration, dedicated feed-status announcement, Featured story route feedback, composer focus return, drawer focus return, skip-link navigation, board state, and board dialog focus return passed runtime checks.
+- States and interactions: URL state, history restoration, dedicated feed-status announcement, Featured story route feedback, synchronized navigation current state, composer focus return, drawer focus return, skip-link navigation, board state, and board dialog focus return passed runtime checks.
 - Feed action focus: Like/Save rerendering preserves the focused action and its updated pressed state in browser QA.
 - Accessibility: semantic controls, visible focus treatment, dedicated live status messaging, reduced-motion support, image alt text, and minimum 44 × 44 px mobile control geometry are covered by the example contract and runtime QA.
 - AI shortcut artifacts: no generic placeholder card, fake product image, or mismatched decorative surface was found in the reviewed home surface; the orbit treatment is a deliberate shared motif.
@@ -62,8 +64,8 @@ The v0.13 route-feedback pass is also behavior-only: the featured story's visibl
 
 - `npm run capture:community` — refreshed 6 evidence captures.
 - QA comparison capture — refreshed source and implementation panels at 1280 × 720 CSS px / 1× density.
-- `npm run validate:evidence` — 6 captures and 21 documented runtime assertions passed.
-- `npm run test:browser` — 14 / 14 runtime checks passed, including dedicated feed-status announcements, Featured story CTA feedback, and Like action focus retention after feed rerender.
+- `npm run validate:evidence` — 6 captures and 22 documented runtime assertions passed.
+- `npm run test:browser` — 15 / 15 runtime checks passed, including navigation current state, dedicated feed-status announcements, Featured story CTA feedback, and Like action focus retention after feed rerender.
 - `npm run test:visual` — 3 / 3 targets passed with `mismatchRatio: 0`.
 - `python3 -m unittest tests.test_community_example_contract.CommunityExampleContractTests.test_responsive_and_motion_contracts_are_present` — safe-area contract passed after the intentional RED → GREEN cycle.
 - Browser console sweep — 0 console errors and 0 page errors across prototype desktop/mobile and board desktop.

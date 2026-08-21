@@ -91,6 +91,7 @@ This prevents “community” from defaulting to one feed pattern. The selected 
 | Like / save action focus | Dynamic feed rerender preserves focus on the pressed action and exposes its updated `aria-pressed` state |
 | Feed status announcement | Filter and search result counts use a dedicated polite status region; post-card actions do not re-announce the entire feed |
 | Featured story CTA | The primary featured-story affordance provides explicit route-boundary feedback until the conversation route is implemented |
+| Navigation current state | Sidebar and mobile navigation share named landmarks and expose the selected destination with `aria-current="page"` |
 
 ## Prototype map
 
