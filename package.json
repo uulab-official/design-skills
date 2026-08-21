@@ -1,0 +1,15 @@
+{
+  "name": "design-skills-evidence-tools",
+  "private": true,
+  "version": "0.2.0",
+  "description": "Local browser capture tooling for the design-skills community reference surface.",
+  "type": "module",
+  "scripts": {
+    "capture:community": "node scripts/capture_community_evidence.mjs",
+    "validate:evidence": "python3 scripts/validate_example_evidence.py --path . --json",
+    "test": "python3 -m unittest discover -s tests -v"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}

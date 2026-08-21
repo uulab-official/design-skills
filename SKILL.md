@@ -129,6 +129,8 @@ The minimum app slice is the app shell plus an end-to-end primary journey with a
 
 For cross-platform briefs, show a side-by-side platform translation board. Keep the product language and semantic tokens shared, but explicitly change navigation, safe-area behavior, input model, typography rhythm, surface/elevation, feedback, and back/dismissal behavior for Web, iOS, Android, or the declared targets. A phone-shaped web screenshot is not a native app design.
 
+For a concrete implementation contract, read [platform-parity.md](references/platform-parity.md). Use it to document safe-area and inset behavior, keyboard/focus movement, system back and dismissal, transient feedback, accessibility announcements, and the native evidence required for each declared target.
+
 ### 8. Implement in vertical slices
 
 Build the smallest complete user journey first: entry → primary task → feedback/result → recovery or next step. Keep component boundaries aligned to semantic behavior, not screenshot rectangles. Reuse the token system and component states across screens. Validate with realistic content, long labels, no data, slow data, failed actions, text scaling, and at least one neighboring route or breakpoint while implementing. Re-render after structural changes and fix hierarchy drift before decorative polish.

@@ -1,6 +1,6 @@
 # Design Skills v0.2 Runtime Hardening Roadmap
 
-> **Status:** In progress. The first slice is implemented in the community reference surface; the remaining items stay explicit until their evidence exists.
+> **Status:** In progress. Runtime hardening, evidence capture, archetype benchmarks, and cross-platform handoff notes are implemented; native runtime evidence remains intentionally out of scope.
 
 ## Goal
 
@@ -25,7 +25,7 @@ Raise the example from a polished visual handoff to a reviewable product surface
 
 - [x] Keep a repeatable capture matrix for desktop, boundary, and mobile viewports in `examples/community/evidence/manifest.json`.
 - [x] Exercise the default, filtered, empty, composer validation, composer success, mobile drawer, and recovery states in browser QA and record them in the manifest.
-- [ ] Add a contributor-friendly capture command when the repository can depend on a supported browser runner.
+- [x] Add a contributor-friendly capture command when the repository can depend on a supported browser runner.
 
 ### 3. Archetype benchmark surface
 
@@ -35,9 +35,9 @@ Raise the example from a polished visual handoff to a reviewable product surface
 
 ### 4. Cross-platform production parity
 
-- [ ] Turn the existing Web/iOS/Android board into implementation notes for safe areas, back behavior, keyboard/focus, and system feedback.
-- [ ] Add native runtime evidence only when native targets are actually in scope.
-- [ ] Keep the production-readiness score below release-ready until all declared target environments are rendered.
+- [x] Turn the existing Web/iOS/Android board into implementation notes for safe areas, back behavior, keyboard/focus, and system feedback.
+- [x] Keep native runtime evidence conditional; no native evidence is added because native targets are not in scope for this static example.
+- [x] Keep the production-readiness score below release-ready until all declared target environments are rendered.
 
 ## Exit gate
 

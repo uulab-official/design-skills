@@ -56,7 +56,7 @@ The selected visual direction is translated instead of copied across platforms:
 | iOS / SwiftUI | Large-title rhythm with thumb-safe tab bar | Sheet composer, swipe-back, safe area, Dynamic Type intent |
 | Android / Jetpack Compose | Material task surface with compact filters and FAB | App bar elevation, system back, snackbar-style feedback |
 
-The board is a visual handoff, not a claim that these native screens are already shipped. The web surface is the runnable implementation; iOS and Android frames specify the platform-aware translation target.
+The board is a visual handoff, not a claim that these native screens are already shipped. The web surface is the runnable implementation; iOS and Android frames specify the platform-aware translation target. The concrete safe-area, back/dismissal, keyboard/focus, feedback, and accessibility contract is recorded in [`platform-parity.md`](../../references/platform-parity.md).
 
 ## Community archetypes
 
@@ -126,7 +126,7 @@ board.html
 | Mobile 390 × 844 | [`board-390.jpg`](evidence/board-390.jpg), [`prototype-390.jpg`](evidence/prototype-390.jpg) | One-column cards, horizontal filters, bottom navigation, composer, empty/loading/recovery/success states |
 | Native intent: iOS 390 pt / Android 360 dp | Platform translation artboards | Large-title/tab-bar and app-bar/FAB behavior are specified; native runtime remains a target, not a shipped surface |
 
-The live surface was checked after the direction, platform, and archetype boards were added. Runtime QA also exercised composer validation → recovery → publish success, feed filter state, and mobile drawer open → Escape recovery. The [evidence manifest](evidence/manifest.json) binds each capture to its route, viewport, and represented states; run `python3 scripts/validate_example_evidence.py --path . --json` to verify the matrix and JPEG dimensions. Evidence captures are committed under `examples/community/evidence/`; they are full-page JPEG screenshots produced from the local server at the viewport sizes named above. Reproduce the surface with the command in [Run locally](#run-locally), then open `/board.html` and `/index.html` at the declared sizes. The static example has no backend or network dependency; loading, empty, recovery, validation, and success are represented as deterministic prototype states.
+The live surface was checked after the direction, platform, and archetype boards were added. Runtime QA also exercised composer validation → recovery → publish success, feed filter state, and mobile drawer open → Escape recovery. The [evidence manifest](evidence/manifest.json) binds each capture to its route, viewport, and represented states; run `python3 scripts/validate_example_evidence.py --path . --json` to verify the matrix and JPEG dimensions. Evidence captures are committed under `examples/community/evidence/`; they are full-page JPEG screenshots produced from the local server at the viewport sizes named above. Reproduce the surface with the command in [Run locally](#run-locally), then open `/board.html` and `/index.html` at the declared sizes. The static example has no backend or network dependency; loading, empty, recovery, validation, and success are represented as deterministic prototype states. Contributors can regenerate the capture matrix with `npm install`, `npx playwright install chromium`, and `npm run capture:community`; the command reads the manifest instead of maintaining a second list of viewports.
 
 ### Review scores
 
@@ -159,7 +159,7 @@ Scores use the 0–4 rubric in `references/review-rubric.md` and only claim what
 
 - **medium — native runtime:** iOS/SwiftUI and Android/Jetpack Compose are platform-aware design targets, but no compiled native implementation or simulator evidence is included in this example.
 - **medium — data/runtime integration:** authentication, backend persistence, network retry, offline caching, analytics, and deployment checks still require product integration.
-- **low — visual regression automation:** the review evidence is recorded manually; screenshot automation remains outside this first skill release.
+- **low — visual regression review:** capture automation is now available through `npm run capture:community`; pixel-diff thresholds and CI review remain open so environment-specific font and image rendering do not create false failures.
 
 These findings intentionally prevent a `release-ready` claim. The next implementation slice should close the native/runtime evidence only when those targets are in scope.
 
@@ -168,7 +168,9 @@ These findings intentionally prevent a `release-ready` claim. The next implement
 From the repository root:
 
 ```bash
-python3 -m http.server 4173 --directory examples/community
+npm install
+npx playwright install chromium
+npm run capture:community
 ```
 
-Open `http://127.0.0.1:4173`. The demo is static HTML/CSS/JS and has no build step.
+Open `http://127.0.0.1:4173`. The capture command starts a local static server when one is not already running; the demo itself remains static HTML/CSS with no build step. To use an existing server, pass `--base-url http://127.0.0.1:4173`.
