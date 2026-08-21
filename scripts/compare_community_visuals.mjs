@@ -21,6 +21,7 @@ const targets = [
   { id: "prototype-thread-wide", route: "/index.html?evidence=visual&view=thread&circle=City%20Makers&thread=city-daylight", viewport: { width: 1440, height: 1000 } },
   { id: "prototype-profile-wide", route: "/index.html?evidence=visual&view=profile&profile=mina", viewport: { width: 1440, height: 1000 } },
   { id: "prototype-notifications-wide", route: "/index.html?evidence=visual&view=notifications", viewport: { width: 1440, height: 1000 } },
+  { id: "prototype-settings-wide", route: "/index.html?evidence=visual&view=settings", viewport: { width: 1440, height: 1000 } },
   { id: "board-wide", route: "/board.html?evidence=visual", viewport: { width: 1440, height: 1000 } },
 ];
 

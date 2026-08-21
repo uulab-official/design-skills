@@ -316,6 +316,43 @@
           </div>
         </section>
 
+        <section class="settings-view" id="settingsView" aria-labelledby="settingsTitle" hidden>
+          <div class="settings-hero">
+            <div class="settings-hero-copy">
+              <p class="eyebrow"><span class="eyebrow-line"></span>Your space</p>
+              <h1 id="settingsTitle">Make the room <em>yours.</em></h1>
+              <p class="settings-description">A few thoughtful defaults for how Gather reaches you, looks around you, and leaves room for what matters.</p>
+              <div class="settings-hero-meta"><span><strong>3</strong> preferences to shape</span><span class="meta-separator">·</span><span>Private to you</span></div>
+            </div>
+            <div class="settings-hero-art" aria-hidden="true"><div class="settings-signal settings-signal-one"></div><div class="settings-signal settings-signal-two"></div><div class="settings-signal-center"><svg class="icon" aria-hidden="true"><use href="#icon-spark" /></svg><span>your<br />pace</span></div><i class="settings-signal-dot settings-signal-dot-one">✦</i><i class="settings-signal-dot settings-signal-dot-two">MP</i></div>
+          </div>
+
+          <div class="settings-layout">
+            <div class="settings-main">
+              <section class="settings-section settings-account-section" aria-labelledby="settingsAccountTitle">
+                <div class="settings-section-heading"><p class="section-kicker">Account</p><h2 id="settingsAccountTitle">Keep your presence close.</h2><p>These details make it easier for good people to find the right conversation.</p></div>
+                <div class="settings-account-card"><span class="avatar avatar-user">MP</span><div><strong>Mina Park</strong><span>@minapark · Seoul, KR</span></div><button class="text-button" type="button" data-profile-route="mina">View profile <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+              </section>
+
+              <section class="settings-section" aria-labelledby="settingsPreferencesTitle">
+                <div class="settings-section-heading"><p class="section-kicker">Preferences</p><h2 id="settingsPreferencesTitle">Choose how the room finds you.</h2><p>Nothing here is urgent. Change the rhythm whenever it stops feeling like yours.</p></div>
+                <div class="settings-preference-card">
+                  <label class="settings-toggle-row" for="settingDigest"><span><strong>Weekly digest</strong><small>A gentle note about conversations you might want to return to.</small></span><input type="checkbox" id="settingDigest" data-setting-key="digest" checked /><span class="settings-toggle" aria-hidden="true"></span></label>
+                  <label class="settings-toggle-row" for="settingReplies"><span><strong>Replies and mentions</strong><small>Let people pull you back into a conversation you started.</small></span><input type="checkbox" id="settingReplies" data-setting-key="replies" checked /><span class="settings-toggle" aria-hidden="true"></span></label>
+                  <label class="settings-toggle-row" for="settingQuietHours"><span><strong>Quiet hours</strong><small>Pause email nudges between 10 PM and 8 AM.</small></span><input type="checkbox" id="settingQuietHours" data-setting-key="quietHours" /><span class="settings-toggle" aria-hidden="true"></span></label>
+                </div>
+              </section>
+
+              <div class="settings-actions"><span id="settingsStatus" role="status" aria-live="polite" aria-atomic="true">Your preferences are up to date.</span><button class="button button-primary" id="saveSettings" type="button" disabled aria-disabled="true">Save preferences <svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg></button></div>
+            </div>
+
+            <aside class="settings-side">
+              <div class="settings-side-card"><p class="section-kicker">Your defaults</p><h2>A softer signal.</h2><p>Gather will always keep the important things easy to find and the noisy things easy to quiet.</p><div class="settings-default-list"><span><b>Paper</b><small>Appearance</small></span><span><b>Seoul</b><small>Timezone</small></span><span><b>English</b><small>Language</small></span></div></div>
+              <div class="settings-side-card settings-note-card"><span class="prompt-icon"><svg class="icon" aria-hidden="true"><use href="#icon-spark" /></svg></span><p>Good tools should know when to get out of the way.</p><span>— Gather practice</span></div>
+            </aside>
+          </div>
+        </section>
+
         <section class="notifications-view" id="notificationsView" aria-labelledby="notificationsTitle" hidden>
           <div class="notifications-hero">
             <div class="notifications-hero-copy">

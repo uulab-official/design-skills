@@ -344,6 +344,33 @@ async function runRuntimeChecks() {
     await desktop.goBack();
     await wait(80);
     results.push({ id: "notifications-route", verified: true, viewport: "1440x1000" });
+
+    await desktop.locator('.nav-item[data-nav="Settings"]').click();
+    const settingsRoute = await desktop.evaluate(() => ({
+      url: window.location.search,
+      homeHidden: document.querySelector("#homeView")?.hidden,
+      settingsHidden: document.querySelector("#settingsView")?.hidden,
+      current: Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav),
+      title: document.querySelector("#settingsTitle")?.textContent,
+      digestChecked: document.querySelector("#settingDigest")?.checked,
+    }));
+    assert(settingsRoute.url.includes("view=settings") && settingsRoute.homeHidden === true && settingsRoute.settingsHidden === false && settingsRoute.current.length === 1 && settingsRoute.current[0] === "Settings" && settingsRoute.title === "Make the room yours." && settingsRoute.digestChecked === true, "Settings did not open as a shareable preferences route");
+    await desktop.locator("#settingDigest").uncheck();
+    const settingsDirty = await desktop.evaluate(() => ({
+      status: document.querySelector("#settingsStatus")?.textContent,
+      saveDisabled: document.querySelector("#saveSettings")?.disabled,
+    }));
+    assert(settingsDirty.status === "You have unsaved preference changes." && settingsDirty.saveDisabled === false, "Settings did not expose a clear dirty state after a preference change");
+    await desktop.locator("#saveSettings").click();
+    const settingsSaved = await desktop.evaluate(() => ({
+      status: document.querySelector("#settingsStatus")?.textContent,
+      saveDisabled: document.querySelector("#saveSettings")?.disabled,
+      digestChecked: document.querySelector("#settingDigest")?.checked,
+    }));
+    assert(settingsSaved.status === "Your preferences are saved." && settingsSaved.saveDisabled === true && settingsSaved.digestChecked === false, "Settings did not confirm and retain saved preference state");
+    await desktop.goBack();
+    await wait(80);
+    results.push({ id: "settings-route", verified: true, viewport: "1440x1000" });
     await desktop.close();
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
