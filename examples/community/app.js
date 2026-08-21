@@ -1,6 +1,7 @@
 const posts = [
   {
     id: 1,
+    threadId: "quiet-inbox",
     circle: "Quiet Mornings",
     dot: "dot-lilac",
     filter: "following",
@@ -17,6 +18,7 @@ const posts = [
   },
   {
     id: 2,
+    threadId: "city-map",
     circle: "City Makers",
     dot: "dot-coral",
     filter: "latest",
@@ -33,6 +35,7 @@ const posts = [
   },
   {
     id: 3,
+    threadId: "film-door",
     circle: "Sunday Film Club",
     dot: "dot-moss",
     filter: "following",
@@ -57,6 +60,9 @@ const state = {
   discoverFilter: "all",
   circleTab: "conversations",
   circleJoined: false,
+  thread: "",
+  threadReplies: {},
+  threadStatus: "",
   liked: new Set(),
   saved: new Set(),
   toastTimer: null,
@@ -71,6 +77,7 @@ const homeView = document.querySelector("#homeView");
 const discoverView = document.querySelector("#discoverView");
 const discoverStatus = document.querySelector("#discoverStatus");
 const circleView = document.querySelector("#circleView");
+const threadView = document.querySelector("#threadView");
 const composerDialog = document.querySelector("#composerDialog");
 const composerForm = document.querySelector("#composerForm");
 const composerTitleInput = document.querySelector("#composerTitleInput");
@@ -82,7 +89,7 @@ const sidebarTrigger = document.querySelector("#openSidebar");
 
 const validFilters = new Set(["all", "following", "latest"]);
 const validCircles = new Set(["City Makers", "Quiet Mornings", "Sunday Film Club", "Open Table", "Tiny Libraries", "Field Notes"]);
-const validViews = new Set(["home", "discover", "circle"]);
+const validViews = new Set(["home", "discover", "circle", "thread"]);
 const validDiscoverFilters = new Set(["all", "make", "slow", "notice"]);
 const circleProfiles = {
   "City Makers": {
@@ -96,7 +103,7 @@ const circleProfiles = {
     fitCopy: "You like half-formed ideas, local details, and making something useful before it is perfect.",
     topics: ["Local rituals", "Making in public", "Small city"],
     members: ["MP", "HL", "JK", "+15"],
-    conversations: [{ author: "Hana Lee", initials: "HL", time: "38 min ago", title: "A neighborhood map made from borrowed stories.", excerpt: "What happens when a city is drawn by the people who notice its edges?" }, { author: "Mina Park", initials: "MP", time: "Today", title: "What would make your block easier to linger in?", excerpt: "A prompt for the overlooked corners we pass every day." }],
+    conversations: [{ threadId: "city-map", author: "Hana Lee", initials: "HL", time: "38 min ago", title: "A neighborhood map made from borrowed stories.", excerpt: "What happens when a city is drawn by the people who notice its edges?" }, { threadId: "city-linger", author: "Mina Park", initials: "MP", time: "Today", title: "What would make your block easier to linger in?", excerpt: "A prompt for the overlooked corners we pass every day." }],
   },
   "Quiet Mornings": {
     eyebrow: "Ritual / focus",
@@ -109,7 +116,7 @@ const circleProfiles = {
     fitCopy: "You are interested in gentle systems, honest routines, and better ways to begin.",
     topics: ["Morning rituals", "Deep work", "Small resets"],
     members: ["JK", "SO", "+4"],
-    conversations: [{ author: "Jae Kim", initials: "JK", time: "14 min ago", title: "The best workday starts before the inbox.", excerpt: "A small, honest ritual for protecting the first hour of the day." }],
+    conversations: [{ threadId: "quiet-inbox", author: "Jae Kim", initials: "JK", time: "14 min ago", title: "The best workday starts before the inbox.", excerpt: "A small, honest ritual for protecting the first hour of the day." }],
   },
   "Sunday Film Club": {
     eyebrow: "Film / afterglow",
@@ -122,7 +129,7 @@ const circleProfiles = {
     fitCopy: "You like quiet endings, unfinished interpretations, and stories that leave the door open.",
     topics: ["Quiet endings", "One good question", "Sunday ritual"],
     members: ["SP", "HN"],
-    conversations: [{ author: "Sol Park", initials: "SP", time: "1 hr ago", title: "Films that leave the door open.", excerpt: "Three quiet endings we kept thinking about long after the credits." }],
+    conversations: [{ threadId: "film-door", author: "Sol Park", initials: "SP", time: "1 hr ago", title: "Films that leave the door open.", excerpt: "Three quiet endings we kept thinking about long after the credits." }],
   },
   "Open Table": {
     eyebrow: "Questions / practice",
@@ -135,7 +142,7 @@ const circleProfiles = {
     fitCopy: "You would rather make room for a useful question than rush toward a polished answer.",
     topics: ["Work in progress", "Good questions", "Shared practice"],
     members: ["AV", "MP", "HL", "+9"],
-    conversations: [{ author: "Ava Choi", initials: "AV", time: "2 hr ago", title: "What are you making room for?", excerpt: "A table for the ideas that need a little more time before they become plans." }],
+    conversations: [{ threadId: "open-room", author: "Ava Choi", initials: "AV", time: "2 hr ago", title: "What are you making room for?", excerpt: "A table for the ideas that need a little more time before they become plans." }],
   },
   "Tiny Libraries": {
     eyebrow: "Books / neighborhood",
@@ -148,7 +155,7 @@ const circleProfiles = {
     fitCopy: "You notice what people leave behind, pass along, and quietly recommend.",
     topics: ["Books to pass on", "Street corners", "Small exchanges"],
     members: ["JM", "SO", "+7"],
-    conversations: [{ author: "Joon Min", initials: "JM", time: "Yesterday", title: "A shelf for books that changed your route.", excerpt: "Which book made you take the long way home?" }],
+    conversations: [{ threadId: "tiny-shelf", author: "Joon Min", initials: "JM", time: "Yesterday", title: "A shelf for books that changed your route.", excerpt: "Which book made you take the long way home?" }],
   },
   "Field Notes": {
     eyebrow: "Walk / attention",
@@ -161,20 +168,133 @@ const circleProfiles = {
     fitCopy: "You collect details, take the long way home, and believe attention is a practice.",
     topics: ["Slow walks", "Daily details", "Outside time"],
     members: ["HL", "JK", "MP", "+11"],
-    conversations: [{ author: "Hana Lee", initials: "HL", time: "Yesterday", title: "The detail I nearly walked past.", excerpt: "A small field note from a familiar route." }],
+    conversations: [{ threadId: "field-detail", author: "Hana Lee", initials: "HL", time: "Yesterday", title: "The detail I nearly walked past.", excerpt: "A small field note from a familiar route." }],
   },
 };
+
+const threadProfiles = {
+  "city-map": {
+    circle: "City Makers",
+    kicker: "Conversation · 8 min read",
+    readTime: "8 min read",
+    author: "Hana Lee",
+    initials: "HL",
+    avatar: "avatar-hana",
+    time: "38 min ago",
+    title: "A neighborhood map made from borrowed stories.",
+    body: "What happens when a city is drawn by the people who notice its edges?",
+    replies: [
+      { author: "Mina Park", initials: "MP", avatar: "avatar-mina", time: "22 min ago", body: "I keep thinking about the places that invite us to stay a little longer. A bench, a low wall, a shopkeeper who remembers your order." },
+      { author: "Jae Kim", initials: "JK", avatar: "avatar-jae", time: "14 min ago", body: "The map I want is less about landmarks and more about the small permissions a street gives you." },
+      { author: "Sol Park", initials: "SP", avatar: "avatar-sol", time: "8 min ago", body: "Could we add the sounds, too? The corner where someone always tunes a guitar after sunset is part of the route." },
+    ],
+  },
+  "city-linger": {
+    circle: "City Makers",
+    kicker: "Prompt · 3 min read",
+    readTime: "3 min read",
+    author: "Mina Park",
+    initials: "MP",
+    avatar: "avatar-mina",
+    time: "Today",
+    title: "What would make your block easier to linger in?",
+    body: "A prompt for the overlooked corners we pass every day. What would you change, add, or simply notice?",
+    replies: [
+      { author: "Hana Lee", initials: "HL", avatar: "avatar-hana", time: "Yesterday", body: "More places to sit without needing to buy anything. A city feels different when rest is allowed in public." },
+      { author: "Jae Kim", initials: "JK", avatar: "avatar-jae", time: "Yesterday", body: "A little shade and a place for a bottle of water would go a long way." },
+    ],
+  },
+  "quiet-inbox": {
+    circle: "Quiet Mornings",
+    kicker: "Conversation · 4 min read",
+    readTime: "4 min read",
+    author: "Jae Kim",
+    initials: "JK",
+    avatar: "avatar-jae",
+    time: "14 min ago",
+    title: "The best workday starts before the inbox.",
+    body: "A small, honest ritual for protecting the first hour of the day.",
+    replies: [
+      { author: "Mina Park", initials: "MP", avatar: "avatar-mina", time: "9 min ago", body: "I leave one page of my notebook blank on purpose. It makes the first thought feel less like a performance." },
+      { author: "Soo Lee", initials: "SL", avatar: "avatar-soo", time: "5 min ago", body: "Tea, a window, and no decisions for twenty minutes. That is the whole system." },
+    ],
+  },
+  "film-door": {
+    circle: "Sunday Film Club",
+    kicker: "Conversation · 5 min read",
+    readTime: "5 min read",
+    author: "Sol Park",
+    initials: "SP",
+    avatar: "avatar-sol",
+    time: "1 hr ago",
+    title: "Films that leave the door open.",
+    body: "Three quiet endings we kept thinking about long after the credits.",
+    replies: [
+      { author: "Hana Lee", initials: "HL", avatar: "avatar-hana", time: "42 min ago", body: "I love an ending that trusts the audience enough to keep walking after the story stops." },
+      { author: "Mina Park", initials: "MP", avatar: "avatar-mina", time: "31 min ago", body: "The silence after the last frame can be part of the film, too." },
+    ],
+  },
+  "open-room": {
+    circle: "Open Table",
+    kicker: "Prompt · 6 min read",
+    readTime: "6 min read",
+    author: "Ava Choi",
+    initials: "AV",
+    avatar: "avatar-ava",
+    time: "2 hr ago",
+    title: "What are you making room for?",
+    body: "A table for the ideas that need a little more time before they become plans.",
+    replies: [
+      { author: "Mina Park", initials: "MP", avatar: "avatar-mina", time: "1 hr ago", body: "A slower version of a project I keep trying to rush. The shape is getting clearer now." },
+      { author: "Hana Lee", initials: "HL", avatar: "avatar-hana", time: "48 min ago", body: "Room for a question that does not need to become a task yet." },
+    ],
+  },
+  "tiny-shelf": {
+    circle: "Tiny Libraries",
+    kicker: "Conversation · 3 min read",
+    readTime: "3 min read",
+    author: "Joon Min",
+    initials: "JM",
+    avatar: "avatar-jun",
+    time: "Yesterday",
+    title: "A shelf for books that changed your route.",
+    body: "Which book made you take the long way home?",
+    replies: [
+      { author: "Soo Lee", initials: "SL", avatar: "avatar-soo", time: "Yesterday", body: "A slim book of essays I found in a station library. I missed my stop twice." },
+    ],
+  },
+  "field-detail": {
+    circle: "Field Notes",
+    kicker: "Field note · 2 min read",
+    readTime: "2 min read",
+    author: "Hana Lee",
+    initials: "HL",
+    avatar: "avatar-hana",
+    time: "Yesterday",
+    title: "The detail I nearly walked past.",
+    body: "A small field note from a familiar route.",
+    replies: [
+      { author: "Jae Kim", initials: "JK", avatar: "avatar-jae", time: "Yesterday", body: "The familiar routes are full of things waiting for a second look." },
+    ],
+  },
+};
+
+const validThreads = new Set(Object.keys(threadProfiles));
 
 function readUrlState() {
   const params = new URLSearchParams(window.location.search);
   const view = params.get("view");
   const filter = params.get("filter");
   const circle = params.get("circle");
+  const thread = params.get("thread");
   const discoverFilter = params.get("topic");
   state.view = validViews.has(view) ? view : "home";
   state.filter = validFilters.has(filter) ? filter : "all";
   state.circle = validCircles.has(circle) ? circle : "";
+  state.thread = validThreads.has(thread) ? thread : "";
   if (state.view === "circle" && !state.circle) state.view = "home";
+  if (state.view === "thread" && !state.thread) state.view = "home";
+  if (state.view === "thread") state.circle = threadProfiles[state.thread].circle;
   state.query = params.get("q")?.slice(0, 120) ?? "";
   state.discoverFilter = validDiscoverFilters.has(discoverFilter) ? discoverFilter : "all";
   if (state.circle) state.filter = "all";
@@ -183,12 +303,14 @@ function readUrlState() {
 
 function updateUrlState(historyMethod = "replaceState") {
   const url = new URL(window.location.href);
-  if (state.view === "discover" || state.view === "circle") url.searchParams.set("view", state.view);
+  if (state.view === "discover" || state.view === "circle" || state.view === "thread") url.searchParams.set("view", state.view);
   else url.searchParams.delete("view");
   if (state.filter !== "all" && !state.circle) url.searchParams.set("filter", state.filter);
   else url.searchParams.delete("filter");
   if (state.circle) url.searchParams.set("circle", state.circle);
   else url.searchParams.delete("circle");
+  if (state.view === "thread" && state.thread) url.searchParams.set("thread", state.thread);
+  else url.searchParams.delete("thread");
   if (state.query.trim()) url.searchParams.set("q", state.query.trim().slice(0, 120));
   else url.searchParams.delete("q");
   if (state.view === "discover" && state.discoverFilter !== "all") url.searchParams.set("topic", state.discoverFilter);
@@ -346,29 +468,60 @@ function renderCircle({ syncUrl = true } = {}) {
     circlePanel.innerHTML = "<div class=\"circle-about-panel\"><p class=\"section-kicker\">About this circle</p><h2>" + escapeHtml(profile.description) + "</h2><p>There is no correct pace here. Share a reference, a question, or a detail that made you look twice. The best threads leave room for someone else to add their own edge.</p><div class=\"circle-about-rule\"></div><p class=\"circle-about-meta\">" + profile.memberCount + " members · " + profile.topics.join(" · ") + "</p></div>";
     circleStatus.textContent = "About " + state.circle + ".";
   } else {
-    circlePanel.innerHTML = "<div class=\"circle-conversation-list\">" + profile.conversations.map((conversation) => "<article class=\"circle-conversation\"><div class=\"circle-conversation-avatar\">" + escapeHtml(conversation.initials) + "</div><div class=\"circle-conversation-copy\"><div class=\"post-meta\"><strong>" + escapeHtml(conversation.author) + "</strong><span>·</span><span>" + escapeHtml(conversation.time) + "</span></div><h2>" + escapeHtml(conversation.title) + "</h2><p>" + escapeHtml(conversation.excerpt) + "</p><div class=\"circle-conversation-footer\"><span>" + (conversation.replies || 8) + " replies</span><button class=\"text-button\" type=\"button\" data-circle-conversation>Read conversation " + icon("arrow-up") + "</button></div></div></article>").join("") + "</div>";
+    circlePanel.innerHTML = "<div class=\"circle-conversation-list\">" + profile.conversations.map((conversation) => "<article class=\"circle-conversation\"><div class=\"circle-conversation-avatar\">" + escapeHtml(conversation.initials) + "</div><div class=\"circle-conversation-copy\"><div class=\"post-meta\"><strong>" + escapeHtml(conversation.author) + "</strong><span>·</span><span>" + escapeHtml(conversation.time) + "</span></div><h2>" + escapeHtml(conversation.title) + "</h2><p>" + escapeHtml(conversation.excerpt) + "</p><div class=\"circle-conversation-footer\"><span>" + (threadProfiles[conversation.threadId]?.replies.length || 0) + " replies</span><button class=\"text-button\" type=\"button\" data-circle-conversation data-thread-route=\"" + escapeHtml(conversation.threadId) + "\">Read conversation " + icon("arrow-up") + "</button></div></div></article>").join("") + "</div>";
     circleStatus.textContent = profile.conversations.length + " conversation" + (profile.conversations.length === 1 ? "" : "s") + " in " + state.circle + ".";
   }
+  if (syncUrl) syncUrlState();
+}
+
+function renderThread({ syncUrl = true } = {}) {
+  const profile = threadProfiles[state.thread];
+  if (!profile) return;
+  const circleProfile = circleProfiles[profile.circle];
+  const replies = [...profile.replies, ...(state.threadReplies[state.thread] || [])];
+  document.querySelector("#threadCircleName").textContent = profile.circle;
+  document.querySelector("#threadBackCircle").textContent = profile.circle;
+  document.querySelector("#threadReadTime").textContent = profile.readTime;
+  document.querySelector("#threadKicker").textContent = profile.kicker;
+  document.querySelector("#threadTitle").textContent = profile.title;
+  document.querySelector("#threadBody").textContent = profile.body;
+  const authorAvatar = document.querySelector("#threadAuthorAvatar");
+  authorAvatar.className = "avatar " + profile.avatar;
+  authorAvatar.textContent = profile.initials;
+  document.querySelector("#threadAuthor").textContent = profile.author;
+  document.querySelector("#threadAuthorMeta").textContent = profile.time + " · " + profile.circle;
+  document.querySelector("#threadReplyCount").textContent = replies.length;
+  document.querySelector("#threadContextTitle").textContent = profile.circle;
+  document.querySelector("#threadContextCopy").textContent = circleProfile.description;
+  document.querySelector("#threadTopicList").innerHTML = circleProfile.topics.map((topic) => "<span>" + escapeHtml(topic) + "</span>").join("");
+  document.querySelector("#threadReplyStatus").textContent = state.threadStatus || `${replies.length} thoughtful replies in ${profile.circle}.`;
+  document.querySelector("#threadReplies").innerHTML = replies.map((reply) => `<article class="thread-reply"><span class="avatar ${reply.avatar}">${escapeHtml(reply.initials)}</span><div><div class="thread-reply-meta"><strong>${escapeHtml(reply.author)}</strong><span>${escapeHtml(reply.time)}</span></div><p class="thread-reply-body">${escapeHtml(reply.body)}</p><span class="thread-reply-action">♡ Appreciate · Reply</span></div></article>`).join("");
   if (syncUrl) syncUrlState();
 }
 
 function renderRoute({ syncUrl = true, scroll = true } = {}) {
   const isDiscover = state.view === "discover";
   const isCircle = state.view === "circle";
-  homeView.hidden = isDiscover || isCircle;
+  const isThread = state.view === "thread";
+  homeView.hidden = isDiscover || isCircle || isThread;
   discoverView.hidden = !isDiscover;
   circleView.hidden = !isCircle;
-  document.querySelector("#breadcrumbRoot").textContent = isCircle ? "Circles" : isDiscover ? "Discover" : "Home";
-  document.querySelector("#breadcrumbCurrent").textContent = isCircle ? state.circle : isDiscover ? "Circles" : "For you";
-  setActiveNavigation(isCircle ? "Your circles" : isDiscover ? "Discover" : "Home");
+  threadView.hidden = !isThread;
+  document.querySelector("#breadcrumbRoot").textContent = isCircle || isThread ? "Circles" : isDiscover ? "Discover" : "Home";
+  document.querySelector("#breadcrumbCurrent").textContent = isThread ? threadProfiles[state.thread]?.title || "Conversation" : isCircle ? state.circle : isDiscover ? "Circles" : "For you";
+  setActiveNavigation(isCircle || isThread ? "Your circles" : isDiscover ? "Discover" : "Home");
   if (isDiscover) renderDiscover({ syncUrl });
   else if (isCircle) renderCircle({ syncUrl });
+  else if (isThread) renderThread({ syncUrl });
   else renderFeed({ syncUrl });
   if (scroll) window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 }
 
 function navigateToView(view) {
   state.view = validViews.has(view) ? view : "home";
+  if (state.view !== "thread") state.thread = "";
+  if (state.view === "home" || state.view === "discover") state.circle = "";
+  state.threadStatus = "";
   updateUrlState("pushState");
   renderRoute({ syncUrl: false });
 }
@@ -377,10 +530,27 @@ function navigateToCircle(circleName) {
   if (!validCircles.has(circleName)) return;
   state.view = "circle";
   state.circle = circleName;
+  state.thread = "";
   state.filter = "all";
   state.query = "";
   state.circleTab = "conversations";
   state.circleJoined = false;
+  state.threadStatus = "";
+  searchInput.value = "";
+  updateUrlState("pushState");
+  renderRoute({ syncUrl: false });
+}
+
+function navigateToThread(threadId) {
+  const profile = threadProfiles[threadId];
+  if (!profile) return;
+  state.view = "thread";
+  state.thread = threadId;
+  state.circle = profile.circle;
+  state.filter = "all";
+  state.query = "";
+  state.circleTab = "conversations";
+  state.threadStatus = "";
   searchInput.value = "";
   updateUrlState("pushState");
   renderRoute({ syncUrl: false });
@@ -458,10 +628,10 @@ feedList.addEventListener("click", (event) => {
       showToast(state.saved.has(postId) ? "Saved to your quiet corner" : "Removed from saved");
       renderFeed({ focusPostId: postId, focusAction: actionType });
     }
-    if (actionType === "comment") showToast(`Opening the conversation by ${post.author}`);
+    if (actionType === "comment") navigateToThread(post.threadId);
     return;
   }
-  if (event.target.closest(".post-card")) showToast("Post detail is ready for the next route");
+  if (event.target.closest(".post-card")) navigateToThread(posts.find((post) => post.id === Number(event.target.closest("[data-post-id]")?.dataset.postId))?.threadId);
   const clear = event.target.closest("[data-clear-feed]");
   if (clear) {
     state.filter = "all";
@@ -592,9 +762,12 @@ document.querySelectorAll("[data-circle-tab]").forEach((button) => {
 });
 
 document.querySelector("#circleBack").addEventListener("click", () => navigateToView("discover"));
+document.querySelector("#threadBack").addEventListener("click", () => navigateToView("circle"));
+document.querySelector("#threadCircleLink").addEventListener("click", () => navigateToView("circle"));
 document.querySelector("#circleStartConversation").addEventListener("click", openComposer);
 document.querySelector("#circlePanel").addEventListener("click", (event) => {
-  if (event.target.closest("[data-circle-conversation]")) showToast("Conversation route coming next");
+  const route = event.target.closest("[data-thread-route]");
+  if (route) navigateToThread(route.dataset.threadRoute);
 });
 document.querySelector("#joinCircle").addEventListener("click", () => {
   state.circleJoined = !state.circleJoined;
@@ -602,6 +775,25 @@ document.querySelector("#joinCircle").addEventListener("click", () => {
   showToast(state.circleJoined ? "You joined " + state.circle : "You left " + state.circle);
 });
 document.querySelector("#discoverStartConversation").addEventListener("click", openComposer);
+document.querySelector("#threadReplyForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const input = document.querySelector("#threadReplyInput");
+  const error = document.querySelector("#threadReplyError");
+  const body = input.value.trim();
+  if (!body) {
+    input.setAttribute("aria-invalid", "true");
+    error.removeAttribute("hidden");
+    input.focus();
+    return;
+  }
+  input.removeAttribute("aria-invalid");
+  error.setAttribute("hidden", "");
+  state.threadReplies[state.thread] ||= [];
+  state.threadReplies[state.thread].push({ author: "Mina Park", initials: "MP", avatar: "avatar-user", time: "Just now", body });
+  state.threadStatus = "Your reply was added to the conversation.";
+  event.target.reset();
+  renderThread({ syncUrl: false });
+});
 document.querySelectorAll("[data-toast]").forEach((button) => button.addEventListener("click", () => showToast(button.dataset.toast)));
 
 document.addEventListener("keydown", (event) => {

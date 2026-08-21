@@ -255,6 +255,37 @@
             </aside>
           </div>
         </section>
+
+        <section class="thread-view" id="threadView" aria-labelledby="threadTitle" hidden>
+          <button class="text-button thread-back" id="threadBack" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg> Back to <span id="threadBackCircle">City Makers</span></button>
+          <div class="thread-layout">
+            <div class="thread-main">
+              <div class="thread-topline"><span class="thread-circle-link"><span class="circle-dot dot-coral"></span><span id="threadCircleName">City Makers</span></span><span id="threadReadTime">8 min read</span></div>
+              <article class="thread-post">
+                <p class="eyebrow"><span class="eyebrow-line"></span><span id="threadKicker">Conversation · 8 min read</span></p>
+                <h1 id="threadTitle">A neighborhood map made from borrowed stories.</h1>
+                <p class="thread-body" id="threadBody">What happens when a city is drawn by the people who notice its edges?</p>
+                <div class="thread-author-line"><span class="avatar avatar-hana" id="threadAuthorAvatar">HL</span><span><strong id="threadAuthor">Hana Lee</strong><small id="threadAuthorMeta">38 min ago · City Makers</small></span></div>
+              </article>
+
+              <div class="thread-replies-heading"><div><p class="section-kicker">Stay with it</p><h2><span id="threadReplyCount">3</span> thoughtful replies</h2></div><span id="threadReplyStatus" role="status" aria-live="polite" aria-atomic="true"></span></div>
+              <div class="thread-replies" id="threadReplies"></div>
+
+              <form class="thread-reply-form" id="threadReplyForm" novalidate>
+                <div class="thread-reply-form-top"><span class="avatar avatar-user">MP</span><div><strong>Add to the conversation</strong><span>Specific is generous.</span></div></div>
+                <label class="sr-only" for="threadReplyInput">Your reply</label>
+                <textarea id="threadReplyInput" maxlength="280" aria-describedby="threadReplyError" placeholder="What are you noticing?" required></textarea>
+                <p class="form-error" id="threadReplyError" role="alert" hidden>Write a little context before adding your reply.</p>
+                <div class="thread-reply-form-footer"><span>280 characters max</span><button class="button button-primary" type="submit">Add reply <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+              </form>
+            </div>
+
+            <aside class="thread-side">
+              <div class="thread-side-card thread-context-card"><p class="section-kicker">Inside the circle</p><h2 id="threadContextTitle">City Makers</h2><p id="threadContextCopy">For people turning small observations into useful things for the places they live.</p><div class="circle-topic-list" id="threadTopicList"></div><button class="button button-dark" id="threadCircleLink" type="button">View circle <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+              <div class="thread-side-card thread-note-card"><span class="prompt-icon"><svg class="icon" aria-hidden="true"><use href="#icon-spark" /></svg></span><p>Good threads leave enough room for the next person to add an edge.</p><span class="thread-note-signoff">— Gather practice</span></div>
+            </aside>
+          </div>
+        </section>
       </main>
     </div>
 

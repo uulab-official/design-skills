@@ -72,6 +72,20 @@
       "viewport": {"width": 390, "height": 844},
       "file": "prototype-circle-390.jpg",
       "states": ["Circle route", "City Makers", "conversation detail", "mobile recomposition"]
+    },
+    {
+      "id": "prototype-thread-wide",
+      "route": "/index.html?evidence=0.2&view=thread&circle=City%20Makers&thread=city-map",
+      "viewport": {"width": 1440, "height": 1000},
+      "file": "prototype-thread-1440.jpg",
+      "states": ["Thread route", "City Makers", "replies", "desktop"]
+    },
+    {
+      "id": "prototype-thread-mobile",
+      "route": "/index.html?evidence=0.2&view=thread&circle=City%20Makers&thread=city-map",
+      "viewport": {"width": 390, "height": 844},
+      "file": "prototype-thread-390.jpg",
+      "states": ["Thread route", "City Makers", "reply composer", "mobile recomposition"]
     }
   ],
   "runtime_checks": [
@@ -94,6 +108,8 @@
     {"id": "navigation-current-state", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "Named navigation landmarks expose a shared aria-current page destination across sidebar and mobile navigation."},
     {"id": "discover-route-and-scroll-reset", "route": "/index.html?view=discover", "viewport": "1440x1000", "verified": true, "assertion": "Discover is a real shareable view with route-boundary navigation, instant top reset, and browser-back restoration to Home."},
     {"id": "circle-route-and-back", "route": "/index.html?view=circle&circle=City%20Makers", "viewport": "1440x1000", "verified": true, "assertion": "A Discover card opens the City Makers detail route with current navigation, accessible tabs, and browser-back restoration to Discover."},
+    {"id": "thread-route-and-back", "route": "/index.html?view=thread&circle=City%20Makers&thread=city-map", "viewport": "1440x1000", "verified": true, "assertion": "A Circle conversation opens a shareable Thread route with author context, current navigation, and browser-back restoration to the Circle."},
+    {"id": "thread-reply-flow", "route": "/index.html?view=thread&circle=City%20Makers&thread=city-map", "viewport": "1440x1000", "verified": true, "assertion": "The deterministic reply composer adds a local reply, clears its draft, updates the count, and announces the new state."},
     {"id": "drawer-focus-return", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Mobile drawer focus moves inside on open and returns to the menu trigger on Escape."},
     {"id": "mobile-touch-targets", "route": "/index.html", "viewport": "390x844", "verified": true, "assertion": "Core mobile controls render with at least 44 × 44 px usable geometry."},
     {"id": "board-url-state", "route": "/board.html?source=qa&view=mobile&filter=platforms", "viewport": "1440x1000", "verified": true, "assertion": "The design board restores view and filter state from a shareable URL while preserving unknown parameters."},

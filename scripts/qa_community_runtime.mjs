@@ -164,11 +164,14 @@ async function runRuntimeChecks() {
     assert(circleAbout.selected === "true" && circleAbout.panel === "circle-about-panel" && circleAbout.status.includes("About City Makers"), "Circle About tab did not render its selected panel");
     await desktop.locator('[data-circle-tab="conversations"]').click();
     await desktop.locator("[data-circle-conversation]").first().click();
-    const circleConversationFeedback = await desktop.evaluate(() => ({
-      message: document.querySelector("#toast").textContent,
-      visible: document.querySelector("#toast").classList.contains("is-visible"),
+    const circleConversationRoute = await desktop.evaluate(() => ({
+      url: window.location.search,
+      circleHidden: document.querySelector("#circleView")?.hidden,
+      threadHidden: document.querySelector("#threadView")?.hidden,
     }));
-    assert(circleConversationFeedback.visible && circleConversationFeedback.message === "Conversation route coming next", "Circle conversation CTA did not provide route feedback");
+    assert(circleConversationRoute.url.includes("view=thread") && circleConversationRoute.url.includes("thread=city-map") && circleConversationRoute.circleHidden === true && circleConversationRoute.threadHidden === false, "Circle conversation CTA did not open the Thread route");
+    await desktop.goBack();
+    await wait(80);
     await desktop.goBack();
     await wait(80);
     const discoverBack = await desktop.evaluate(() => ({
@@ -180,6 +183,40 @@ async function runRuntimeChecks() {
     }));
     assert(discoverBack.url.includes("view=discover") && discoverBack.discoverHidden === false && discoverBack.circleHidden === true && discoverBack.current.length === 2 && discoverBack.current.every((label) => label === "Discover") && discoverBack.scrollY === 0, "Browser back did not restore Discover after leaving a Circle");
     results.push({ id: "circle-route-and-back", verified: true, viewport: "1440x1000" });
+
+    await desktop.goto(DEFAULT_BASE_URL + "/index.html?view=circle&circle=City%20Makers", { waitUntil: "networkidle" });
+    await desktop.locator("[data-circle-conversation]").first().click();
+    const threadRoute = await desktop.evaluate(() => ({
+      url: window.location.search,
+      circleHidden: document.querySelector("#circleView")?.hidden,
+      threadHidden: document.querySelector("#threadView")?.hidden,
+      current: Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav),
+      title: document.querySelector("#threadTitle")?.textContent,
+      circle: document.querySelector("#threadCircleName")?.textContent,
+    }));
+    assert(threadRoute.url.includes("view=thread") && threadRoute.url.includes("circle=City+Makers") && threadRoute.url.includes("thread=city-map") && threadRoute.circleHidden === true && threadRoute.threadHidden === false && threadRoute.current.length === 2 && threadRoute.current.every((label) => label === "Your circles") && threadRoute.title === "A neighborhood map made from borrowed stories." && threadRoute.circle === "City Makers", "Thread detail route did not render from the Circle conversation");
+    await desktop.goBack();
+    await wait(80);
+    const circleBack = await desktop.evaluate(() => ({
+      url: window.location.search,
+      circleHidden: document.querySelector("#circleView")?.hidden,
+      threadHidden: document.querySelector("#threadView")?.hidden,
+      title: document.querySelector("#circleTitle")?.textContent,
+    }));
+    assert(circleBack.url.includes("view=circle") && circleBack.circleHidden === false && circleBack.threadHidden === true && circleBack.title === "City Makers", "Browser back did not restore the Circle after leaving a Thread");
+    results.push({ id: "thread-route-and-back", verified: true, viewport: "1440x1000" });
+
+    await desktop.goto(DEFAULT_BASE_URL + "/index.html?view=thread&circle=City%20Makers&thread=city-map", { waitUntil: "networkidle" });
+    await desktop.locator("#threadReplyInput").fill("I keep thinking about the places that invite us to stay a little longer.");
+    await desktop.locator("#threadReplyForm button[type=submit]").click();
+    const replyState = await desktop.evaluate(() => ({
+      count: document.querySelectorAll(".thread-reply").length,
+      status: document.querySelector("#threadReplyStatus")?.textContent,
+      input: document.querySelector("#threadReplyInput")?.value,
+      lastReply: document.querySelector(".thread-reply:last-child .thread-reply-body")?.textContent,
+    }));
+    assert(replyState.count === 4 && replyState.status === "Your reply was added to the conversation." && replyState.input === "" && replyState.lastReply === "I keep thinking about the places that invite us to stay a little longer.", "Thread reply composer did not add a local reply and clear its draft");
+    results.push({ id: "thread-reply-flow", verified: true, viewport: "1440x1000" });
     await desktop.close();
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });

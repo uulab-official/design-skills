@@ -12,10 +12,11 @@ Complete the first meaningful community journey after Discover by making Circle 
 - [x] Reset scroll on Circle entry and restore Discover through browser back.
 - [x] Translate the board’s Circle identity into a responsive hero, orbit artwork, conversation list, and context rail.
 - [x] Add Conversations and About tabs with selected state and polite status feedback.
-- [x] Add join/leave pressed state and route-boundary feedback for conversation actions.
+- [x] Add join/leave pressed state and a Thread route for conversation actions.
 - [x] Capture Circle at desktop and mobile sizes.
 - [x] Add a dedicated Circle visual regression baseline.
-- [ ] Replace conversation route-boundary feedback with a persisted Thread route when reply data and backend scope are available.
+- [x] Replace conversation route-boundary feedback with a deterministic review-ready Thread route and local reply fixtures.
+- [ ] Replace local Thread reply fixtures with a persisted route when reply data and backend scope are available; tracked in the [v0.17 Thread roadmap](2026-08-21-design-skills-v0.17-thread-route.md).
 
 ## Review note
 

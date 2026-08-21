@@ -78,7 +78,7 @@ This prevents “community” from defaulting to one feed pattern. The selected 
 | Circle row | Circle scope applies, feed scrolls into view, toast confirms context |
 | Search | Feed filters as the user types; clear recovery appears when empty |
 | Like / Save | Pressed state and count update immediately with feedback |
-| Comment / post card | Feedback communicates the next route boundary |
+| Comment / post card | Opens the shareable Thread route with author context and replies |
 | Start a conversation | Composer opens with focus placed in the title field |
 | Publish | New post appears at top of feed and toast confirms success |
 | Mobile menu | Drawer and scrim open; Escape and scrim close them |
@@ -90,11 +90,13 @@ This prevents “community” from defaulting to one feed pattern. The selected 
 | Composer or mobile drawer dismissal | Focus returns to the trigger after close, publish, or Escape recovery |
 | Like / save action focus | Dynamic feed rerender preserves focus on the pressed action and exposes its updated `aria-pressed` state |
 | Feed status announcement | Filter and search result counts use a dedicated polite status region; post-card actions do not re-announce the entire feed |
-| Featured story CTA | The primary featured-story affordance provides explicit route-boundary feedback until the conversation route is implemented |
+| Featured story CTA | The primary featured-story affordance provides explicit route-boundary feedback until its featured Thread is mapped |
 | Navigation current state | Sidebar and mobile navigation share named landmarks and expose the selected destination with `aria-current="page"` |
 | Discover route | Discover opens as a shareable `view=discover` route, resets scroll instantly, filters circle cards, and restores Home through browser back |
 | Circle route | A Discover card opens `view=circle&circle=City Makers`, selects Your circles, and restores Discover through browser back |
-| Circle detail tabs | Conversations and About expose a selected tab, status copy, and a route-boundary feedback action |
+| Circle detail tabs | Conversations and About expose a selected tab, status copy, and a route-boundary action into Thread |
+| Thread route | A Circle conversation opens `view=thread&circle=City Makers&thread=city-map` with reading hierarchy, replies, and browser-back recovery |
+| Thread reply composer | A local deterministic reply validates, appends, clears its draft, updates the count, and announces success |
 
 ## Prototype map
 
@@ -106,7 +108,7 @@ board.html
   ├─ Web / iOS / Android    ├─ platform translation board
   ├─ Discover / Circles     ├─ open live prototype → index.html?view=discover
   ├─ Circle / City Makers  ├─ open live prototype → index.html?view=circle&circle=City%20Makers
-  ├─ Thread / Conversation  │
+  ├─ Thread / Conversation  ├─ open live prototype → index.html?view=thread&circle=City%20Makers&thread=city-map
   ├─ Profile / Mina Park    │
   └─ Mobile / Home ─────────┘
        ├─ Empty
@@ -139,11 +141,13 @@ board.html
 | Discover desktop 1440 × 1000 | [`prototype-discover-1440.jpg`](evidence/prototype-discover-1440.jpg) | Dark editorial hero, circle directory cards, topic filters, route-boundary state |
 | Circle desktop 1440 × 1000 | prototype-circle-1440.jpg | City Makers identity, conversation list, About tab, join CTA, responsive route state |
 | Circle mobile 390 × 844 | prototype-circle-390.jpg | Stacked circle hero, tab bar, conversation cards, side context cards, bottom navigation |
+| Thread desktop 1440 × 1000 | [`prototype-thread-1440.jpg`](evidence/prototype-thread-1440.jpg) | Reading hierarchy, author context, replies, Circle context rail, reply composer |
+| Thread mobile 390 × 844 | [`prototype-thread-390.jpg`](evidence/prototype-thread-390.jpg) | Stacked reading flow, reply list, fixed navigation, response composer and context cards |
 | Native intent: iOS 390 pt / Android 360 dp | Platform translation artboards | Large-title/tab-bar and app-bar/FAB behavior are specified; native runtime remains a target, not a shipped surface |
 
 The live surface was checked after the direction, platform, and archetype boards were added. Runtime QA also exercised composer validation → recovery → publish success, feed filter state, mobile drawer open → Escape recovery, URL restoration, prototype and board history-state rehydration, local font loading, search URL synchronization, composer focus return, drawer focus return, 44 px mobile touch-target geometry, board dialog focus return, and skip-link navigation. The [evidence manifest](evidence/manifest.json) binds each capture and runtime assertion to its route, viewport, and represented state; run `npm run test:browser` and `npm run validate:evidence` to verify the interaction contract and JPEG dimensions. Evidence captures are committed under `examples/community/evidence/`; they are full-page JPEG screenshots produced from the local server at the viewport sizes named above. Reproduce the surface with the command in [Run locally](#run-locally), then open `/board.html` and `/index.html` at the declared sizes. The static example has no backend or network dependency; loading, empty, recovery, validation, and success are represented as deterministic prototype states. Contributors can regenerate the capture matrix with `npm install`, `npx playwright install chromium`, and `npm run capture:community`; the command reads the manifest instead of maintaining a second list of viewports.
 
-The live route flow now covers Discover → Circle / City Makers with a shareable URL, selected Conversations/About tabs, join-state feedback, dynamic conversation CTA feedback, and browser-back restoration. Circle desktop and mobile captures are included in the evidence matrix alongside the Discover route.
+The live route flow now covers Discover → Circle / City Makers → Thread with shareable URLs, selected Conversations/About tabs, join-state feedback, author/reply context, local reply creation, and browser-back restoration. Circle and Thread desktop/mobile captures are included in the evidence matrix alongside the Discover route.
 
 ### Review scores
 
@@ -176,7 +180,7 @@ Scores use the 0–4 rubric in `references/review-rubric.md` and only claim what
 
 - **medium — native runtime:** iOS/SwiftUI and Android/Jetpack Compose are platform-aware design targets, but no compiled native implementation or simulator evidence is included in this example.
 - **medium — data/runtime integration:** authentication, backend persistence, network retry, offline caching, analytics, and deployment checks still require product integration.
-- **low — visual regression review:** capture automation, three representative PNG baselines, and CI artifact review are available through `npm run capture:community` and `npm run test:visual`; the 3% threshold tolerates anti-aliasing variation, while full-page evidence remains a human visual review responsibility.
+- **low — visual regression review:** capture automation, six representative PNG baselines, and CI artifact review are available through `npm run capture:community` and `npm run test:visual`; the 3% threshold tolerates anti-aliasing variation, while full-page evidence remains a human visual review responsibility.
 
 These findings intentionally prevent a `release-ready` claim. The next implementation slice should close the native/runtime evidence only when those targets are in scope.
 
