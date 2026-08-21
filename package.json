@@ -7,6 +7,8 @@
   "scripts": {
     "capture:community": "node scripts/capture_community_evidence.mjs",
     "validate:evidence": "python3 scripts/validate_example_evidence.py --path . --json",
+    "validate:skill": "python3 scripts/validate_skill.py --path . --json",
+    "ci:quality": "npm run test && npm run validate:evidence && npm run validate:skill",
     "test": "python3 -m unittest discover -s tests -v"
   },
   "devDependencies": {

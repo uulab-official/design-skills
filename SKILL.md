@@ -18,6 +18,7 @@ Design and implement the product, not just a pretty screen. Select the platform 
 - Use the repository's actual stack. If a matching platform/framework skill is available, load it for implementation details after this skill's product decisions are clear.
 - Treat accessibility, responsive behavior, loading, empty, error, offline/permission, disabled, success, and recovery states as part of the feature, not polish.
 - Treat visual fidelity as an acceptance requirement: real content, coherent rhythm, rendered target-size evidence at named rendered target sizes, and state-by-state inspection are required for a release-ready claim.
+- When working in an open-source repository, run the documented quality command and attach rendered evidence for changed routes, states, or target sizes so another contributor can reproduce the review.
 - For app work, treat [production-app-design.md](references/production-app-design.md) as required: produce a Figma-equivalent design board and a complete production-grade app surface, not a single showcase screen.
 - Do not claim readiness from a static happy-path screenshot. Run the review rubric and record evidence for remaining findings.
 
@@ -129,7 +130,7 @@ The minimum app slice is the app shell plus an end-to-end primary journey with a
 
 For cross-platform briefs, show a side-by-side platform translation board. Keep the product language and semantic tokens shared, but explicitly change navigation, safe-area behavior, input model, typography rhythm, surface/elevation, feedback, and back/dismissal behavior for Web, iOS, Android, or the declared targets. A phone-shaped web screenshot is not a native app design.
 
-For a concrete implementation contract, read [platform-parity.md](references/platform-parity.md). Use it to document safe-area and inset behavior, keyboard/focus movement, system back and dismissal, transient feedback, accessibility announcements, and the native evidence required for each declared target.
+For a concrete implementation contract, read [platform-parity.md](references/platform-parity.md). Use it to document safe-area and inset behavior, keyboard/focus movement, system back and dismissal, transient feedback, accessibility announcements, and the native evidence required for each declared target. In an open-source repository, also follow the contribution and CI quality loop documented by the project.
 
 ### 8. Implement in vertical slices
 

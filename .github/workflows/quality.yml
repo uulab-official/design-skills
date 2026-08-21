@@ -1,0 +1,54 @@
+name: Quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    name: Contracts and documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install JavaScript tooling
+        run: npm ci
+      - name: Run repository quality checks
+        run: npm run ci:quality
+
+  visual-evidence:
+    name: Render community evidence
+    runs-on: ubuntu-latest
+    needs: contracts
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install JavaScript tooling
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Capture declared viewport matrix
+        run: npm run capture:community
+      - name: Validate rendered evidence
+        run: npm run validate:evidence
+      - name: Upload rendered evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: community-evidence-${{ github.sha }}
+          path: examples/community/evidence/*.jpg
+          if-no-files-found: error
+          retention-days: 7
