@@ -229,6 +229,10 @@
               <div class="discover-card-top"><span class="circle-symbol">FN</span><span class="discover-card-tag">Take it slow</span></div><p class="discover-card-kicker">WALK / ATTENTION</p><h2>Field Notes</h2><p>A weekly pause to look closely, walk without a destination, and bring one detail back.</p><div class="discover-card-footer"><span class="member-stack" aria-label="14 members"><b>HL</b><b>JK</b><b>MP</b><b>+11</b></span><button class="discover-card-action" type="button" data-circle-route="Field Notes" aria-label="Visit Field Notes circle">Visit circle <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
             </article>
           </div>
+          <div class="route-empty-state" id="discoverEmpty" aria-labelledby="discoverEmptyTitle" hidden>
+            <span class="route-empty-icon"><svg class="icon" aria-hidden="true"><use href="#icon-search" /></svg></span>
+            <div><p class="section-kicker">A quieter result</p><h2 id="discoverEmptyTitle">Nothing matched that search.</h2><p>Try a circle name, a feeling, or a question you want to keep close.</p><button class="text-button" type="button" data-clear-route-search="discover">Clear search <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+          </div>
 
           <div class="discover-invite"><div><p class="section-kicker">Couldn’t find the right room?</p><h2>Start with the question you’re carrying.</h2></div><button class="button button-primary" id="discoverStartConversation" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-plus" /></svg> Start a conversation</button></div>
         </section>
@@ -270,7 +274,12 @@
                   <div class="your-circle-card-footer"><span><strong>2</strong> people · <strong>1</strong> conversation</span><button class="your-circle-action" type="button" data-your-circle-route="Sunday Film Club">Open circle <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
                 </article>
               </div>
+              <div class="route-empty-state" id="circlesEmpty" aria-labelledby="circlesEmptyTitle" hidden>
+                <span class="route-empty-icon"><svg class="icon" aria-hidden="true"><use href="#icon-search" /></svg></span>
+                <div><p class="section-kicker">Your orbit is still here</p><h2 id="circlesEmptyTitle">Nothing matched that search.</h2><p>Clear the search to return to your circles, or try a different phrase.</p><button class="text-button" type="button" data-clear-route-search="circles">Clear search <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up" /></svg></button></div>
+              </div>
             </div>
+
             <aside class="circles-side"><div class="circles-side-card"><p class="section-kicker">Make the orbit wider</p><h2>There’s room for one more good question.</h2><p>Explore a new circle when your current rooms have given you something to carry forward.</p><button class="button button-primary" id="circlesDiscover" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-compass" /></svg> Discover circles</button></div><div class="circles-side-card circles-side-note"><span class="prompt-icon"><svg class="icon" aria-hidden="true"><use href="#icon-spark" /></svg></span><p>Good spaces are not full. They are alive.</p><span>— Gather practice</span></div></aside>
           </div>
         </section>

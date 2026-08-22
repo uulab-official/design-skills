@@ -60,6 +60,20 @@
       "states": ["Discover route", "circle directory", "mobile recomposition"]
     },
     {
+      "id": "prototype-discover-empty-wide",
+      "route": "/index.html?evidence=0.2&view=discover&q=lunar+attic",
+      "viewport": {"width": 1440, "height": 1000},
+      "file": "prototype-discover-empty-1440.jpg",
+      "states": ["Discover route", "search empty", "recovery", "desktop"]
+    },
+    {
+      "id": "prototype-discover-empty-mobile",
+      "route": "/index.html?evidence=0.2&view=discover&q=lunar+attic",
+      "viewport": {"width": 390, "height": 844},
+      "file": "prototype-discover-empty-390.jpg",
+      "states": ["Discover route", "search empty", "recovery", "mobile recomposition"]
+    },
+    {
       "id": "prototype-circles-wide",
       "route": "/index.html?evidence=0.2&view=circles",
       "viewport": {"width": 1440, "height": 1000},
@@ -72,6 +86,20 @@
       "viewport": {"width": 390, "height": 844},
       "file": "prototype-circles-390.jpg",
       "states": ["Your circles route", "collection", "stacked cards", "mobile recomposition"]
+    },
+    {
+      "id": "prototype-circles-empty-wide",
+      "route": "/index.html?evidence=0.2&view=circles&circleFilter=quiet&q=lunar+attic",
+      "viewport": {"width": 1440, "height": 1000},
+      "file": "prototype-circles-empty-1440.jpg",
+      "states": ["Your circles route", "search empty", "quiet filter", "desktop"]
+    },
+    {
+      "id": "prototype-circles-empty-mobile",
+      "route": "/index.html?evidence=0.2&view=circles&circleFilter=quiet&q=lunar+attic",
+      "viewport": {"width": 390, "height": 844},
+      "file": "prototype-circles-empty-390.jpg",
+      "states": ["Your circles route", "search empty", "quiet filter", "mobile recomposition"]
     },
     {
       "id": "prototype-circle-wide",
@@ -210,6 +238,7 @@
     {"id": "circles-route", "route": "/index.html?view=circles", "viewport": "1440x1000", "verified": true, "assertion": "Your circles opens a shareable collection route with activity filters, current navigation state, and Circle detail follow-through."},
     {"id": "navigation-current-state", "route": "/index.html", "viewport": "1440x1000", "verified": true, "assertion": "Named navigation landmarks expose a shared aria-current page destination across sidebar and mobile navigation."},
     {"id": "discover-route-and-scroll-reset", "route": "/index.html?view=discover", "viewport": "1440x1000", "verified": true, "assertion": "Discover is a real shareable view with route-boundary navigation, instant top reset, and browser-back restoration to Home."},
+    {"id": "route-search-empty-recovery", "route": "/index.html?view=discover&q=lunar+attic", "viewport": "1440x1000", "verified": true, "assertion": "Discover and Your circles expose a designed zero-result search state, preserve route/filter context, and restore results with a clear-search action and focus recovery."},
     {"id": "circle-route-and-back", "route": "/index.html?view=circle&circle=City%20Makers", "viewport": "1440x1000", "verified": true, "assertion": "A Discover card opens the City Makers detail route with current navigation, accessible tabs, and browser-back restoration to Discover."},
     {"id": "thread-route-and-back", "route": "/index.html?view=thread&circle=City%20Makers&thread=city-map", "viewport": "1440x1000", "verified": true, "assertion": "A Circle conversation opens a shareable Thread route with author context, current navigation, and browser-back restoration to the Circle."},
     {"id": "thread-reply-flow", "route": "/index.html?view=thread&circle=City%20Makers&thread=city-map", "viewport": "1440x1000", "verified": true, "assertion": "The deterministic reply composer adds a local reply, clears its draft, updates the count, and announces the new state."},

@@ -82,6 +82,16 @@ class CommunityExampleContractTests(unittest.TestCase):
         self.assertIn('navigateToCircles', self.js)
         self.assertIn('.circles-view', self.css)
 
+    def test_directory_search_exposes_a_designed_empty_recovery(self):
+        self.assertIn('id="discoverEmpty"', self.html)
+        self.assertIn('id="circlesEmpty"', self.html)
+        self.assertIn('data-clear-route-search="discover"', self.html)
+        self.assertIn('data-clear-route-search="circles"', self.html)
+        self.assertIn('discoverEmpty.hidden = visibleCount > 0', self.js)
+        self.assertIn('circlesEmpty.hidden = visibleCount > 0', self.js)
+        self.assertIn('.discover-card[hidden] { display: none; }', self.css)
+        self.assertIn('.route-empty-state[hidden] { display: none; }', self.css)
+
     def test_design_board_exposes_shareable_state_and_dialog_focus(self):
         board_html = (EXAMPLE / "board.html").read_text(encoding="utf-8")
         board_js = (EXAMPLE / "board.js").read_text(encoding="utf-8")

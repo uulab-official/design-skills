@@ -530,6 +530,8 @@ function renderDiscover({ syncUrl = true } = {}) {
     const queryCopy = query ? " matching “" + state.query.trim() + "”" : "";
     discoverStatus.textContent = visibleCount + " circle" + (visibleCount === 1 ? "" : "s") + queryCopy;
   }
+  const discoverEmpty = document.querySelector("#discoverEmpty");
+  if (discoverEmpty) discoverEmpty.hidden = visibleCount > 0;
   if (syncUrl) syncUrlState();
 }
 
@@ -555,6 +557,8 @@ function renderCircles({ syncUrl = true } = {}) {
     const queryCopy = query ? ` matching “${state.query.trim()}”` : "";
     circlesStatus.textContent = `${visibleCount} circle${visibleCount === 1 ? "" : "s"} ${filterCopy}${queryCopy}.`;
   }
+  const circlesEmpty = document.querySelector("#circlesEmpty");
+  if (circlesEmpty) circlesEmpty.hidden = visibleCount > 0;
   if (syncUrl) syncUrlState();
 }
 
@@ -1087,6 +1091,15 @@ document.querySelectorAll("[data-circles-filter]").forEach((button) => {
   button.addEventListener("click", () => {
     state.circlesFilter = validCirclesFilters.has(button.dataset.circlesFilter) ? button.dataset.circlesFilter : "all";
     renderCircles();
+  });
+});
+document.querySelectorAll("[data-clear-route-search]").forEach((button) => {
+  button.addEventListener("click", () => {
+    state.query = "";
+    searchInput.value = "";
+    if (button.dataset.clearRouteSearch === "discover") renderDiscover();
+    else renderCircles();
+    searchInput.focus();
   });
 });
 

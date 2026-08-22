@@ -241,6 +241,33 @@ async function runRuntimeChecks() {
     assert(!homeRoute.url.includes("view=discover") && homeRoute.homeHidden === false && homeRoute.discoverHidden === true && homeRoute.current.length === 2 && homeRoute.current.every((label) => label === "Home") && homeRoute.scrollY === 0, "Browser back did not restore the Home route and top position");
     results.push({ id: "discover-route-and-scroll-reset", verified: true, viewport: "1440x1000" });
 
+    await desktop.goto(`${DEFAULT_BASE_URL}/index.html?view=discover`, { waitUntil: "networkidle" });
+    await desktop.fill("#searchInput", "lunar attic");
+    const discoverEmpty = await desktop.evaluate(() => ({
+      url: window.location.search,
+      emptyHidden: document.querySelector("#discoverEmpty")?.hidden,
+      cards: Array.from(document.querySelectorAll("[data-discover-card]")).filter((card) => !card.hidden).length,
+      status: document.querySelector("#discoverStatus")?.textContent,
+    }));
+    assert(discoverEmpty.url.includes("q=lunar+attic") && discoverEmpty.emptyHidden === false && discoverEmpty.cards === 0 && discoverEmpty.status.includes("0 circles"), "Discover did not expose a recoverable empty search state");
+    await desktop.locator('[data-clear-route-search="discover"]').click();
+    const discoverRecovered = await desktop.evaluate(() => ({
+      url: window.location.search,
+      emptyHidden: document.querySelector("#discoverEmpty")?.hidden,
+      cards: Array.from(document.querySelectorAll("[data-discover-card]")).filter((card) => !card.hidden).length,
+      active: document.activeElement?.id,
+    }));
+    assert(!discoverRecovered.url.includes("q=") && discoverRecovered.emptyHidden === true && discoverRecovered.cards === 6 && discoverRecovered.active === "searchInput", "Discover empty search did not clear and restore the directory");
+    await desktop.goto(`${DEFAULT_BASE_URL}/index.html?view=circles&circleFilter=quiet`, { waitUntil: "networkidle" });
+    await desktop.fill("#searchInput", "lunar attic");
+    const circlesEmpty = await desktop.evaluate(() => ({
+      emptyHidden: document.querySelector("#circlesEmpty")?.hidden,
+      cards: Array.from(document.querySelectorAll("[data-your-circle-card]")).filter((card) => !card.hidden).length,
+      status: document.querySelector("#circlesStatus")?.textContent,
+    }));
+    assert(circlesEmpty.emptyHidden === false && circlesEmpty.cards === 0 && circlesEmpty.status.includes("0 circles"), "Your circles did not expose a recoverable empty search state");
+    results.push({ id: "route-search-empty-recovery", verified: true, viewport: "1440x1000" });
+
     await desktop.goto(DEFAULT_BASE_URL + "/index.html?view=discover", { waitUntil: "networkidle" });
     await desktop.locator(".discover-card-action").first().click();
     const circleRoute = await desktop.evaluate(() => ({
