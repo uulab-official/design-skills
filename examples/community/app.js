@@ -58,6 +58,7 @@ const state = {
   feedState: "ready",
   circlesFilter: "all",
   circle: "",
+  circleOrigin: "discover",
   query: "",
   discoverFilter: "all",
   circleTab: "conversations",
@@ -121,6 +122,13 @@ const validCircles = new Set(["City Makers", "Quiet Mornings", "Sunday Film Club
 const validViews = new Set(["home", "discover", "circles", "circle", "thread", "profile", "notifications", "settings"]);
 const validDiscoverFilters = new Set(["all", "make", "slow", "notice"]);
 const validCirclesFilters = new Set(["all", "recent", "quiet"]);
+const validCircleOrigins = new Set(["discover", "circles", "profile", "notifications"]);
+const circleOriginLabels = {
+  discover: "Discover",
+  circles: "Your circles",
+  profile: "Profile",
+  notifications: "Notifications",
+};
 const validProfileTabs = new Set(["conversations", "saved"]);
 const workspaceProfiles = {
   seoul: { name: "Seoul circles", type: "Personal space", initials: "S", avatarClass: "workspace-avatar-moss" },
@@ -356,10 +364,12 @@ function readUrlState() {
   const profileTab = params.get("tab");
   const discoverFilter = params.get("topic");
   const circlesFilter = params.get("circleFilter");
+  const circleOrigin = params.get("from");
   state.view = validViews.has(view) ? view : "home";
   state.filter = validFilters.has(filter) ? filter : "all";
   state.feedState = validFeedStates.has(feedState) ? feedState : "ready";
   state.circle = validCircles.has(circle) ? circle : "";
+  state.circleOrigin = validCircleOrigins.has(circleOrigin) ? circleOrigin : "discover";
   state.thread = validThreads.has(thread) ? thread : "";
   state.profile = validProfiles.has(profile) ? profile : "";
   state.profileTab = validProfileTabs.has(profileTab) ? profileTab : "conversations";
@@ -388,6 +398,8 @@ function updateUrlState(historyMethod = "replaceState") {
   else url.searchParams.delete("profile");
   if (state.view === "profile" && state.profileTab !== "conversations") url.searchParams.set("tab", state.profileTab);
   else url.searchParams.delete("tab");
+  if (state.view === "circle" && state.circleOrigin !== "discover") url.searchParams.set("from", state.circleOrigin);
+  else url.searchParams.delete("from");
   if (state.query.trim()) url.searchParams.set("q", state.query.trim().slice(0, 120));
   else url.searchParams.delete("q");
   if (state.view === "discover" && state.discoverFilter !== "all") url.searchParams.set("topic", state.discoverFilter);
@@ -670,6 +682,53 @@ function renderSettings({ syncUrl = true } = {}) {
   if (syncUrl) syncUrlState();
 }
 
+function updateRouteMetadata() {
+  const circleProfile = circleProfiles[state.circle];
+  const threadProfile = threadProfiles[state.thread];
+  const profile = profileProfiles[state.profile];
+  const routeMetadata = {
+    home: {
+      title: "Gather — Community, with context.",
+      description: "Gather is a warm, editorial community space for finding people who care about the same things.",
+    },
+    discover: {
+      title: "Discover circles · Gather",
+      description: "Browse small circles built around shared curiosity, useful rituals, and better conversations.",
+    },
+    circles: {
+      title: "Your circles · Gather",
+      description: "Return to the circles you chose, with activity worth noticing and conversations worth keeping.",
+    },
+    circle: {
+      title: `${state.circle || "Circle"} · Gather`,
+      description: circleProfile?.description || "A small community with room for useful questions and generous conversation.",
+    },
+    thread: {
+      title: `${threadProfile?.title || "Conversation"} · Gather`,
+      description: threadProfile?.body || "A thoughtful conversation from the Gather community.",
+    },
+    profile: {
+      title: `${profile?.name || "Profile"} · Gather`,
+      description: profile?.bio || "A Gather profile with circles, conversations, and saved thoughts.",
+    },
+    notifications: {
+      title: "Notifications · Gather",
+      description: "A quiet record of replies, circle updates, and invitations back into your orbit.",
+    },
+    settings: {
+      title: "Preferences · Gather",
+      description: "Thoughtful defaults for how Gather reaches you and protects your attention.",
+    },
+  };
+  const metadata = routeMetadata[state.view] || routeMetadata.home;
+  document.title = metadata.title;
+  document.querySelector('meta[name="description"]')?.setAttribute("content", metadata.description);
+  document.querySelector('meta[property="og:title"]')?.setAttribute("content", metadata.title);
+  document.querySelector('meta[property="og:description"]')?.setAttribute("content", metadata.description);
+  document.querySelector('meta[name="twitter:title"]')?.setAttribute("content", metadata.title);
+  document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", metadata.description);
+}
+
 function renderRoute({ syncUrl = true, scroll = true } = {}) {
   const isDiscover = state.view === "discover";
   const isCircles = state.view === "circles";
@@ -678,6 +737,7 @@ function renderRoute({ syncUrl = true, scroll = true } = {}) {
   const isProfile = state.view === "profile";
   const isNotifications = state.view === "notifications";
   const isSettings = state.view === "settings";
+  updateRouteMetadata();
   homeView.hidden = isDiscover || isCircles || isCircle || isThread || isProfile || isNotifications || isSettings;
   discoverView.hidden = !isDiscover;
   circlesView.hidden = !isCircles;
@@ -690,6 +750,8 @@ function renderRoute({ syncUrl = true, scroll = true } = {}) {
   document.querySelector("#breadcrumbCurrent").textContent = isThread ? threadProfiles[state.thread]?.title || "Conversation" : isCircle ? state.circle : isProfile ? profileProfiles[state.profile]?.name || "Mina Park" : isNotifications ? "Notifications" : isSettings ? "Settings" : isCircles ? "Your circles" : isDiscover ? "Circles" : "For you";
   const activeNavigation = isCircle || isThread ? "Your circles" : isCircles ? "Your circles" : isDiscover ? "Discover" : isProfile && state.profileTab === "saved" ? "Saved" : isProfile ? "" : isNotifications ? "Notifications" : isSettings ? "Settings" : "Home";
   setActiveNavigation(activeNavigation);
+  const circleBack = document.querySelector("#circleBack");
+  if (circleBack && isCircle) circleBack.innerHTML = `${icon("arrow-up")} Back to ${circleOriginLabels[state.circleOrigin] || circleOriginLabels.discover}`;
   if (isDiscover) renderDiscover({ syncUrl });
   else if (isCircles) renderCircles({ syncUrl });
   else if (isCircle) renderCircle({ syncUrl });
@@ -706,6 +768,7 @@ function navigateToView(view) {
   if (state.view !== "thread") state.thread = "";
   if (state.view !== "profile") state.profile = "";
   if (state.view === "home" || state.view === "discover" || state.view === "circles") state.circle = "";
+  if (state.view !== "circle" && state.view !== "thread") state.circleOrigin = "discover";
   state.threadStatus = "";
   state.profileStatus = "";
   updateUrlState("pushState");
@@ -715,6 +778,7 @@ function navigateToView(view) {
 function navigateToCircles() {
   state.view = "circles";
   state.circle = "";
+  state.circleOrigin = "discover";
   state.thread = "";
   state.profile = "";
   state.query = "";
@@ -726,10 +790,11 @@ function navigateToCircles() {
   renderRoute({ syncUrl: false });
 }
 
-function navigateToCircle(circleName) {
+function navigateToCircle(circleName, origin = "discover") {
   if (!validCircles.has(circleName)) return;
   state.view = "circle";
   state.circle = circleName;
+  state.circleOrigin = validCircleOrigins.has(origin) ? origin : "discover";
   state.thread = "";
   state.profile = "";
   state.filter = "all";
@@ -745,9 +810,11 @@ function navigateToCircle(circleName) {
 function navigateToThread(threadId) {
   const profile = threadProfiles[threadId];
   if (!profile) return;
+  const origin = state.view === "profile" ? "profile" : state.view === "notifications" ? "notifications" : state.circleOrigin;
   state.view = "thread";
   state.thread = threadId;
   state.circle = profile.circle;
+  state.circleOrigin = validCircleOrigins.has(origin) ? origin : "discover";
   state.filter = "all";
   state.query = "";
   state.circleTab = "conversations";
@@ -766,6 +833,7 @@ function navigateToProfile(profileId) {
   state.profileFollowed = false;
   state.profileStatus = "";
   state.circle = "";
+  state.circleOrigin = "discover";
   state.thread = "";
   state.query = "";
   state.filter = "all";
@@ -781,6 +849,7 @@ function navigateToSaved() {
   state.profileFollowed = false;
   state.profileStatus = "";
   state.circle = "";
+  state.circleOrigin = "discover";
   state.thread = "";
   state.query = "";
   state.filter = "all";
@@ -792,6 +861,7 @@ function navigateToSaved() {
 function navigateToNotifications() {
   state.view = "notifications";
   state.circle = "";
+  state.circleOrigin = "discover";
   state.thread = "";
   state.profile = "";
   state.query = "";
@@ -804,6 +874,7 @@ function navigateToNotifications() {
 function navigateToSettings() {
   state.view = "settings";
   state.circle = "";
+  state.circleOrigin = "discover";
   state.thread = "";
   state.profile = "";
   state.query = "";
@@ -1104,10 +1175,10 @@ document.querySelectorAll("[data-clear-route-search]").forEach((button) => {
 });
 
 document.querySelectorAll("[data-circle-route]").forEach((button) => {
-  button.addEventListener("click", () => navigateToCircle(button.dataset.circleRoute));
+  button.addEventListener("click", () => navigateToCircle(button.dataset.circleRoute, button.dataset.circleOrigin || "discover"));
 });
 document.querySelectorAll("[data-your-circle-route]").forEach((button) => {
-  button.addEventListener("click", () => navigateToCircle(button.dataset.yourCircleRoute));
+  button.addEventListener("click", () => navigateToCircle(button.dataset.yourCircleRoute, "circles"));
 });
 document.querySelectorAll("[data-thread-route]").forEach((button) => {
   button.addEventListener("click", () => navigateToThread(button.dataset.threadRoute));
@@ -1126,7 +1197,12 @@ document.querySelectorAll("[data-circle-tab]").forEach((button) => {
   });
 });
 
-document.querySelector("#circleBack").addEventListener("click", () => navigateToView("discover"));
+document.querySelector("#circleBack").addEventListener("click", () => {
+  if (state.circleOrigin === "circles") navigateToView("circles");
+  else if (state.circleOrigin === "profile") navigateToProfile("mina");
+  else if (state.circleOrigin === "notifications") navigateToNotifications();
+  else navigateToView("discover");
+});
 document.querySelector("#threadBack").addEventListener("click", () => navigateToView("circle"));
 document.querySelector("#threadCircleLink").addEventListener("click", () => navigateToView("circle"));
 document.querySelector("#circleStartConversation").addEventListener("click", openComposer);
@@ -1192,7 +1268,7 @@ document.querySelector("#profilePanel").addEventListener("click", (event) => {
 });
 document.querySelector("#profileCircleList").addEventListener("click", (event) => {
   const circleRoute = event.target.closest("[data-profile-circle]");
-  if (circleRoute) navigateToCircle(circleRoute.dataset.profileCircle);
+  if (circleRoute) navigateToCircle(circleRoute.dataset.profileCircle, "profile");
 });
 document.querySelectorAll("[data-toast]").forEach((button) => button.addEventListener("click", () => showToast(button.dataset.toast)));
 

@@ -92,6 +92,16 @@ class CommunityExampleContractTests(unittest.TestCase):
         self.assertIn('.discover-card[hidden] { display: none; }', self.css)
         self.assertIn('.route-empty-state[hidden] { display: none; }', self.css)
 
+    def test_route_handoff_and_metadata_contracts_are_present(self):
+        self.assertIn('const validCircleOrigins = new Set', self.js)
+        self.assertIn('circleOrigin', self.js)
+        self.assertIn('data-circle-origin="notifications"', self.html)
+        self.assertIn('Back to ${circleOriginLabels[state.circleOrigin]', self.js)
+        self.assertIn('document.title = metadata.title', self.js)
+        self.assertIn('meta[property="og:title"]', self.js)
+        self.assertIn('meta[name="twitter:title"]', self.js)
+        self.assertIn('id="circleBack"', self.html)
+
     def test_design_board_exposes_shareable_state_and_dialog_focus(self):
         board_html = (EXAMPLE / "board.html").read_text(encoding="utf-8")
         board_js = (EXAMPLE / "board.js").read_text(encoding="utf-8")

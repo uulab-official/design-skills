@@ -205,6 +205,24 @@ async function runRuntimeChecks() {
     assert(circlesCardRoute.url.includes("view=circle") && circlesCardRoute.url.includes("circle=City+Makers") && circlesCardRoute.circlesHidden === true && circlesCardRoute.circleHidden === false && circlesCardRoute.title === "City Makers", "Your circles card did not open its Circle route");
     results.push({ id: "circles-route", verified: true, viewport: "1440x1000" });
 
+    await desktop.goto(`${DEFAULT_BASE_URL}/index.html?view=circles`, { waitUntil: "networkidle" });
+    await desktop.locator('[data-your-circle-route="City Makers"]').click();
+    const circleOrigin = await desktop.evaluate(() => ({
+      url: window.location.search,
+      backLabel: document.querySelector("#circleBack")?.textContent,
+      title: document.title,
+    }));
+    assert(circleOrigin.url.includes("from=circles") && circleOrigin.backLabel.includes("Back to Your circles") && circleOrigin.title === "City Makers · Gather", "Circle route did not preserve its collection origin");
+    await desktop.locator("#circleBack").click();
+    const circleOriginBack = await desktop.evaluate(() => ({
+      url: window.location.search,
+      circlesHidden: document.querySelector("#circlesView")?.hidden,
+      circleHidden: document.querySelector("#circleView")?.hidden,
+      current: Array.from(document.querySelectorAll('[data-nav][aria-current="page"]')).map((item) => item.dataset.nav),
+    }));
+    assert(circleOriginBack.url.includes("view=circles") && circleOriginBack.circlesHidden === false && circleOriginBack.circleHidden === true && circleOriginBack.current.length === 2 && circleOriginBack.current.every((label) => label === "Your circles"), "Circle origin back did not restore Your circles");
+    results.push({ id: "circle-origin-back", verified: true, viewport: "1440x1000" });
+
     await desktop.goto(`${DEFAULT_BASE_URL}/index.html`, { waitUntil: "networkidle" });
     const initialNavState = await desktop.evaluate(() => ({
       labels: Array.from(document.querySelectorAll("nav")).map((nav) => nav.getAttribute("aria-label")),
@@ -229,6 +247,13 @@ async function runRuntimeChecks() {
       heading: document.querySelector("#discoverTitle")?.textContent,
     }));
     assert(discoverRoute.url.includes("view=discover") && discoverRoute.homeHidden === true && discoverRoute.discoverHidden === false && discoverRoute.current.length === 2 && discoverRoute.current.every((label) => label === "Discover") && discoverRoute.scrollY === 0 && discoverRoute.heading === "Find your next circle.", "Discover route did not render as a real view with a top reset");
+    const discoverMetadata = await desktop.evaluate(() => ({
+      title: document.title,
+      description: document.querySelector('meta[name="description"]')?.content,
+      ogTitle: document.querySelector('meta[property="og:title"]')?.content,
+    }));
+    assert(discoverMetadata.title === "Discover circles · Gather" && discoverMetadata.description.includes("Browse small") && discoverMetadata.ogTitle === "Discover circles · Gather", "Discover did not publish route-specific document metadata");
+    results.push({ id: "route-metadata", verified: true, viewport: "1440x1000" });
     await desktop.goBack();
     await wait(80);
     const homeRoute = await desktop.evaluate(() => ({
