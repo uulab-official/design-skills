@@ -98,6 +98,8 @@ Comparison evidence:
 
 Use real or realistic content from the first polished pass. Define the layout system and semantic primitives before tuning individual screens. If rendering is unavailable, label the work `not verified` and do not call it `release-ready`.
 
+For product-specific visual refinement of Web, Expo/native apps and game interfaces, optionally invoke the independent `design-taste` specialist when installed. Its direction-selection and browser-capture process complements this skill's platform, state, accessibility and readiness contracts; native game/play quality still needs real engine/device verification.
+
 ### 6. Design information architecture and states
 
 For each route or screen, record:
