@@ -134,6 +134,7 @@ def draw(platform: str, brief: str, seed: str = "0", facts: list[str] | None = N
         used_axes.add(move["axis"])
         options.append({
             "id": direction["id"] + "+" + move["id"],
+            "platform": platform,
             "title": direction["title"] + " / " + move["title"],
             "visual_direction": direction,
             "composition_move": move,

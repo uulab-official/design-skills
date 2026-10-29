@@ -30,6 +30,10 @@ npm run validate:evidence
 
 The capture tool reads [`examples/community/evidence/manifest.json`](examples/community/evidence/manifest.json). Add a manifest entry when a new route, target viewport, or state is important enough to review; do not maintain a second undocumented screenshot list. Browser assertions for important URL and focus behavior belong in `scripts/qa_community_runtime.mjs` and the manifest runtime checks.
 
+## Design Taste contributions
+
+Maintain the independent `skills/design-taste` source registry, unique structural axes, real-content direction contract, heuristic audit tests, and actual browser integration tests. Run `npm run ci:quality` and `npm run test:taste:browser` with Chromium. Never import external screenshots/fonts/assets without license review. AI-like aesthetics flags indicate review candidates, not AI authorship.
+
 ## Design changes
 
 Before changing a screen or reference:

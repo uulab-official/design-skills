@@ -67,6 +67,20 @@ npx skills add https://github.com/uulab-official/design-skills --skill design-ta
 
 Use it for website/storefront design (**web**), Expo/native/SaaS design (**app**) or Unity/Godot/Unreal/browser-game interface design (**game**). It does **not** bundle a browser or game editor, claim design quality from static checks, or install dependencies automatically. On an authorized local web app, run its included `scripts/capture.mjs` with an installed Playwright/Chromium; native apps and games require actual device/engine capture. The direction library and inspection process are independently implemented, with the general visual-craft workflow inspired in part by [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill); its code and assets are not copied.
 
+### Reference-backed anti-template design workflow
+
+Design Taste now includes **18 researched source references** (web galleries, shipped app flows, OSS design systems, Unity/Godot samples), **24 original structural craft moves** layered on its 15 starting directions, a reproducible **3-option selector with real product facts and brand constraints**, a context-sensitive source auditor and a state/viewport screenshot capture matrix. See [design-taste](skills/design-taste/SKILL.md), [research index](skills/design-taste/references/research.md) and [originality protocol](skills/design-taste/references/originality.md).
+
+The examples are **reference-only**; no source screenshots, fonts, game assets or upstream skill code are bundled. The anti-template audit is heuristic and never claims to detect AI authorship. Actual app/game engine device tests and independent visual review are still needed.
+
+```bash
+python3 skills/design-taste/scripts/draw.py --platform app --brief "Expo inventory stock scan" --fact "Barcode scanner available" --primary-job "Correct stock"
+python3 skills/design-taste/scripts/audit.py --path examples/community --platform web --json
+# Capture a real local site after installing playwright + chromium in your project:
+node skills/design-taste/scripts/capture.mjs --url http://127.0.0.1:4173 --platform web --out .design-taste/evidence
+npm run test:taste:browser
+```
+
 ## Design standard
 
 For a new design or a structural redesign, record the platform, product archetype, primary job, navigation rationale, visual directions considered, semantic tokens, state coverage, target sizes, rendered evidence, readiness level, and open findings. For cross-platform work, use [`references/platform-parity.md`](references/platform-parity.md) to specify safe areas, system back, keyboard/focus, feedback, accessibility semantics, and native evidence requirements.

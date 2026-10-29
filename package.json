@@ -12,7 +12,8 @@
     "validate:evidence": "python3 scripts/validate_example_evidence.py --path . --json",
     "validate:skill": "python3 scripts/validate_skill.py --path . --json",
     "ci:quality": "npm run test && npm run validate:evidence && npm run validate:skill",
-    "test": "python3 -m unittest discover -s tests -v"
+    "test": "python3 -m unittest discover -s tests -v",
+    "test:taste:browser": "node scripts/test_design_taste_browser.mjs"
   },
   "devDependencies": {
     "pixelmatch": "^7.2.0",
