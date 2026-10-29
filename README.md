@@ -55,6 +55,18 @@ This runs the Python contract suite, evidence manifest validator, and dependency
 
 The community reference surface also ships its DM Sans and Fraunces WOFF2 files in `examples/community/assets/fonts/`, with the applicable OFL text beside them. The pages load `assets/fonts.css` locally so typography remains reviewable offline and capture output is not dependent on Google Fonts availability.
 
+## Visual taste for web, apps and games
+
+The specialized [design-taste skill](skills/design-taste/SKILL.md) adds product-specific visual direction choices, a native-aware critique loop, a deterministic direction selector and optional browser screenshot/DOM evidence. The parent `design-skills` skill remains responsible for product architecture, state coverage and implementation readiness.
+
+Install **only** the portable visual specialist in Codex, Claude Code or other Agent Skills clients:
+
+```bash
+npx skills add https://github.com/uulab-official/design-skills --skill design-taste
+```
+
+Use it for website/storefront design (**web**), Expo/native/SaaS design (**app**) or Unity/Godot/Unreal/browser-game interface design (**game**). It does **not** bundle a browser or game editor, claim design quality from static checks, or install dependencies automatically. On an authorized local web app, run its included `scripts/capture.mjs` with an installed Playwright/Chromium; native apps and games require actual device/engine capture. The direction library and inspection process are independently implemented, with the general visual-craft workflow inspired in part by [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill); its code and assets are not copied.
+
 ## Design standard
 
 For a new design or a structural redesign, record the platform, product archetype, primary job, navigation rationale, visual directions considered, semantic tokens, state coverage, target sizes, rendered evidence, readiness level, and open findings. For cross-platform work, use [`references/platform-parity.md`](references/platform-parity.md) to specify safe areas, system back, keyboard/focus, feedback, accessibility semantics, and native evidence requirements.

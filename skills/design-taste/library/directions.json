@@ -1,0 +1,381 @@
+{
+  "schema_version": 1,
+  "description": "Original UULAB starting directions. Non-verified option library, not a license to copy other interfaces.",
+  "directions": [
+    {
+      "id": "web-editorial-proof",
+      "platform": "web",
+      "title": "Proof-led editorial",
+      "signature": "Make the true product evidence the visual centre, with publication-like narrative rhythm.",
+      "composition": "Large proof image or demonstration followed by claim-and-evidence chapters",
+      "typography": "Expressive heading paired with exceptionally readable body text",
+      "color": "Restrained neutral foundations with one decision-bearing accent",
+      "imagery": "Owned product photography, process details, named captions",
+      "motion": "Subtle scroll reveal only when it helps comprehension",
+      "fit_terms": [
+        "브랜드",
+        "소개",
+        "스토리",
+        "portfolio",
+        "case study",
+        "story"
+      ],
+      "avoid": [
+        "generic icon-feature rows",
+        "unverified awards"
+      ]
+    },
+    {
+      "id": "web-crafted-commerce",
+      "platform": "web",
+      "title": "Material-led storefront",
+      "signature": "Show what is sold through texture, dimensions and concrete proof rather than marketing gloss.",
+      "composition": "Product-led first viewport, specification-led comparison, then delivery and purchase reassurance",
+      "typography": "Confident product naming with systematic price and measurement labels",
+      "color": "Warm substrate from the actual material, contrasting purchase action",
+      "imagery": "Original product photos, scale references, consistent crops",
+      "motion": "Considered transitions for variant selection and zoom",
+      "fit_terms": [
+        "상품",
+        "쇼핑",
+        "스마트스토어",
+        "머그",
+        "마그넷",
+        "store",
+        "shop",
+        "commerce",
+        "product"
+      ],
+      "avoid": [
+        "invented product photos",
+        "hidden price or shipping"
+      ]
+    },
+    {
+      "id": "web-data-workbench",
+      "platform": "web",
+      "title": "Decision workbench",
+      "signature": "Give data, filters and the next decision the hierarchy normally spent on decoration.",
+      "composition": "Context toolbar, primary working table or chart, right-sized detail inspection",
+      "typography": "Legible compact UI with tabular numerals where appropriate",
+      "color": "Quiet surfaces with semantic alert and selection colors",
+      "imagery": "Real product diagrams and meaningful sparklines, not decorative illustrations",
+      "motion": "State-transition cues, not ambient animation",
+      "fit_terms": [
+        "dashboard",
+        "관리",
+        "재고",
+        "erp",
+        "analytics",
+        "data",
+        "admin",
+        "saas",
+        "솔루션"
+      ],
+      "avoid": [
+        "vanity metrics",
+        "rainbow KPI cards"
+      ]
+    },
+    {
+      "id": "web-cultural-index",
+      "platform": "web",
+      "title": "Living archive",
+      "signature": "Make discovery feel like navigating a considered catalogue with strong orientation.",
+      "composition": "Search-first index, editorial feature, collection-led discovery",
+      "typography": "Strong information hierarchy, clear category metadata and long-form readability",
+      "color": "Content-derived palette with high-contrast navigation",
+      "imagery": "Attributable archival imagery or original imagery with recorded licensing",
+      "motion": "Deliberate image transitions, reduced-motion alternative",
+      "fit_terms": [
+        "문화",
+        "전시",
+        "컬렉션",
+        "아카이브",
+        "갤러리",
+        "blog",
+        "archive",
+        "museum"
+      ],
+      "avoid": [
+        "anonymous stock collage",
+        "missing attribution"
+      ]
+    },
+    {
+      "id": "web-conversion-clarity",
+      "platform": "web",
+      "title": "Focused conversion",
+      "signature": "Turn a precise promise into one obvious next action, backed by verifiable evidence.",
+      "composition": "Outcome and proof above the fold, objection-handling sequence, decisive CTA",
+      "typography": "Direct high-impact statement with short supporting lines",
+      "color": "Single primary action accent against accessible neutral grounds",
+      "imagery": "Real use-case screenshots and explained results",
+      "motion": "Only where it clarifies demonstration or interaction",
+      "fit_terms": [
+        "랜딩",
+        "서비스",
+        "출시",
+        "가입",
+        "landing",
+        "startup",
+        "signup",
+        "marketing"
+      ],
+      "avoid": [
+        "three identical feature-card blocks",
+        "repeated competing CTAs"
+      ]
+    },
+    {
+      "id": "app-calm-operations",
+      "platform": "app",
+      "title": "Calm operations",
+      "signature": "Treat the screen as a working instrument: high signal, deliberate density, reliable feedback.",
+      "composition": "Adaptive workspace shell, scoped filters, focused detail and clear actions",
+      "typography": "Compact system-friendly type, reliable text scaling and tabular amounts",
+      "color": "Neutral planes with stateful semantic colors",
+      "imagery": "Functional icons and actual data views",
+      "motion": "Fast transitions that preserve user context",
+      "fit_terms": [
+        "erp",
+        "재고",
+        "inventory",
+        "admin",
+        "dashboard",
+        "관리",
+        "analytics",
+        "saas"
+      ],
+      "avoid": [
+        "oversized decorative cards",
+        "hardcoded fake KPIs"
+      ]
+    },
+    {
+      "id": "app-focused-tool",
+      "platform": "app",
+      "title": "One-task utility",
+      "signature": "The user's main input and result are the hero; everything else is contextual.",
+      "composition": "Primary task first, contextual options second, history/reuse last",
+      "typography": "Large result, quiet supporting labels and accessible controls",
+      "color": "High contrast for active input, restrained supporting surfaces",
+      "imagery": "Only task-relevant visualization",
+      "motion": "Immediate feedback with a reduced-motion path",
+      "fit_terms": [
+        "도구",
+        "변환",
+        "손전등",
+        "계산",
+        "utility",
+        "tool",
+        "scanner",
+        "converter"
+      ],
+      "avoid": [
+        "five-tab navigation without reason",
+        "needless onboarding"
+      ]
+    },
+    {
+      "id": "app-tactile-journal",
+      "platform": "app",
+      "title": "Tactile journal",
+      "signature": "Make personal entries intimate and readable without making editing slower.",
+      "composition": "Entry content leads, expressive calendar or timeline, quiet edit surfaces",
+      "typography": "Comfortable long-form reading and differentiated date hierarchy",
+      "color": "Warm intentional surfaces with clear editable focus",
+      "imagery": "User-owned photos and cohesive thumbnails",
+      "motion": "Natural navigation with interrupt-safe save feedback",
+      "fit_terms": [
+        "일기",
+        "로그",
+        "캘린더",
+        "사진",
+        "journal",
+        "diary",
+        "timeline",
+        "memory"
+      ],
+      "avoid": [
+        "photography as wallpaper behind text",
+        "ambiguous save state"
+      ]
+    },
+    {
+      "id": "app-data-command",
+      "platform": "app",
+      "title": "Evidence console",
+      "signature": "Deliver crisp, precise analytics that remain actionable on a phone.",
+      "composition": "Scope and time range first, primary finding, drill-down table or chart",
+      "typography": "Tabular numerals, compact labels and readable units",
+      "color": "Data meaning takes priority over aesthetic color",
+      "imagery": "Truthful charts using actual units and denominators",
+      "motion": "Responsive state changes without hiding loading/stale indicators",
+      "fit_terms": [
+        "매출",
+        "광고",
+        "지표",
+        "finance",
+        "metrics",
+        "kpi",
+        "report",
+        "analytics"
+      ],
+      "avoid": [
+        "misleading axis scales",
+        "dense desktop chart squeezed to mobile"
+      ]
+    },
+    {
+      "id": "app-expressive-community",
+      "platform": "app",
+      "title": "Human community",
+      "signature": "Let identity, real conversations and creation carry the visual voice.",
+      "composition": "People-and-content-first feed with purposeful creation and moderation access",
+      "typography": "Clear content hierarchy, strong author context and accessible comments",
+      "color": "Brand-accented navigation with content-led surfaces",
+      "imagery": "Real user media with truthful placeholders and crop rules",
+      "motion": "Predictable interaction feedback and safe interruption recovery",
+      "fit_terms": [
+        "커뮤니티",
+        "채팅",
+        "모임",
+        "social",
+        "community",
+        "messaging",
+        "feed"
+      ],
+      "avoid": [
+        "engagement controls over content",
+        "silent posting errors"
+      ]
+    },
+    {
+      "id": "game-diegetic-world",
+      "platform": "game",
+      "title": "World-embedded interface",
+      "signature": "Let game-world materials and lore shape framing without obscuring critical information.",
+      "composition": "Gameplay canvas dominant, diegetic status motifs, explicit pause and result overlays",
+      "typography": "Thematic display voice paired with highly legible numeric HUD",
+      "color": "Materials drawn from the game's original art direction with contrast guards",
+      "imagery": "Original world assets, crafted icon family and state cues",
+      "motion": "World-consistent transitions with fast combat feedback",
+      "fit_terms": [
+        "rpg",
+        "어드벤처",
+        "중세",
+        "fantasy",
+        "role-playing",
+        "탐험",
+        "스토리"
+      ],
+      "avoid": [
+        "low-contrast lore fonts in combat",
+        "HUD covering enemy telegraphs"
+      ]
+    },
+    {
+      "id": "game-arcade-signal",
+      "platform": "game",
+      "title": "Arcade signal",
+      "signature": "Make action, collision, score and retry unmistakable at full game speed.",
+      "composition": "Wide play area, peripheral glanceable HUD and decisive round-end screen",
+      "typography": "Hard-working numerals with strong score and timer hierarchy",
+      "color": "High-salience gameplay cues using redundant shape and motion signals",
+      "imagery": "Original high-contrast silhouettes, spare functional VFX",
+      "motion": "Instant input response and controlled celebration, no critical feedback delay",
+      "fit_terms": [
+        "액션",
+        "슈팅",
+        "로그라이크",
+        "arcade",
+        "roguelike",
+        "rhythm",
+        "리듬",
+        "survivor"
+      ],
+      "avoid": [
+        "confetti-like permanent VFX",
+        "score panels that hide projectiles"
+      ]
+    },
+    {
+      "id": "game-cozy-handmade",
+      "platform": "game",
+      "title": "Cozy tactile",
+      "signature": "Build a coherent handcrafted material language and unhurried progress clarity.",
+      "composition": "Environment-first play surface, thumb-friendly contextual tools, clear inventory loops",
+      "typography": "Warm display type with neutral readable labels",
+      "color": "Soft art-driven palette reinforced by contrast-safe text surfaces",
+      "imagery": "Original props, tactile feedback, coherent illustrations",
+      "motion": "Gentle transitions that never block skip or input",
+      "fit_terms": [
+        "생활",
+        "육성",
+        "동물",
+        "농장",
+        "cozy",
+        "sim",
+        "village",
+        "idle",
+        "방치형"
+      ],
+      "avoid": [
+        "tiny inventory targets",
+        "cute decoration that hides state"
+      ]
+    },
+    {
+      "id": "game-tactical-map",
+      "platform": "game",
+      "title": "Readable tactics",
+      "signature": "Make spatial decisions and turn consequences visible before decoration.",
+      "composition": "Large navigable map, contextual actionable information, restrained turn log",
+      "typography": "Compact legible tactical labels with clear risk/warning cues",
+      "color": "Separate selection, danger and ownership by color plus shape",
+      "imagery": "Controlled sprites/meshes with readable silhouette and tile hierarchy",
+      "motion": "Intentional preview, unambiguous turn transition and accessible motion options",
+      "fit_terms": [
+        "전략",
+        "전술",
+        "카드",
+        "체스",
+        "strategy",
+        "tactics",
+        "turn",
+        "deckbuilder"
+      ],
+      "avoid": [
+        "combat info hidden in hover alone",
+        "indistinguishable units"
+      ]
+    },
+    {
+      "id": "game-premium-systems",
+      "platform": "game",
+      "title": "Systems-forward premium",
+      "signature": "Express depth through authored icons, resilient HUD and meaningful reward presentation.",
+      "composition": "Clear play canvas, selective system HUD, reward and progression as distinct layers",
+      "typography": "Consistent numeric hierarchy and localizable copy widths",
+      "color": "Game identity palette with scarce emphasis and semantic rarity/status",
+      "imagery": "Consistent original icon/sprite/material art family",
+      "motion": "Purposeful reward beats and low-cost, opt-out effects",
+      "fit_terms": [
+        "스팀",
+        "인디",
+        "성장",
+        "수집",
+        "unity",
+        "unreal",
+        "godot",
+        "indie",
+        "upgrade"
+      ],
+      "avoid": [
+        "shop-like HUD in every scene",
+        "particle effects masking input"
+      ]
+    }
+  ]
+}
