@@ -1,0 +1,473 @@
+{
+  "schema_version": 1,
+  "description": "Original design moves for product-specific differentiation, not templates to copy. Directions are selected by task fit and validated by real renders.",
+  "moves": [
+    {
+      "id": "web-material-evidence",
+      "platform": "web",
+      "axis": "material-led",
+      "title": "Proof in the object",
+      "focus": "E-commerce product, physical material and fulfillment facts lead.",
+      "match_terms": [
+        "제품",
+        "상품",
+        "소재",
+        "마그넷",
+        "머그",
+        "commerce",
+        "product",
+        "store"
+      ],
+      "lead": "Close-up owned object evidence and scale reference before supporting copy.",
+      "sequence": "Material detail → size/comparison → use context → fulfillment facts → primary purchase.",
+      "stress_states": "out-of-stock, variant error, shipping details, long product name",
+      "acceptance_question": "Is the object immediately recognizable and correctly scaled?"
+    },
+    {
+      "id": "web-editorial-archive",
+      "platform": "web",
+      "axis": "type-led",
+      "title": "Editorial index",
+      "focus": "Turn true history, chronology and named people into typography-led navigation.",
+      "match_terms": [
+        "아카이브",
+        "역사",
+        "문서",
+        "컬렉션",
+        "archive",
+        "editorial",
+        "portfolio"
+      ],
+      "lead": "Context-rich headline and large editorial index, not decorative hero copy.",
+      "sequence": "Index/period → narrative chapters → source notes → navigation.",
+      "stress_states": "long titles, missing images, keyboard navigation",
+      "acceptance_question": "Can an unfamiliar reader orient without the logo?"
+    },
+    {
+      "id": "web-evidence-comparison",
+      "platform": "web",
+      "axis": "comparison-led",
+      "title": "Comparative proof",
+      "focus": "Make measurable differences and conditions visible side-by-side.",
+      "match_terms": [
+        "비교",
+        "플랜",
+        "기능",
+        "가격",
+        "comparison",
+        "pricing",
+        "plans"
+      ],
+      "lead": "Comparison table with criteria and honest scope labels.",
+      "sequence": "Decision context → comparison → evidence → qualification → CTA.",
+      "stress_states": "missing feature, long value, narrow table, unavailable plan",
+      "acceptance_question": "Can a buyer explain the differences and limitations in a minute?"
+    },
+    {
+      "id": "web-live-tool",
+      "platform": "web",
+      "axis": "tool-led",
+      "title": "Interactive workbench",
+      "focus": "Let the actual tool and its output replace marketing decoration.",
+      "match_terms": [
+        "변환",
+        "계산",
+        "도구",
+        "utility",
+        "generator",
+        "tool"
+      ],
+      "lead": "Input/preview split that becomes stacked task flow on narrow screens.",
+      "sequence": "Input → live result → examples/reuse → method/limits.",
+      "stress_states": "invalid input, partial result, offline, mobile keyboard",
+      "acceptance_question": "Can the user complete the task without scrolling past a hero?"
+    },
+    {
+      "id": "web-process-sequence",
+      "platform": "web",
+      "axis": "sequence-led",
+      "title": "Process as story",
+      "focus": "Explain why the work exists through original process evidence.",
+      "match_terms": [
+        "만드는",
+        "제작",
+        "수작업",
+        "과정",
+        "process",
+        "studio",
+        "craft"
+      ],
+      "lead": "Original making/process shots anchored by real steps and timings.",
+      "sequence": "Result → stages → materials → maker notes → next action.",
+      "stress_states": "missing media, captions, reduced-motion, translated text",
+      "acceptance_question": "Would changing the product name break this story?"
+    },
+    {
+      "id": "web-spatial-exhibit",
+      "platform": "web",
+      "axis": "scene-led",
+      "title": "Spatial exhibit",
+      "focus": "Use place and space as the navigation metaphor when the content genuinely has places.",
+      "match_terms": [
+        "여행",
+        "공간",
+        "지역",
+        "전시",
+        "travel",
+        "museum",
+        "location"
+      ],
+      "lead": "Large map/space-context section with persistent wayfinding.",
+      "sequence": "Place context → destinations → details → practical information.",
+      "stress_states": "map unavailable, small screens, keyboard map alternative",
+      "acceptance_question": "Does the spatial layout simplify real navigation?"
+    },
+    {
+      "id": "web-utility-catalog",
+      "platform": "web",
+      "axis": "index-led",
+      "title": "Purposeful catalogue",
+      "focus": "Let precise categories and filters define the visual system.",
+      "match_terms": [
+        "카탈로그",
+        "검색",
+        "필터",
+        "리스트",
+        "catalog",
+        "search",
+        "directory"
+      ],
+      "lead": "Typographic category index with high-quality search and preview.",
+      "sequence": "Search/filter → results → details → no-result recovery.",
+      "stress_states": "zero results, pagination, sorting, narrow viewport",
+      "acceptance_question": "Can the visitor identify scope, filters and next action?"
+    },
+    {
+      "id": "web-quiet-conversion",
+      "platform": "web",
+      "axis": "action-led",
+      "title": "One clear choice",
+      "focus": "A concise thesis with one task-specific action and credible proof.",
+      "match_terms": [
+        "랜딩",
+        "가입",
+        "서비스",
+        "출시",
+        "landing",
+        "signup",
+        "service"
+      ],
+      "lead": "Specific product promise aligned to real interface or use evidence.",
+      "sequence": "Problem/capability → demonstration → constraints/trust → decision.",
+      "stress_states": "validation, consent, narrow fold, no network",
+      "acceptance_question": "Could the page be used by any competitor by only changing its logo?"
+    },
+    {
+      "id": "app-operator-console",
+      "platform": "app",
+      "axis": "data-led",
+      "title": "Operations console",
+      "focus": "Put scope, filter, high-impact decision and table before vanity statistics.",
+      "match_terms": [
+        "재고",
+        "관리",
+        "ERP",
+        "admin",
+        "inventory",
+        "dashboard"
+      ],
+      "lead": "Scoped work queue/table with one contextual inspection panel.",
+      "sequence": "Scope → filtered worklist → selection → action/result.",
+      "stress_states": "empty, stale, permission, bulk action, long SKUs",
+      "acceptance_question": "Does every chart or KPI lead to an action?"
+    },
+    {
+      "id": "app-camera-first",
+      "platform": "app",
+      "axis": "camera-led",
+      "title": "Camera instrument",
+      "focus": "Camera/capture occupies the screen; everything else is a reachable control.",
+      "match_terms": [
+        "카메라",
+        "스캔",
+        "촬영",
+        "scan",
+        "camera",
+        "capture"
+      ],
+      "lead": "Live capture with thumb-oriented primary control and status.",
+      "sequence": "Permission → ready → capture → review → recovery.",
+      "stress_states": "camera denied, slow capture, landscape, one-handed",
+      "acceptance_question": "Can the capture task start without entering generic navigation?"
+    },
+    {
+      "id": "app-timeline-memory",
+      "platform": "app",
+      "axis": "timeline-led",
+      "title": "Personal chronology",
+      "focus": "Entries and moments define structure, not generic dashboard tiles.",
+      "match_terms": [
+        "일기",
+        "사진",
+        "캘린더",
+        "journal",
+        "diary",
+        "timeline"
+      ],
+      "lead": "Date rhythm, content legibility and unmistakable edit status.",
+      "sequence": "Moment → entry → related context → edit/undo.",
+      "stress_states": "no entries, unsaved edit, long text, offline",
+      "acceptance_question": "Is personal media protected from distracting chrome?"
+    },
+    {
+      "id": "app-primary-editor",
+      "platform": "app",
+      "axis": "canvas-led",
+      "title": "Focused creation",
+      "focus": "Make the work in progress dominant, with tools contextual to selection.",
+      "match_terms": [
+        "제작",
+        "편집",
+        "그림",
+        "creative",
+        "editor",
+        "design"
+      ],
+      "lead": "Large working canvas with inspector, commands and saved states.",
+      "sequence": "Open → create → inspect → export/recover.",
+      "stress_states": "empty canvas, unsaved, undo, narrow device",
+      "acceptance_question": "Does UI help the creation instead of crowding it?"
+    },
+    {
+      "id": "app-readable-ledger",
+      "platform": "app",
+      "axis": "ledger-led",
+      "title": "Honest ledger",
+      "focus": "Use accounting-like alignment when accurate amounts and history are the goal.",
+      "match_terms": [
+        "매출",
+        "수익",
+        "광고",
+        "금액",
+        "finance",
+        "billing",
+        "revenue"
+      ],
+      "lead": "Amount, period, source and comparison explicitly aligned.",
+      "sequence": "Overview → breakdown → event history → export.",
+      "stress_states": "negative values, no data, currency, stale",
+      "acceptance_question": "Could a user reconcile each visible number to a source?"
+    },
+    {
+      "id": "app-messaging-context",
+      "platform": "app",
+      "axis": "conversation-led",
+      "title": "Conversation craft",
+      "focus": "Identity and conversation context drive readable exchange and recovery.",
+      "match_terms": [
+        "채팅",
+        "대화",
+        "메시지",
+        "messaging",
+        "chat",
+        "community"
+      ],
+      "lead": "Thread owns primary view; composer with precise send state.",
+      "sequence": "Conversation → compose → delivery → retry.",
+      "stress_states": "long message, offline, attachments, keyboard",
+      "acceptance_question": "Is failed delivery obvious and recoverable?"
+    },
+    {
+      "id": "app-list-detail",
+      "platform": "app",
+      "axis": "inspection-led",
+      "title": "Adaptive inspector",
+      "focus": "High-density list becomes a contextual detail surface across widths.",
+      "match_terms": [
+        "기록",
+        "리스트",
+        "검색",
+        "관리",
+        "list",
+        "detail",
+        "inbox"
+      ],
+      "lead": "List/detail split with visible selected context, stack on mobile.",
+      "sequence": "Search/filter → select → inspect → act.",
+      "stress_states": "no selection, zero matches, deep link, keyboard",
+      "acceptance_question": "Can the user find and resolve one item without losing scope?"
+    },
+    {
+      "id": "app-scan-result",
+      "platform": "app",
+      "axis": "result-led",
+      "title": "Single-purpose result",
+      "focus": "Complete a short utility task with minimal navigation and unambiguous result.",
+      "match_terms": [
+        "변환",
+        "계산",
+        "측정",
+        "scanner",
+        "converter",
+        "tool"
+      ],
+      "lead": "Input and big result first; context only when it changes an action.",
+      "sequence": "Enter → validate → result → reuse/share.",
+      "stress_states": "invalid, permission, copied, small device",
+      "acceptance_question": "Can the task be done without a tutorial?"
+    },
+    {
+      "id": "game-combat-telegraph",
+      "platform": "game",
+      "axis": "threat-led",
+      "title": "Threat-first combat HUD",
+      "focus": "Critical enemy cues and player state outrank decoration.",
+      "match_terms": [
+        "전투",
+        "로그라이크",
+        "액션",
+        "roguelike",
+        "action",
+        "combat"
+      ],
+      "lead": "Large clean playfield with danger cues and peripheral status.",
+      "sequence": "Playing → low HP → hit → pause → death/retry.",
+      "stress_states": "projectile clutter, color-blind, screen shake, lag",
+      "acceptance_question": "Do critical threats remain legible at full-speed playback?"
+    },
+    {
+      "id": "game-rhythm-lane",
+      "platform": "game",
+      "axis": "beat-led",
+      "title": "Rhythm clarity",
+      "focus": "Timing windows and lane legibility outrank spectacle.",
+      "match_terms": [
+        "리듬",
+        "음악",
+        "노트",
+        "rhythm",
+        "music",
+        "beat"
+      ],
+      "lead": "Timing lane, note approach and grade feedback with sparse surrounding HUD.",
+      "sequence": "Count-in → active lane → miss/combo → results.",
+      "stress_states": "frame drops, high speed, low vision, latency",
+      "acceptance_question": "Can timing and feedback be read without audio alone?"
+    },
+    {
+      "id": "game-cozy-world",
+      "platform": "game",
+      "axis": "world-led",
+      "title": "Life in the scene",
+      "focus": "World activity drives tools and rewards rather than app-like cards.",
+      "match_terms": [
+        "육성",
+        "생활",
+        "마을",
+        "동물",
+        "cozy",
+        "village",
+        "farming"
+      ],
+      "lead": "Original living world with contextual inventory and gentle feedback.",
+      "sequence": "Explore → interact → inventory → reward → resume.",
+      "stress_states": "small touch targets, item overflow, interrupted save",
+      "acceptance_question": "Is the world visually dominant during actual play?"
+    },
+    {
+      "id": "game-tactical-board",
+      "platform": "game",
+      "axis": "map-led",
+      "title": "Strategic foresight",
+      "focus": "The map, consequences and previewability are the visual story.",
+      "match_terms": [
+        "전략",
+        "전술",
+        "카드",
+        "turn",
+        "tactics",
+        "strategy"
+      ],
+      "lead": "Readable board with selection preview and controlled action panel.",
+      "sequence": "Inspect → plan → commit → consequences.",
+      "stress_states": "dense units, selected/focus distinction, controller",
+      "acceptance_question": "Can players predict an action outcome before committing?"
+    },
+    {
+      "id": "game-inventory-ritual",
+      "platform": "game",
+      "axis": "inventory-led",
+      "title": "Meaningful collecting",
+      "focus": "Item identity, rarity semantics and quick comparison define inventory.",
+      "match_terms": [
+        "인벤토리",
+        "수집",
+        "장비",
+        "loot",
+        "inventory",
+        "equipment"
+      ],
+      "lead": "Item silhouettes, comparison slots, explicit state, no surprise sales CTA.",
+      "sequence": "Acquire → compare → equip → exit → combat.",
+      "stress_states": "full inventory, duplicate, controller, long names",
+      "acceptance_question": "Can players compare items without interpreting decoration?"
+    },
+    {
+      "id": "game-run-results",
+      "platform": "game",
+      "axis": "result-led",
+      "title": "Finish and retry",
+      "focus": "Make death/win consequences and restart fast and understandable.",
+      "match_terms": [
+        "방치형",
+        "로그라이크",
+        "점수",
+        "retry",
+        "results",
+        "arcade"
+      ],
+      "lead": "Large achieved result, meaningful feedback and clearly differentiated retry.",
+      "sequence": "Finish → reward → improve → restart.",
+      "stress_states": "zero rewards, long stats, accidental purchase",
+      "acceptance_question": "Does the result communicate what changed and how to play again?"
+    },
+    {
+      "id": "game-diegetic-quest",
+      "platform": "game",
+      "axis": "world-ui-led",
+      "title": "World as UI",
+      "focus": "Use in-world artifacts if they improve immersion without hiding actions.",
+      "match_terms": [
+        "스토리",
+        "퀘스트",
+        "rpg",
+        "fantasy",
+        "quest",
+        "exploration"
+      ],
+      "lead": "World artifact / map plus accessible operational overlay.",
+      "sequence": "Discover → inspect → accept → track → complete.",
+      "stress_states": "small script font, missing lore, controller and localization",
+      "acceptance_question": "Can players still read tasks at stressful moments?"
+    },
+    {
+      "id": "game-arcade-score",
+      "platform": "game",
+      "axis": "score-led",
+      "title": "Crisp arcade instrumentation",
+      "focus": "Let time, rank and reward information compete only when needed.",
+      "match_terms": [
+        "슈팅",
+        "아케이드",
+        "랭킹",
+        "shooting",
+        "score",
+        "arcade"
+      ],
+      "lead": "Peripheral score instrumentation and one clear high-priority action region.",
+      "sequence": "Enter → play → combo → game over.",
+      "stress_states": "high score overflow, fast motion, pause",
+      "acceptance_question": "Is input, threat and score legible in a single glance?"
+    }
+  ]
+}
