@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "screens": [
+    {
+      "name": "overview",
+      "path": "/dashboard",
+      "state": "ready",
+      "viewports": [
+        {
+          "width": 390,
+          "height": 844
+        },
+        {
+          "width": 1280,
+          "height": 800
+        }
+      ],
+      "expectText": [
+        "Inventory"
+      ],
+      "fullPage": true
+    },
+    {
+      "name": "search",
+      "path": "/dashboard?state=empty",
+      "state": "empty",
+      "viewports": [
+        {
+          "width": 390,
+          "height": 844
+        }
+      ],
+      "expectText": [
+        "No results"
+      ],
+      "fullPage": true
+    },
+    {
+      "name": "settings",
+      "path": "/settings",
+      "state": "error",
+      "viewports": [
+        {
+          "width": 390,
+          "height": 844
+        },
+        {
+          "width": 1280,
+          "height": 800
+        }
+      ],
+      "expectText": [
+        "Try again"
+      ],
+      "fullPage": true
+    }
+  ]
+}

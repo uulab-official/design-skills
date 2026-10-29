@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-29",
+  "scope": "References only, no third-party screenshots/code/fonts/assets bundled or fetched.",
+  "guidance": "Use sources for design questions and inspect the live reference yourself. Code, assets, screenshots, fonts and layouts require per-file rights review. Neither public viewability nor an open source repository implies visual asset reuse permission.",
+  "sources": [
+    {
+      "id": "awwwards",
+      "kind": "web-gallery",
+      "title": "Awwwards",
+      "url": "https://www.awwwards.com/websites/",
+      "platforms": [
+        "web"
+      ],
+      "reuse": "study-only",
+      "license_note": "not assessed",
+      "study_question": "Study distinctive composition, interaction rhythm, structure and the purpose of visual effects. Awards are not evidence of accessibility."
+    },
+    {
+      "id": "siteinspire",
+      "kind": "web-gallery",
+      "title": "SiteInspire",
+      "url": "https://www.siteinspire.com/",
+      "platforms": [
+        "web"
+      ],
+      "reuse": "study-only",
+      "license_note": "not assessed",
+      "study_question": "Compare typography, gutters, content sequencing and industry-specific visual language. Avoid copying arrangements."
+    },
+    {
+      "id": "one-page-love",
+      "kind": "web-gallery",
+      "title": "One Page Love",
+      "url": "https://onepagelove.com/",
+      "platforms": [
+        "web"
+      ],
+      "reuse": "study-only",
+      "license_note": "not assessed",
+      "study_question": "Study narrative sequence and truthful proof-to-CTA flow; adapt for product-specific content."
+    },
+    {
+      "id": "mobbin",
+      "kind": "app-reference",
+      "title": "Mobbin",
+      "url": "https://mobbin.com/",
+      "platforms": [
+        "app",
+        "web"
+      ],
+      "reuse": "study-only",
+      "license_note": "not assessed",
+      "study_question": "Study shipped mobile/web screen states, search/checkout/onboarding flows, task density and navigation."
+    },
+    {
+      "id": "refero",
+      "kind": "app-reference",
+      "title": "Refero",
+      "url": "https://refero.design/",
+      "platforms": [
+        "web",
+        "app"
+      ],
+      "reuse": "study-only",
+      "license_note": "not assessed",
+      "study_question": "Compare real product SaaS pages, filters, tables and subscription/checkout states."
+    },
+    {
+      "id": "pageflows",
+      "kind": "app-reference",
+      "title": "Page Flows",
+      "url": "https://pageflows.com/",
+      "platforms": [
+        "app",
+        "web"
+      ],
+      "reuse": "study-only",
+      "license_note": "not assessed",
+      "study_question": "Review complete task sequences and error/recovery interaction; screens are not reusable assets."
+    },
+    {
+      "id": "gameuidatabase",
+      "kind": "game-reference",
+      "title": "Game UI Database",
+      "url": "https://www.gameuidatabase.com/",
+      "platforms": [
+        "game"
+      ],
+      "reuse": "study-only",
+      "license_note": "not assessed",
+      "study_question": "Study HUD priority, game menu hierarchies, inventory patterns and result screens. Game screenshots remain third-party content."
+    },
+    {
+      "id": "godot-demos",
+      "kind": "open-source-example",
+      "title": "Godot official demo projects",
+      "url": "https://github.com/godotengine/godot-demo-projects",
+      "platforms": [
+        "game"
+      ],
+      "reuse": "study-only",
+      "license_note": "MIT (repository statement; verify individual assets)",
+      "study_question": "Run official GUI demos at the project-pinned engine version; examine input and state handling."
+    },
+    {
+      "id": "unity-ui-toolkit",
+      "kind": "official-example",
+      "title": "Unity UI Toolkit code examples",
+      "url": "https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples",
+      "platforms": [
+        "game"
+      ],
+      "reuse": "study-only",
+      "license_note": "License and asset terms require file-level verification",
+      "study_question": "Study runtime UXML/USS styling, ListView and responsive UI. Repository examples are not standalone games."
+    },
+    {
+      "id": "carbon",
+      "kind": "open-source-design-system",
+      "title": "IBM Carbon",
+      "url": "https://github.com/carbon-design-system/carbon",
+      "platforms": [
+        "web",
+        "app"
+      ],
+      "reuse": "study-only",
+      "license_note": "Apache-2.0 (repo statement)",
+      "study_question": "Learn enterprise density, typographic roles, interactive states, spacing and data table hierarchy."
+    },
+    {
+      "id": "react-aria",
+      "kind": "open-source-design-system",
+      "title": "Adobe React Aria",
+      "url": "https://github.com/adobe/react-spectrum",
+      "platforms": [
+        "web",
+        "app"
+      ],
+      "reuse": "study-only",
+      "license_note": "License must be checked per selected package",
+      "study_question": "Use as a behavioral accessibility and internationalization reference; separate styling from semantic interaction."
+    },
+    {
+      "id": "radix",
+      "kind": "open-source-design-system",
+      "title": "Radix Primitives",
+      "url": "https://github.com/radix-ui/primitives",
+      "platforms": [
+        "web",
+        "app"
+      ],
+      "reuse": "study-only",
+      "license_note": "MIT (repo statement)",
+      "study_question": "Study composable accessible primitives, focus and keyboard behavior, without adopting default styling."
+    },
+    {
+      "id": "shadcn",
+      "kind": "open-source-design-system",
+      "title": "shadcn/ui",
+      "url": "https://github.com/shadcn-ui/ui",
+      "platforms": [
+        "web",
+        "app"
+      ],
+      "reuse": "study-only",
+      "license_note": "MIT (repo statement)",
+      "study_question": "Study open, adaptable component architecture. Do not mistake its example theme for a product identity."
+    },
+    {
+      "id": "fluent",
+      "kind": "open-source-design-system",
+      "title": "Microsoft Fluent UI",
+      "url": "https://github.com/microsoft/fluentui",
+      "platforms": [
+        "web",
+        "app"
+      ],
+      "reuse": "study-only",
+      "license_note": "MIT (repo statement)",
+      "study_question": "Study stateful controls, high-density work surfaces and accessible feedback."
+    },
+    {
+      "id": "web-guidelines",
+      "kind": "open-source-guidelines",
+      "title": "Vercel Web Interface Guidelines",
+      "url": "https://github.com/vercel-labs/web-interface-guidelines",
+      "platforms": [
+        "web",
+        "app"
+      ],
+      "reuse": "study-only",
+      "license_note": "Guide license must be checked before copying text",
+      "study_question": "Review interaction, content, focus, semantic HTML, motion, image and performance hygiene."
+    },
+    {
+      "id": "playwright-snapshots",
+      "kind": "official-tool-docs",
+      "title": "Playwright Visual Comparisons",
+      "url": "https://playwright.dev/docs/test-snapshots",
+      "platforms": [
+        "web",
+        "app",
+        "game"
+      ],
+      "reuse": "study-only",
+      "license_note": "Documentation usage; do not copy code/assets without checking terms",
+      "study_question": "Use reproducible screenshot and target-size comparisons; baseline renders must share environment."
+    },
+    {
+      "id": "axe-core",
+      "kind": "open-source-audit-tool",
+      "title": "axe-core",
+      "url": "https://github.com/dequelabs/axe-core",
+      "platforms": [
+        "web",
+        "app"
+      ],
+      "reuse": "study-only",
+      "license_note": "MPL-2.0 (repo statement)",
+      "study_question": "Audit semantic and accessible HTML; automated results do not establish full accessibility."
+    },
+    {
+      "id": "godot-ui-manual",
+      "kind": "official-docs",
+      "title": "Godot GUI Docs",
+      "url": "https://docs.godotengine.org/en/stable/tutorials/ui/index.html",
+      "platforms": [
+        "game"
+      ],
+      "reuse": "study-only",
+      "license_note": "Documentation/license requires checking before copying",
+      "study_question": "Study Control node layout, themes, scalable interfaces and locale handling."
+    }
+  ]
+}

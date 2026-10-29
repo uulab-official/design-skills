@@ -45,6 +45,8 @@ jobs:
         run: npm run capture:community
       - name: Run browser interaction assertions
         run: npm run test:browser
+      - name: Verify Design Taste screenshot state matrix in Chromium
+        run: npm run test:taste:browser
       - name: Run visual baseline comparison
         run: npm run test:visual
       - name: Validate rendered evidence

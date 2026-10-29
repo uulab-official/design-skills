@@ -2,6 +2,8 @@
 
 Use this reference for open-ended high-fidelity requests, redesigns, or any brief that asks for a result “like a public Figma design.” The goal is to make visual exploration concrete without producing three cosmetic color swaps.
 
+For reproducible Web/App/Game exploration, optional [Design Taste](../skills/design-taste/SKILL.md) provides 24 independent composition moves and a [research index](../skills/design-taste/references/research.md). Its choices are prompts, not proven visual outcomes; external reference art must not be copied as an asset.
+
 ## Direction set contract
 
 Create three directions before locking the production surface. One may be recommended, but all three should be credible enough to review.

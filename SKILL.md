@@ -98,6 +98,8 @@ Comparison evidence:
 
 Use real or realistic content from the first polished pass. Define the layout system and semantic primitives before tuning individual screens. If rendering is unavailable, label the work `not verified` and do not call it `release-ready`.
 
+For source-grounded differentiation, compare genuine product facts and actual task flows against two complementary references; record what was learned and what must not be copied. When using `design-taste`, read its `references/research.md` and `references/originality.md`, generate three structurally different options with `scripts/draw.py`, audit heuristic code concerns with `scripts/audit.py` and capture real route/state evidence with `scripts/capture.mjs` where a browser is available. Subjective AI-like repetition warnings are not facts about authorship, nor release-blocking rules by themselves.
+
 For product-specific visual refinement of Web, Expo/native apps and game interfaces, optionally invoke the independent `design-taste` specialist when installed. Its direction-selection and browser-capture process complements this skill's platform, state, accessibility and readiness contracts; native game/play quality still needs real engine/device verification.
 
 ### 6. Design information architecture and states
